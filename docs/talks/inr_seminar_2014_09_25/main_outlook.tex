@@ -1,0 +1,44 @@
+
+\section{Outlook}
+% Availability of PIRS: in INR, and outside KIT.
+% Ongoing work: interface to SERPENT
+% Making it open source.
+
+\begin{frame}[fragile]
+    \frametitle{Ongoing work}
+
+    \begin{itemize}
+        \item Interface to Serpent-2 using multi-physics interface. Toward full-core coupled calculations?
+        \item Improvements to SCF interface
+        \item clean output
+        \item Documentation
+
+            Partly written documentation can be found here:
+            \url{http://www.inr.kit.edu/661.php}. Not covered description of
+            high-level interfaces and low-level interface to SCF.
+
+        \item make PIRS widely available. In INR it can be found in
+            \begin{itemize}
+                \item \bashinline/\\sccfs-oe-cn.scc.kit.edu\INR\Gruppen\RPD\Software\PIRS/
+                \item \url{https://inrserv02.inr.kit.edu/svn/pirs/}
+            \end{itemize}
+
+            For wider distribution we are waiting for a license from KIT legal
+            department. They currently propose  GPL license.
+
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Ideas for future work}
+        \begin{itemize}
+            \item High-level interface to SCF for handling geometry of "unstructured" bundle of rods. Using \bashinline/qhull/ for traingulation 
+                  and \bashinline/shapely/ for computing subchannel areas and perimeters.
+
+                  \includegraphics[width=0.3\textwidth]{examples/mini_bwr.pdf}
+
+            \item Integration with other INR tools. Project-oriented? 
+                
+            \item Development of geometry constructor and high-level interfaces to handle hexagonal geometries.
+        \end{itemize}
+\end{frame}

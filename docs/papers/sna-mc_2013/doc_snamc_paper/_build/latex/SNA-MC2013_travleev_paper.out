@@ -1,0 +1,11 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}
+\BOOKMARK [1][-]{section.2}{Concept of the coupling framework}{}
+\BOOKMARK [1][-]{section.3}{Example: a simplified pin model}{}
+\BOOKMARK [2][-]{subsection.3.1}{Calculation geometry}{section.3}
+\BOOKMARK [2][-]{subsection.3.2}{high-level interface to MCNP}{section.3}
+\BOOKMARK [2][-]{subsection.3.3}{High-level interface to SCF}{section.3}
+\BOOKMARK [1][-]{section.4}{Example results for PWR assembly}{}
+\BOOKMARK [2][-]{subsection.4.1}{Assembly model}{section.4}
+\BOOKMARK [2][-]{subsection.4.2}{Results}{section.4}
+\BOOKMARK [1][-]{section.5}{Current state and outlook}{}
+\BOOKMARK [1][-]{section.6}{Acknowledgment}{}

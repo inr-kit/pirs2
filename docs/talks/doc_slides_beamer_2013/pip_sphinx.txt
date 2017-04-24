@@ -1,0 +1,203 @@
+Sphinx                    - Python documentation generator
+  INSTALLED: 1.1.3
+  LATEST:    1.2b2
+sphinx-bootstrap-theme    - Sphinx Bootstrap Theme.
+sphinxcontrib-blockdiag   - Sphinx "blockdiag" extension
+sphinxcontrib-actdiag     - Sphinx "actdiag" extension
+dataflake.docbuilder      - Automated Sphinx documentation builder
+sphinxcontrib-nwdiag      - Sphinx "nwdiag" and "rackdiag" extension
+flyingsphinx              - Flying Sphinx Python client
+sphinxcontrib-seqdiag     - Sphinx "seqdiag" extension
+repoze.sphinx.autointerface - Sphinx extension: auto-generates API docs from Zope interfaces
+Tinkerer                  - Sphinx-based blogging engine
+sphinxcontrib-robotdoc    - Sphinx extension to embed Robot Framework test cases and and user keywords into Sphinx documents
+sphinx-pyreverse          - A simple sphinx extension to generate UML diagrams with pyreverse
+collective.recipe.sphinxbuilder - ZC.buildout recipe to generate and build Sphinx-based documentation in the buildout.
+django-sphinx             - An integration layer bringing Django and Sphinx Search together.
+javasphinx                - Sphinx extension for documenting Java projects
+sphinxcontrib-httpdomain  - Sphinx domain for HTTP APIs
+bw_sphinxtheme            - Minimalistic sphinx theme in black and white colours
+sphinxcontrib-aafig       - aafig Sphinx extension
+sphinxcontrib-spelling    - Sphinx "spelling" extension
+sphinxcontrib-bibtex      - A Sphinx extension for BibTeX style citations.
+  INSTALLED: 0.2.8 (latest)
+Loslassa                  - Web Site generator based on sphinx and git
+sphinxcontrib-doxylink    - Sphinx extension for linking to Doxygen documentation.
+sphinxit                  - Lite and powerful SphinxQL query constructor
+sphinx-gettext-helper     - gettext helper script for Sphinx
+hgblog                    - Sphinx-based blogging engine
+sphinxcontrib-issuetracker - Sphinx integration with different issuetrackers
+django-sphinxdoc          - Easily integrate Sphinx documentation into your website.
+django-giza               - Autodoc all modules from a Django project's INSTALLED_APPS for Sphinx
+odt2sphinx                - An OpenDocument to sphinx converter.
+sphinxcontrib-cldomain    - Sphinx domain for Common Lisp
+Okydoky                   - Automated docs builder using Sphinx/GitHub/Distribute for private use
+tk.phpautodoc             - sample implementation of phpdocumentor using sphinx
+sphinxcontrib-phpdomain   - Sphinx "phpdomain" extension
+sphinxcontrib-spam        - output spam! spam! spam!
+cloud_sptheme             - a nice sphinx theme named 'Cloud', and some related extensions
+sphinxtheme.readability   - Sphinx Readability Theme provides a comfortably reading environment for your documentation.
+sphinxcontrib-programscreenshot - Sphinx extension to include screenshot of programs
+sphinxjp.shibukawa        - Sphinx calendar extension
+rusty                     - A collection of Sphinx extensions
+sphinxcontrib-googlechart - Sphinx "googlechart" extension
+sphinxcontrib-paverutils  - Sphinx/Paver integration
+sphinxjp.themes.bizstyle  - A sphinx theme for Business style Documentation.
+sphinxcontrib-gtkwave     - Sphinx extension to include screenshot of GTKWave
+sphinxcontrib-robotframework - Robot Framework plugin for Sphinx
+sphinxcontrib-programoutput - Sphinx extension to include program output
+sphinxcontrib-napoleon    - Sphinx "napoleon" extension.
+sphinxcontrib-clearquest  - Sphinx "clearquest" extension
+z3c.recipe.sphinxdoc      - Use Sphinx to build documentation for zope.org.
+sphinx-better-theme       - A nice-looking, customizable Sphinx theme
+sphinxjp.themes.s6        - A sphinx theme for generate S6 presentation. #sphinxjp
+sphinx-me                 - Wraps your README-only projects in a dynamic Sphinx shell for hosting on http://readthedocs.org
+sphinxcontrib-inheritance - Documentation inheritance functionality for Sphinx
+sphinxcontrib-ansi        - Sphinx extension ansi
+sphinxjp.themes.htmlslide - A sphinx theme for generate HTML Slide presentation. #sphinxjp
+releases                  - A Sphinx extension for changelog manipulation
+impress                   - Generate slides from rest files using sphinx and impress.js
+dipus                     - Dipus is a simple full-text search server using Whoosh for Sphinx
+guzzle_sphinx_theme       - Sphinx theme used by Guzzle.
+sphinxcontrib-sadisplay   - Sphinx "sadisplay" extension
+sphinxcontrib-testbuild   - Test Sphinx builds with Python tests.
+sphinxjp.themecore        - A sphinx theme plugin support extension. #sphinxjp
+sphinxcontrib-pecanwsme   - Extension to Sphinx for documenting APIs built with Pecan and WSME
+sphinxcontrib-recentpages - UNKNOWN
+sphinxcontrib-externallinks - Sphinx "externallinks" extension
+sphinx-argparse           - Sphinx extension that automatically document argparse commands and options
+sphinx-intl               - Sphinx utility that make it easy to translate and to apply translation.
+sphinxjp.themes.basicstrap - A sphinx theme for Basicstrap style. Using Twitter Bootstrap. #sphinxjp
+sphinxalchemy             - SQLAlchemy extension for dealing with SphinxQL
+tooth.paste               - Create shiny new Python packages with Sphinx documentation, unit tests and tools to keep your code clean
+sphinxcontrib-eagle       - Sphinx extension to include image or partlist of eagle schematic or board
+numpydoc                  - Sphinx extension to support docstrings in Numpy format
+sphinxcontrib-epydoc      - Epydoc cross-referencing for Sphinx
+gir2rst                   - ReST-based Sphinx documentation from GIR files
+sphinxcontrib-fancybox    - Sphinx "fancybox" extension
+sphinxcontrib-swf         - Sphinx "swf" extension
+SphinxReport              - SphinxReport : a report generator in python based on Sphinx and matplotlib
+agoraplex.themes.sphinx   - A Sphinx theme for Agoraplex projects, based on the Pylons Sphinx theme
+sphinxcontrib-cheeseshop  - Sphinx extension cheeseshop
+oslo.sphinx               - OpenStack Sphinx Extensions
+sphinxfeed                - Sphinx extension for generating RSS feeds
+sphinxcontrib-plantuml    - Sphinx "plantuml" extension
+catkin-sphinx             - ROS package library
+sphinxjp.themes.impressjs - A sphinx theme for HTML presentation style.
+mezzanine-meze            - A Mezzanine app to convert reStructuredText into HTML using Sphinx
+sphinxcontrib-mscgen      - mscgen Sphinx extension
+django-sphinx-autodoc     - Autodoc all apps from a project to Sphinx
+mdn-sphinx-theme          - A Sphinx theme for the Mozilla Developer Network
+TracSphinx                - Sphinx plugin for Trac 0.11
+trydoc                    - Tryton markup for Sphinx
+Sphinx-PyPI-upload        - setuptools command for uploading Sphinx documentation to PyPI
+sphinx_wxoptimize         - Convert sphinx-generated htmlhelp files into versions optimized for reading using the wxHtmlHelp browser
+sphinxcontrib-coffee      - Sphinx extension to add CoffeeScript support
+breathe                   - Sphinx Doxygen renderer
+sphinx-patchqueue         - Sphinx extension for embedding sequences of file alterations
+sphinx-git                - git Changelog for Sphinx
+django-docs               - Allows to serve Sphinx generated docs from django.
+rstspreadsheet            - Add the `spreadsheet` directive to reStructuredText for Docutils and Sphinx
+sphinxcontrib.twitter     - embedding twitter's tweet in sphinx
+sphinxcontrib-mercurial   - Sphinx "mercurial" extension
+sphinxit-fc               - Lite and powerful SphinxQL query constructor
+sphinxcontrib-golangdomain - Sphinx extension sphinxcontrib-golangdomain
+sphinxcontrib-manpage     - Sphinx linux manpage extension
+sffms                     - Sffms-style LaTeX output for Sphinx
+sphinx.webtools           - Sphinx web tools for python web frameworks
+kotti_docs_theme          - Sphinx Theme for Kotti Documentation
+sphinxcontrib-proceduralimage - proceduralimage Sphinx extension
+sphinxcontrib-tikz        - TikZ extension for Sphinx
+sphinxtools               - Paver tasks for Sphinx Search server
+sphinxcontrib-whoosh      - Whoosh Sphinx extension
+sphinxcontrib-lassodomain - Lasso domain for Sphinx
+stsci.sphinxext           - A set of tools and templates to customize Sphinx for use in STScI projects
+mozilla-sphinx-theme      - A theme using the default mozilla design guidelines
+sphinxjp.themes.dotted    - A sphinx theme for Dotted style.
+changelog                 - Provides simple Sphinx markup to render changelog displays.
+sphinxcontrib-gruffygen   - Gruffy Sphinx extension
+sphinxcontrib-zopeext     - Sphinx extension zopeext
+sphinxcontrib-rawfiles    - Sphinx "rawfiles" extension
+sphinxcontrib-textstyle   - Sphinx "textstyle" extension
+sphinxcontrib-findanything - Sphinx "FindAnything" extension
+dragon-sphinx             - Sphinx extensions for the Stupeflix tasks system
+sphinxcontrib-htsql       - HTSQL extension for Sphinx
+sphinxjp.themes.sphinxjp  - A sphinx theme for sphinx-users.jp site. #sphinxjp
+sphinxcontrib-slide       - Sphinx "slide" extension
+sphinxjp.themes.tinkerpress - A tinkerer theme like some famous blogging tool.
+epfl-sphinx-theme         - A Sphinx theme for EPFL
+readthedocs-sphinx-ext    - Improved Client for Sphinx.
+sphinxjp.themes.trstyle   - A sphinx theme for TriAx Corp style Documentation.
+collective.sphinx.includedoc - Sphinx extension for including doctests
+pylons_sphinx_latesturl   - Sphinx extension: generate "latest" URL for versioned docs
+sphinx-http-domain        - Sphinx domain to mark up RESTful web services in ReST
+sphinxcontrib-mockautodoc - Sphinx mocking autodoc extension
+sphinxtrap                - Yet another bootstrap sphinx theme.
+sphinxcontrib-exceltable  - Support for including Excel spreadsheets into Sphinx documents
+sphinxcontrib-sdedit      - Sphinx extension for drawing sequence diagrams
+sphinxcontrib-restbuilder - Sphinx extension to output reST files.
+sphinxcontrib-googlemaps  - Sphinx "googlemaps" extension
+sphinxcontrib-rubydomain  - Sphinx extension sphinxcontrib-rubydomain
+sphinxcontrib-nicovideo   - Sphinx "nicovideo" extension
+sphinxjp.themes.solarized - A sphinx theme based on solarized color scheme. #sphinxjp
+sphinxcontrib-scaladomain - Sphinx domain for Scala APIs
+wild_sphinx_theme         - Like Nature sphinx theme but allows pygments style to be dark
+sphinxcontrib-sqltable    - Sphinx "SQLTable" extension
+sphinxcontrib-bitbucket   - Sphinx/BitBucket integration
+tl.pkg                    - A paste.script template for a namespaced Python package and a Sphinx theme.
+sphinxcontrib-bayesnet    - BayesNet extension for Sphinx
+sphinxcontrib-erlangdomain - Sphinx extension sphinxcontrib-erlangdomain
+sphinx-naps-theme         - Sphinx theme used by Antoine Millet for its projects
+sphinx-readable-theme     - Sphinx Readable Theme
+wuxi                      - Django template bridge and themes for Sphinx
+sphinxjp.themes.tinkerbelizehole - A tinkerer theme like some famous blogging tool.
+horae.sphinx.grok         - Provides grok specific autodoc directives for sphinx
+sphinx-php                - 
+fSphinx                   - fSphinx easily builds faceted search systems using Sphinx.
+sphinx-serve              - Preview sphinx documentation locally
+txsphinx                  - An asynchronous Python driver for the Sphinx search engine, based on Twisted.
+orgtblfilter              - A sphinx extension to pre-process orgtbl-mode tables to sphinx tables
+sphinxtheme-simple        - Simple sphinx theme
+qubic.sphinx.graphvizinclude - Sphinx extension: graphviz generation of external dot files
+sphinxcontrib-osaka       - Sphinx extension osaka
+sphinxcontrib-japanese-text-join - japanese-text-join
+sphinxcontrib-autojs      - Sphinx "Auto JavaScript Document" extension
+sphinxcontrib-newsfeed    - News Feed extension for Sphinx
+nose-sphinx-doc           - Generate sphinx documentation for tests.
+collective.sphinx.autoatschema - Sphinx extension for archetypes schema
+cartouche                 - Sphinx "cartouche" extension
+sphinx.plonetheme         - Addon for Plone
+sphinxcontrib-operationdomain - Sphinx extension sphinxcontrib-operationdomain
+sphinxcontrib-requirements - Sphinx "requirements" extension
+sphinxjp.themes.tinkerturquoise - A tinkerer theme like some famous blogging tool.
+ATD_document              - setuptools command for uploading Sphinx documentation to PyPI
+sphinxtogithub            - Script for preparing the html output of the Sphinx documentation system for
+github pages.
+sphinxcontrib-taglist     - Sphinx "taglist" extension
+sphinxcontrib-email       - Sphinx email obfuscation extension
+sphinxcontrib-docxbuilder - Sphinx docx builder extension.
+sphinxcontrib-jsdemo      - HTML/Javascript Demo extension for Sphinx
+sphinxcontrib.infrae      - Add-ons to sphinx to document Zope event and interfaces (and buildout configuration).
+django-documentation      - Provides a way to integrate a protected sphinx based
+    documentation within your django app.
+collective.sphinx.includechangelog - Include changelog extracted from egg information  into sphinx documentation.
+sphinxcontrib-webmocks    - Sphinx "webmocks" extension
+sphinxcontrib-texfigure   - TeX Figure extension for Sphinx
+sphinxcontrib-googleanalytics - Sphinx extension googleanalytics
+sphinxcontrib-jsoncall    - Sphinx extension that adds a simple button to perform test calls to JSON based apis
+wiki2sphinx               - tool for creating a sphinx document structure from a ReST-moin-wiki
+sphinxsearch              - A module for querying the sphinx search daemon
+sphinxjp.themes.revealjs  - A sphinx theme for generate reveal.js presentation. #sphinxjp
+sphinxcontrib-jinjadomain - Jinja domain for jinja templates
+sphinxcontrib-fulltoc     - Include a full table of contents in your Sphinx HTML sidebar
+sphinxapi                 - Client for the Sphinx search engine.
+sphinxjp.themes.tinkeralizarin - A tinkerer theme like some famous blogging tool.
+sphinx-server             - simple wsgi sphinx server
+caktus-sphinx-theme       - Custom Sphinx theme for projects written and maintained by Caktus Consulting Group.
+django-sphinx-db          - Django database backend for SphinxQL.
+sphinx_amazonjp_embed     - embedding amazon.co.jp in sphinx
+sphinxcontrib-smblink     - Sphinx Windows Share Links (WSL) role extension
+sphinxcontrib-matlabdomain - Sphinx "matlabdomain" extension
+testr3454                 - setuptools command for uploading Sphinx documentation to PyPI
+sphinxcontrib.gist        - embedding gist to sphinx
+sphinxcontrib-adadomain   - Sphinx "adadomain" extension

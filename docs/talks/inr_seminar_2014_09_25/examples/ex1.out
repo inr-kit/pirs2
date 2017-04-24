@@ -1,0 +1,12 @@
+   MCNP input file generated in 0.000495910644531 seconds
+Started mcnp <job cd 'mcnp0'; ./batch.bat> mode=R, kwargs={}
+scheduler queued job <job cd 'mcnp0'; ./batch.bat>
+scheduler waits with parameters {'files': ['i_o'], 'llines': ['^ mcnp  *version .* probid'], 'sec': 5}
+Thu Sep 25 13:30:44 2014
+     mcnp0/i_o doesn't exist
+Thu Sep 25 13:30:49 2014
+     mcnp0/i_o exists last line mismatch
+Thu Sep 25 13:30:54 2014
+     mcnp0/i_o exists last line matches
+   MCNP run took 15.0220649242 seconds
+K-inf: [0.417872, 0.00414795]

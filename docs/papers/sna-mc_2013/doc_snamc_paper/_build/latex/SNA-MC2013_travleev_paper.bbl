@@ -1,0 +1,95 @@
+\begin{thebibliography}{10}
+
+\bibitem{hpmc}
+``{HPMC} An FP7 Euroatom Project,''
+\newblock \url{http://www.fp7-hpmc.eu}.
+
+\bibitem{HoogenboomMC2011}
+E.~Hoogenboom, C.~Diop, A.~Ivanov, and V.~Sanchez,
+\newblock ``Development of coupling methodologies for TRIPOLI and FLICA in the
+  frame of NURISP Project,''
+\newblock {\em Proc. 2011 International Conference on Mathematics and
+  Computational Methods applied to nuclear science and engineering ({M\&C}
+  2011)}, Rio De Janeiro, RJ, Brazil, May, 2011.
+
+\bibitem{nuresimICONE2006}
+C.~Chauliac et~al.,
+\newblock ``NURESIM: a eurupean platform for nuclear reactor simulation,''
+\newblock {\em Proc. ICONE-14 Workshop on advanced LWR}, Miami, USA, July,
+  2006.
+
+\bibitem{nuresimWEB}
+``NURESIM,''
+\newblock \url{http://www.nuresim.com}.
+
+\bibitem{salomeWEB}
+``SALOME: open source integration platform for numerical simulation,''
+\newblock \url{http://www.salome-platform.org}.
+
+\bibitem{pythonWEB}
+``Python Programming Language -- Official Website,''
+\newblock \url{http://www.python.org}.
+
+\bibitem{mcnpREF}
+{X-5 Monte Carlo team},
+\newblock {\em MCNP -- A general N-Particle transport code, Version 5 -- Volume
+  I: overview and Theory},
+\newblock Los Alamos National Laboratory, 2003.
+
+\bibitem{scfREF}
+U.~Imke and V.~Sanchez,
+\newblock ``Validation of the subchannel code SUBCHANFLOW using the NUPEC PWR
+  test (PSBT),''
+\newblock {\em Science and Technology of Nuclear Installations}, {\bf 2012}, 12
+  (2012).
+
+\bibitem{natAbund2011}
+M.~Berglund and M.~E. Wieser,
+\newblock {\em Pure and Applied Chemistry}, {\bf 83}, 397--410 (2011).
+
+\bibitem{pseudoMat2008}
+F.~B. Brown, W.~R. Martin, and R.~D. Mosteller,
+\newblock ``Monte Carlo Advances and Challenges,''
+\newblock {\em Proc. PHYSOR'08 -- International Conference of Physics of
+  Reactors}, Interlaken, Switzerland, September, 2008.
+
+\bibitem{pseudoMatAlHamry}
+A.~Al-Hamry and V.~Sanchez,
+\newblock ``Development of a coupling scheme between MCNP and COBRA-TF for the
+  prediction of the pin power of a PWR fuel assembly,''
+\newblock {\em Proc. 2009 International Conference on Mathematics,
+  Computational Methods and Reactor Physics ({M\&C} 2009)}, New York, USA, May,
+  2009.
+
+\bibitem{PWRbenchmark}
+T.~Kozlowksi and T.~J. Downar,
+\newblock ``PWR MOX/UO2 Core Transient Benchmark, Final Report,''
+\newblock NEA.
+
+\bibitem{dufek2006}
+J.~Dufek and W.~Gudowski,
+\newblock ``{S}tochastic {A}pproximation for {M}onte {C}arlo {C}alculation of
+  {S}teady-{S}tate {C}onditions in {T}hermal {R}eactors,''
+\newblock {\em Nucl.Sci.Eng.}, {\bf 152}, 274 (2006).
+
+\bibitem{juqueenWEB}
+``JUQUEEN -- Juelich BLue Gene/Q,''
+\newblock \url{http://www.fz-juelich.de/ias/jsc/juqueen}.
+
+\bibitem{sphinxWEB}
+``Sphinx documentation,''
+\newblock \url{http://sphinx-doc.rog}.
+
+\bibitem{serpentWEB}
+``SERPENT 2, a Countinuous-energy Monte Carlo Reactor Physics Burnup
+  Calculation Code,''
+\newblock \url{http://montecarlo.vtt.fi}.
+
+\bibitem{kanext}
+M.~Becker, S.~Criekingen, and C.~Broeders,
+\newblock ``{KA}rlsruhe {PRO}gram {S}ystem {KAPROS} and its successor
+  {KA}rlsruhe {N}eutronic {EX}tentable {T}ool {KANEXT},''
+\newblock \url{http://inrwww.webarchiv.kit.edu/kanext.html}, last accessed
+  September 2013.
+
+\end{thebibliography}

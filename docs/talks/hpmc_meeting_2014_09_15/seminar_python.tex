@@ -1,0 +1,49 @@
+\begin{frame}[fragile]
+    \frametitle{Python Interpreter}
+
+    \begin{bashcode}
+        $ python --version
+        Python 2.7.3
+        $ python
+    \end{bashcode}
+        
+    \begin{pythoncode}
+        >>> from math import pi
+        >>> print pi
+        3.14159265359
+        
+        >>> from pirs.solids import Box
+        >>> b = Box()
+        >>> b.X = 5
+
+        >>> print b
+        >>> print repr(b)
+
+        >>> help(b)
+        >>> dir()
+        >>> dir(b)
+    \end{pythoncode}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Python script}
+
+    \begin{bashcode}
+        $ python script.py
+    \end{bashcode}
+        
+    \begin{pythoncode}
+        l = [1, 2, 3, 4, 5]
+        s = 0
+        for e in l:
+            s += e
+            print e, s
+
+        for c in 'abs':
+            print c
+
+    \end{pythoncode}
+
+\end{frame}
+

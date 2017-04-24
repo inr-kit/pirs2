@@ -1,0 +1,138 @@
+%
+% sphinx.sty
+%
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{sphinxkit}[2013/10/11 LaTeX package (Sphinx markup)]
+
+% it is actually modifications of sphinx.sty.
+\RequirePackage{sphinx}
+
+% some colors:
+\definecolor{TitleColor}{rgb}{0.,0.,0.}
+\definecolor{VerbatimBorderColor}{rgb}{0.9,0.9,0.9}
+
+% use sans-serif
+\renewcommand{\familydefault}{\sfdefault}
+
+% some commands that are used in the title
+\def\inr@number{INR XX/YY -- NUKLEAR ZZZZ}
+\def\inr@title{The Title. To change, use inrTitle command.}
+\def\inr@project{INR Project}
+\def\inr@projectOpt{Project Optional description}
+\def\inr@date{\@date}
+\def\inr@abstract{%
+To specify an abstract, use the command inrAbstract in the preamble.
+
+An abstract can be multi-paragraph.
+}
+\newcommand{\inrNumber}[1]{\def\inr@number{#1}}
+\newcommand{\inrTitle}[1]{\def\inr@title{#1}}
+\newcommand{\inrProject}[2]{\def\inr@project{#1}\def\inr@projectOpt{#2}}
+\newcommand{\inrDate}[1]{\def\inr@date{#1}}
+\newcommand{\inrAbstract}[1]{\def\inr@abstract{#1}}
+
+% some packages are needed to define the title page:
+\RequirePackage{KITdefs,KITcolors}
+%\RequirePackage[a4paper,includemp=true,includehead=true,includefoot=true,showframe]{geometry}
+\RequirePackage[a4paper,showframe=false]{geometry}
+\geometry{inner=3cm,outer=2.0cm,top=3cm,bottom=3cm}
+% redefine the title page, that is 
+% originally defined in sphinxmanual.cls 
+\renewcommand{\maketitle}{%
+    \newgeometry{a4paper,left=7.6cm,right=3cm,top=4.2cm,bottom=3.5cm}
+    \begin{titlepage}\begin{flushleft}%
+
+        \setlength{\unitlength}{1cm}
+        \begin{picture}(0,0)
+            \put(-5.6,0.8){\includegraphics[width=4.5cm]{\KIT@logo@clrE}}
+        \end{picture}
+
+        
+        \vspace{1cm}
+        {\LARGE \py@HeaderFamily Internal Report \par}
+        {\LARGE \py@HeaderFamily \inr@number \par}
+        {\normalsize                 \inr@date \par}
+
+        \vfill
+
+        {\LARGE                  \inr@title \par}
+
+        \vfill
+
+        {\normalsize                 \@author \par}
+        {\normalsize                 \inr@project \par}
+        {\normalsize                 \inr@projectOpt \par}
+
+        \vfill
+
+        {\small                 \KIT@Text@E \par}
+
+        \clearpage
+
+        %\restoregeometry
+        \newgeometry{a4paper,right=6cm,left=3cm,top=3.2cm,bottom=3.5cm}
+
+        \vspace*{\fill}
+
+        {\small {\py@HeaderFamily Bitte beachten Sie:}
+
+        Dieser interne Bericht enthält Informationen von vorläufigen Charakter und
+        ist ausschließlich für den internen Gebrauch bestimmt.
+
+        \vspace{0.5cm}
+
+        {\py@HeaderFamily Please note:}
+
+        This internal Report contains information by temporary nature. It is
+        intended only for use in the KIT.
+
+        }
+
+
+        \clearpage
+
+        {\normalsize \py@HeaderFamily Abstract \par}
+
+        {\normalsize \inr@abstract \par}
+
+        \clearpage
+
+
+
+    \end{flushleft}
+    \end{titlepage}
+    \restoregeometry
+
+    \setcounter{footnote}{0}%
+    \let\thanks\relax\let\maketitle\relax
+}
+
+% headers and footers:
+\fancypagestyle{normal}{
+    \fancyhf{} % remove any previous footers and headers
+    \fancyhead[LE,RO]{{\py@HeaderFamily\thepage}} % outside headers: page number
+    \fancyhead[RE]{{\py@HeaderFamily\leftmark}} % even (left) page, internal: chapter
+    \fancyhead[LO]{{\py@HeaderFamily\rightmark}} % odd (right) page, internal: section
+    \renewcommand{\headrulewidth}{0.2pt}
+    \renewcommand{\footrulewidth}{0.2pt}
+}
+\fancypagestyle{plain}{
+    \fancyhf{}
+}
+
+% another chapter headings. This definition is used only if
+% no fncychap was loaded previously (see latex_element['fncychap'] in conf.py):
+\@ifpackageloaded{fncychap}{}{
+    \RequirePackage[Lenny]{fncychap}
+    \ChRuleWidth{0pt}
+    \ChNumVar{\raggedright \Huge\py@HeaderFamily}
+    \ChTitleVar{\raggedright \Huge\py@HeaderFamily}
+    \renewcommand{\DOCH}{%
+        \CNoV\thechapter.\,}
+
+}
+
+% make code font smaller:
+\renewcommand{\code}[1]{\small\texttt{#1}}
+

@@ -1,0 +1,78 @@
+MESSAGE:  datapath=C:\MCNP\mcnp_data\jeff31
+
+c title
+1 0  -1 fill=1 imp:n=1  $ ('/',)
+2 1 -1 2 -3 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+3 1 -1 3 -5 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+4 1 -1 5 -6 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+5 1 -1 6 -7 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+6 1 -1 7 -8 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+7 1 -1 8 -9 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+8 1 -1 9 -10 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+9 1 -1 10 -11 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+10 1 -1 11 -12 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+11 1 -1 12 -13 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+12 1 -1 13 -14 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+13 1 -1 14 -15 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+14 1 -1 15 -16 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+15 1 -1 16 -17 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+16 1 -1 17 -18 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+17 1 -1 18 -19 4 imp:n=1 tmp=4.998059e-08 u=1  $ interior of ('/',)
+18 0  -4 fill=2 imp:n=1 u=1  $ ('/', 'clad')
+19 2 -4.0 2 -19 20 imp:n=1 tmp=2.585203e-08 u=2  $ interior of ('/', 'clad')
+20 0  -20 fill=3 imp:n=1 u=2  $ ('/', 'clad', 'gap')
+21 0  2 -19 (21:20.2:20.3) imp:n=1 u=3  $ interior of ('/', 'clad', 'gap')
+22 3 -10.0 -21 -20.2 -20.3 imp:n=1 tmp=1.034081e-07 u=3  $ ('/', 'clad', 'gap', 'fuel')
+23 0  1 imp:n=0  $ The other world
+
+c surfaces
+1 rpp  -0.635  0.635  -0.635  0.635  -220.0  220.0
+2 pz  -1220.00183283
+3 pz  -176.0
+4 rcc  0.0  0.0  -1700.0  0.0  0.0  3400.0  0.475
+5 pz  -157.142857143
+6 pz  -132.0
+7 pz  -94.285714286
+8 pz  -88.0
+9 pz  -44.0
+10 pz  -31.428571429
+11 pz  0.0
+12 pz  31.428571429
+13 pz  44.0
+14 pz  88.0
+15 pz  94.285714286
+16 pz  132.0
+17 pz  157.142857143
+18 pz  176.0
+19 pz  1220.00183283
+20 rcc  0.0  0.0  -195.0  0.0  0.0  390.0  0.411
+21 cz  0.4025
+
+c data cards
+c materials
+m1 $ mixture H-O at 580.0 K 
+       1001.33c 3.8577518e-01     1001.34c 1.6139948e+00    $ 0.19291 500.003K,  0.80709 599.999K
+       1002.33c 4.4369248e-05     1002.34c 1.8563075e-04    $ 0.19291 500.003K,  0.80709 599.999K
+       8016.33c 1.9244100e-01     8016.34c 8.0512900e-01    $ 0.19291 500.003K,  0.80709 599.999K
+       8017.33c 7.3305715e-05     8017.34c 3.0669429e-04    $ 0.19291 500.003K,  0.80709 599.999K
+       8016.33c 3.9546504e-04     8016.34c 1.6545350e-03    $ 0.19291 500.003K,  0.80709 599.999K
+mt1 lwtr07.31t $ thermal data at 573.599K
+m2 $ mixture  H-001 at 300.0 K 
+       1001.31c 1.0000000e+00
+m3 $ mixture  H-001 at 1200 K 
+       1001.39c 1.0000000e+00
+c tallies
+fmesh14:n $  heat in ('/', 'clad', 'gap', 'fuel')
+     geom=cyl
+     origin=0.0 0.0 -195.0
+     axs=0.0 0.0 1.0
+     vec=1.0 0.0 0.0
+     imesh= 0.4025
+     jmesh= 39.0 78.0 117.0 156.0 195.0 234.0 273.0 312.0 351.0 390.0
+     kmesh= 1.0
+fm14 -1 0 -6 -8
+c kcode 500  1.0  20  100  j  j  100000  j 
+prdmp j j 1   $ write mctal file
+
+
+

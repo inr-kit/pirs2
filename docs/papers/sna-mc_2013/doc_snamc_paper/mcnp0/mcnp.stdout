@@ -1,0 +1,22 @@
+ mcnp     ver=5    , ld=04052013  09/10/13 13:02:39                   
+          Thread Name & Version = MCNP5, 1.60
+          Copyright LANS/LANL/DOE - see output file
+                                  _                                      
+            ._ _    _  ._   ._   |_                                      
+            | | |  (_  | |  |_)   _)                                     
+                            |                                            
+  
+  warning.  universe map (print table 128) disabled.                                                                     
+ 
+  comment.  total fission nubar data are being used.                                                                     
+  warning.    8016.31c and   8016.40c are both called for.                                                               
+  warning.    8017.31c and   8017.40c are both called for.                                                               
+  warning.   92235.31c and  92235.40c are both called for.                                                               
+  warning.   92238.31c and  92238.40c are both called for.                                                               
+  warning.    4 materials had unnormalized fractions. print table 40.                                                    
+ comment. using random number generator  1, initial seed = 19073486328125      
+ imcn   is done
+
+  warning.  plot plane coincident with surface     10                                                                    
+ plot   is done
+

@@ -1,0 +1,40 @@
+
+
+% redefine title color (defined in sphinx style) to black:
+%\definecolor{TitleColor}{rgb}{0.0,0.0,0.0}
+
+%\usepackage{snamc2013}
+\usepackage{fancyvrb}
+\usepackage{graphicx}  % allows inclusion of graphics
+\usepackage{booktabs}  % nice rules (thick lines) for tables
+\usepackage{microtype} % improves typography for PDF
+
+%\usepackage[breaklinks=true,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
+%\usepackage{hypcap}
+
+%\usepackage{courier}
+
+
+\title{Python-based framework for coupled MC-TH reactor calculations}
+
+\author[1]{Anton A. Travleev}
+\author[1]{Richard Molitor}
+\author[1]{Victor Sanchez}
+
+\affil[1]{Institute for Neutron Physics and Reactor Technology (INR), Karlsruhe Institute of Technology,\newline%
+Hermann-von-Helmholtz-Platz 1, 76344 Eggenstein-Leopoldshafen}
+
+\abstract{%
+We develop a set of Python packages to provide a modern programming interface
+to codes used for analysis of nuclear reactors. Currently implemented
+interfaces to the Monte Carlo (MC) neutronics code MCNP and thermo-hydraulic
+(TH) code SCF allow efficient description of calculation models and provide a
+framework for coupled calculations.
+
+In this paper we illustrate how these interfaces can be used to describe a
+pin model, and report results of coupled MCNP-SCF calculations performed 
+for a PWR fuel assembly, organized by means of the interfaces.
+}
+
+\keywords{Python, MCNP, SCF, coupled MC-TH}
+

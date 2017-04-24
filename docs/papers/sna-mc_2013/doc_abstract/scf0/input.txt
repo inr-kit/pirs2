@@ -1,0 +1,382 @@
+&initialisation
+title = created by pirs.hpmc.ScfInterface()
+
+&properties
+set_water = on
+set_lead_bismuth = off
+set_lead = off
+set_sodium = off
+set_helium = off
+set_air = off
+
+
+&correlations
+set_subcooled_void_levy = off
+set_subcooled_void_saha_zuber = off
+set_subcooled_void_unal = off
+set_subcooled_void_bowring = on
+set_subcooled_void_none = off
+
+set_boiling_void_homogeneous = off
+set_boiling_void_armand_mod = on
+set_boiling_void_smith = off
+set_boiling_void_chexal_lellouche = off
+
+set_two_phase_friction_homogeneous = off
+set_two_phase_friction_armand = on
+set_two_phase_friction_lockhart = off
+
+set_turbulent_friction_blasius = on
+set_turbulent_friction_rehme_wire = off
+set_turbulent_friction_rehme_grid = off
+set_turbulent_friction_churchill = off
+
+set_heat_transfer_dittus_boelter = on
+set_heat_transfer_gnielinski = off
+set_heat_transfer_subbotin = off
+
+set_chf_barnett+b&w = on
+set_chf_biasi = off
+set_chf_okb = off
+set_chf_w3 = off
+set_chf_levitan = off
+set_chf_epri = off
+
+set_shape_chf_none = on
+set_shape_chf_cobra4i = off
+set_shape_chf_tong = off
+set_shape_chf_w3 = off
+set_shape_chf_smolin = off
+
+set_simple_fuel_cladding_gap = on
+set_transuranus_urgap_fuel_cladding_gap = off
+set_vver1000_benchmark_fuel_cladding_gap = off
+
+blasius_laminar_prefactor = 64.0
+blasius_laminar_reynolds_exponent = -1.0
+blasius_laminar_constant = 0.0
+blasius_turbulent_prefactor = 0.316
+blasius_turbulent_reynolds_exponent = -0.25
+blasius_turbulent_constant = 0.0
+roughness = 3e-06
+dittus_boelter_prefactor = 0.023
+dittus_boelter_reynolds_exponent = 0.8
+dittus_boelter_prandtl_exponent = 0.4
+dittus_boelter_constant = 0.0
+chf_multiplier = 10000000000.0
+
+&special_parameters
+rod_pitch = 0.0
+rod_diameter = 0.0095
+wire_wrap_pitch = 0.0
+wire_wrap_diameter = 0.0
+perimeter_ratio = 0.0
+
+&axial_heat_flux
+file = this_file
+relative_axial_location   relative_heat_flux
+        0.0284090909091       0.132699988566
+        0.0784090909091       0.132699988566
+         0.121428571429       0.638374679216
+         0.144155844156       0.638374679216
+         0.172727272727       0.638374679216
+         0.202272727273       0.757407018722
+         0.219318181818       0.757407018722
+         0.259902597403       0.757407018722
+         0.292857142857       0.757407018722
+         0.311363636364       0.748529275917
+                 0.3375       0.748529275917
+         0.376136363636       0.748529275917
+         0.405681818182       0.932049062722
+         0.419967532468       0.932049062722
+         0.464285714286       0.932049062722
+                    0.5       0.932049062722
+         0.535714285714        1.20203692001
+         0.580032467532        1.20203692001
+         0.594318181818        1.20203692001
+         0.623863636364       0.694368871881
+                 0.6625       0.694368871881
+         0.688636363636       0.694368871881
+         0.707142857143       0.688866156708
+         0.740097402597       0.688866156708
+         0.780681818182       0.688866156708
+         0.797727272727       0.688866156708
+         0.827272727273         0.3911926612
+         0.855844155844         0.3911926612
+         0.878571428571         0.3911926612
+         0.921590909091       0.164510905161
+         0.971590909091       0.164510905161
+!
+
+&channel_layout
+file = this_file
+channel_number        channel_area   wetted_perimeter   heated_perimeter   x_position   y_position
+             1   2.26019539383e-05   0.00746128255228   0.00746128255228            0            0
+             2   2.26019539383e-05   0.00746128255228   0.00746128255228            0            0
+             3   2.26019539383e-05   0.00746128255228   0.00746128255228            0            0
+             4   2.26019539383e-05   0.00746128255228   0.00746128255228            0            0
+!
+file = this_file
+channel   max_40_x_(neighbour+gap+distance)                                                                               
+      1                                   2   0.0016   0.00635   3   0.0016   0.00635   /                                 
+      2                                   4   0.0016   0.00635   /                                                        
+      3                                   4   0.0016   0.00635   /                                                        
+      4                                   0      0.0       0.0   /                                                        
+!
+
+&thermal_connection
+file = this_file
+connection_number   rho_cp_thickness   wall_width   first_channel   resistance   second_channel   resistance
+!
+
+&channel_area_variation
+gradual_insertion_iterations = 1
+file = this_file
+channel_number   axial_location   channel_area   wetted_perimeter   heated_perimeter
+!
+
+&gap_spacing_variation
+file = this_file
+gap_number   axial_location   gap_spacing
+!
+
+&rod_layout
+set_burnup_by_transient = off
+
+set_axial_conduction = off
+
+set_radial_twigl = off
+set_radial_sor = off
+set_radial_dir = on
+
+number_of_fuel_nodes = 6
+minimum_fuel_cladding_gap_conductance = 500.0
+file = this_file
+rod_number   material_type   outer_diamter   power_fraction   x_position   y_position
+         1               1          0.0095              1.0          0.0          0.0
+!
+file = this_file
+rod   max_6_x_(channel+fraction)                                                  
+  1                            1   0.25   2   0.25   3   0.25   4   0.25   /      
+!
+file = this_file
+material   property   fuel_conductivity   fuel_specific_heat   fuel_density   fuel_emissivity   fuel_thermal_expansion
+       1        uo2                 0.0                  0.0            0.0               1.0                      0.0
+!
+file = this_file
+material   fuel_diameter   fuel_inner_radius   fraction_of_theoretical_density   fraction_of_puo2   fuel_roughness
+       1         0.00805                 0.0                               1.0                0.0            3e-06
+!
+file = this_file
+material   property   clad_conductivity   clad_specific_heat   clad_density   clad_emissivity   clad_thermal_expansion
+       1   zircaloy                 0.0                  0.0            0.0               1.0                      0.0
+!
+file = this_file
+material   clad_thickness   gap_conductance   fill_gap   model_gap   clad_roughness   fill_gas_pressure   fill_gas_volume
+       1          0.00032           10000.0        off          on            1e-06            500000.0    0.783819827248
+!
+file = this_file
+configuration_type   number_of_zones
+!
+file = this_file
+configuration_type   zone_number   zone_end_relative_axial_location   material
+!
+file = this_file
+rod_number   relative_axial_location   burnup
+         0                       0.0      0.0
+         0                       1.0      0.0
+!
+file = this_file
+rod_number   molar_fraction_he   molar_fraction_xe   molar_fraction_ar   molar_fraction_kr   molar_fraction_h   molar_fraction_n
+!
+
+&calculation_control
+set_sor_iteration = off
+set_gauss_elimination = on
+
+set_full_equations = on
+set_incompressible = off
+set_thermal_transient = off
+
+set_boron_transport = off
+
+set_buoyancy = on
+
+set_critical_power_iteration = off
+
+start_time = 0.0
+stop_time = 0.0
+time_step = 0.0
+number_of_time_steps = 0
+maximum_cladding_temperature_change = 100.0
+maximum_central_fuel_temperature_change = 100.0
+maximum_coolant_temperature_change = 100.0
+maximum_void_change = 1.0
+print_timestep_every = 1000
+total_axial_length = 4.4
+number_of_axial_nodes = 31
+print_axial_level_every = 1
+sor_convergence = 1e-06
+axial_flow_convergence = 0.0001
+boundary_pressure_convergence = 0.001
+channel_orientation = 0.0
+lateral_flow_damping = 0.7
+axial_flow_damping = 0.7
+pressure_damping = -1.0
+sor_acceleration = 1.0
+max_of_axial_flow_iterations = 100
+min_of_axial_flow_iterations = 10
+max_of_sor_iterations = 9999
+min_of_sor_iterations = 5
+file = this_file
+time   time_step_size
+!
+file = this_file
+cell_number       cell_length
+          1              0.25
+          2              0.19
+          3    0.188571428571
+          4   0.0114285714286
+          5              0.24
+          6              0.02
+          7              0.13
+          8    0.227142857143
+          9   0.0628571428571
+         10               0.1
+         11              0.13
+         12              0.21
+         13              0.05
+         14   0.0757142857143
+         15    0.314285714286
+         16          1.36e-27
+         17    0.314285714286
+         18   0.0757142857143
+         19              0.05
+         20              0.21
+         21              0.13
+         22               0.1
+         23   0.0628571428571
+         24    0.227142857143
+         25              0.13
+         26              0.02
+         27              0.24
+         28   0.0114285714286
+         29    0.188571428571
+         30              0.19
+         31              0.25
+!
+
+&grid_spacer_wire_wrap
+set_wire_wrap = off
+set_grid_spacer = on
+set_both = off
+
+gradual_insertion_iterations = 1
+rod_diameter = 0.0
+wire_wrap_pitch = 0.0
+wire_wrap_thickness = 0.0
+file = this_file
+gap_number   effective_length   relative_crossing   relative_crossing
+!
+file = this_file
+channel_number   number_of_wire_wraps
+!
+file = this_file
+channel_number   relative_axial_location   loss_coefficient
+!
+file = this_file
+gap_number   relative_axial_location   cross_flow_fraction
+!
+
+&lateral_transport
+set_constant_mixing_coefficient = off
+set_rogers_tahir_rectangular = off
+set_rogers_tahir_triangular = off
+set_rogers_rosehart = on
+
+set_equal_mass_exchange = on
+set_equal_volume_exchange = off
+
+constant_mixing_coefficient = 0.0
+void_drift_coefficient = 1.4
+crossflow_resistance_coefficient = 0.5
+lateral_conduction_factor = 0.0
+
+&operating_conditions
+set_uniform_inlet_flux = off
+set_flow_split_first_axial = on
+set_flow_rate_fraction = off
+set_flux_fraction = off
+set_flow_rate = off
+set_flux = off
+
+set_pure_flow_condition = on
+set_unified_pressure_drop = off
+set_driving_pressure_condition = off
+
+set_transient_flow_rate_factor = on
+set_transient_flow_rate = off
+set_transient_flux = off
+
+exit_pressure = 15500000.0
+inlet_temperature = 306.85
+inlet_boron_concentration = 0.0
+inlet_flow_rate = 0.36
+inlet_mass_flux = 0.0
+total_power = 30000.0
+average_heat_flux = 0.0
+pressure_drop = 0.0
+heat_fraction_moderator = 0.0
+file = this_file
+channel_number   inlet_temperature
+!
+file = this_file
+channel_number   inlet_flow
+!
+file = this_file
+time   exit_pressure
+!
+file = this_file
+time   inlet_temperature
+!
+file = this_file
+channel_number   time   inlet_temperature
+!
+file = this_file
+time   inlet_boron_concentration
+!
+file = this_file
+channel_number   time   inlet_boron_concentration
+!
+file = this_file
+time   inlet_flow
+!
+file = this_file
+channel_number   time   inlet_flow
+!
+file = this_file
+time   heat_flux_factor
+!
+file = this_file
+power_map_time
+!
+file = this_file
+axial_cell_number   rod_number   power_map
+!
+
+&output_display
+delta_time = 1000000.0
+file = this_file
+channel_number
+!
+file = this_file
+rod_number
+!
+file = this_file
+gap_number
+!
+file = this_file
+axial_location   channel_or_rod_number   variable
+!
+
+end

@@ -1,0 +1,1 @@
+c:\mcnp\mcnp5\bin\mcnp5.exe ixr name=i_ > mcnp.stdout

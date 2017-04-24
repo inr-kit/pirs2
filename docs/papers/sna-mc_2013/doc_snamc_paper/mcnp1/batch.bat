@@ -1,0 +1,1 @@
+/home/likewise-open/KIT/rx8040/install/bin/mcnp5_own ixr name=i_ > mcnp.stdout

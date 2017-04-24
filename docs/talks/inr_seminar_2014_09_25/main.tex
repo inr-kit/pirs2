@@ -1,0 +1,84 @@
+
+\documentclass[18pt]{beamer}
+
+\geometry{paperwidth=128mm,paperheight=096mm}
+
+\usepackage{templates/beamerthemekit}
+%\usepackage{templates/beamerthemekitwide}
+
+%% TITLE PICTURE
+\titleimage{KIT-Titel}
+
+%% TITLE LOGO
+\titlelogo{kitlogo}
+
+% for python listings
+\usepackage{minted}
+\newminted{python}{gobble=4,fontsize=\scriptsize}
+\newminted{bash}{gobble=4,fontsize=\scriptsize}
+\newmintinline{python}{fontsize=\scriptsize}
+\newmintinline{bash}{fontsize=\scriptsize}
+
+% for underlining
+\usepackage[normalem]{ulem}
+
+% for urls
+\usepackage{hyperref}
+
+% for interface scheme
+\input{scheme_preamble}
+
+
+\title[PIRS: current possibilites]{Python Interfaces for Reactor Simulations:\\ Concept, ways to use, examples}
+\subtitle{INR Seminar "Nukleare Energieerzeugung"}
+\author{Anton Travleev}
+
+\institute{Institute for Neutron Physics and Reactor Technology}
+
+% extra-slides for begin of section
+\AtBeginSection[]
+{
+    \begin{frame}
+    \frametitle{Outline}
+    \tableofcontents[currentsection, 
+                     hideothersubsections,
+                     sectionstyle=show/hide,
+                     subsectionstyle=show/hide,]
+    \end{frame}
+}
+
+% the presentation starts here
+\begin{document}
+
+% change the following line to "ngerman" for German style date and logos
+\selectlanguage{english}
+
+%title page
+\begin{frame}
+\titlepage
+\end{frame}
+
+%table of contents
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+\input{main_intro}
+
+\input{main_install}
+
+\section{Examples}
+\input{main_ex1}
+\input{main_ex2}
+
+
+\input{main_results}
+
+% History: as a benchmark for several different coupling implementations
+% Description of model: criteria: show complexity, close to existing benchmark
+% calculation statistics
+% results
+
+\input{main_outlook}
+
+\end{document}

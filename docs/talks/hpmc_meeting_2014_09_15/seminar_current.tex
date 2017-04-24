@@ -1,0 +1,47 @@
+\begin{frame}[fragile]
+    \frametitle{PIRS current capabilites}
+
+    \begin{block}{Geometry definition}
+    \begin{itemize}
+        \item Geometry described by 
+            \begin{itemize}
+                \item boxes with facets perpendicular to coordinate axes
+                \item cylinders with axes parallel to z (vertical) axis
+            \end{itemize}
+        \item Dependent variables vertical distribution are presented by piece-wise constant functions
+            \begin{itemize}
+                \item heat deposition
+                \item temperature
+                \item material density
+            \end{itemize}
+    \end{itemize}
+    \end{block}
+
+    \begin{block}{Low-level interfaces}
+    Classes to represent code input data, to start code, read code output
+    \begin{itemize}
+        \item MCNP 5
+        \item SCF 2.5
+    \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{PIRS current capabilites (contd.)}
+    \begin{block}{High-level interfaces}
+    Classes to convert geometry to code-specific representation, start calculations and 
+    put results back to geometry.
+    \begin{itemize}
+        \item MCNP 5: any geometry can be converted into MCNP input file. 
+        \item SCF 2.5: for square bundle of vertical rods only. 
+    \end{itemize}
+    \end{block}
+
+    \begin{block}{Utils}
+    \begin{itemize}
+        \item geometry plotter
+        \item plotter of vertical distributions
+        \item dump and load models to and from hard drive    
+    \end{itemize}
+    \end{block}
+\end{frame}

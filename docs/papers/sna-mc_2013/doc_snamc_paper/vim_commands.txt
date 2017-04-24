@@ -1,0 +1,7 @@
+    /\title{Latex-title}
+    .,+6 del
+    /phantomsection
+    :del
+    %s/\chapter/\section/g
+    :update
+    :quit

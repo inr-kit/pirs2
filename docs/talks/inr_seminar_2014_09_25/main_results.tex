@@ -1,0 +1,149 @@
+\section{Results of coupled calculations}
+
+\subsection{Model}
+\begin{frame}[fragile]
+    \frametitle{3x3 minicore}
+    \begin{itemize}
+        \item Based on NEA PWR transient benchmark
+        \item 6 UOX and 3 MOX 17x17 assemblies, 20 axial layers
+        \item UOX has 2 types of rods: fuel pins and water channels
+        \item MOX has 5 types of rods: 3 fuel pins, water channels and WABA
+        \item Can be represented as single bundle with 51x51 rods
+        \item To show performance of codes, provide benchmark for comparison
+    \end{itemize}
+    \begin{columns}
+        \column{0.33\textwidth}
+        \includegraphics[width=\textwidth]{examples/a_model_z.pdf}
+        \column{0.33\textwidth}
+        \includegraphics[width=\textwidth]{examples/a_model_zu.pdf}
+        \column{0.33\textwidth}
+        \includegraphics[width=\textwidth]{examples/a_model_zm.pdf}
+    \end{columns}
+
+\end{frame}
+
+
+\subsection{Calculations}
+\begin{frame}[fragile]
+    \frametitle{Calculations}
+    \begin{itemize}
+        \item IC2 cluster, 1 node with 16 cores
+        \item Standard meshtally to compute heat deposition
+
+            \begin{bashcode}
+        Iteration        kcode                 wall time    Num of cells            
+                0       500000  1.0  30  100     0:05:27            3544 
+                1       809016  1.0  30  100     1:38:43          107634
+                2      1096763  1.0  30  100     1:52:51          107634
+                3      1374895  1.0  30  100     2:06:26             ...  
+                4      1647439  1.0  30  100     2:19:16          
+                5      1916300  1.0  30  100     2:29:45             ... 
+
+               20      5549120  1.0  30  100     5:05:40             ...
+               21      5804749  1.0  30  100     5:15:52 
+               22      6060130  1.0  30  100     5:27:00 
+               23      6315284  1.0  30  100     5:38:33 
+               24      6570230  1.0  30  100     5:49:10 
+               25      6824985  1.0  30  100     6:00:09             ...
+               26      7079562  1.0  30  100     6:12:28          107634
+
+            \end{bashcode}
+        \item MCNP initialization time 15 -- 50 min
+
+    \end{itemize}
+\end{frame}
+
+\subsection{Results}
+
+\begin{frame}[fragile]
+    \frametitle{Heat deposition}
+    \includegraphics[width=\textwidth]{examples/map_anton_e26_k01k08k19_Power.pdf}
+
+    \includegraphics[width=\textwidth]{examples/map_anton_e26_i09i26j09j26j43_Power.pdf}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Fuel temperature}
+    \includegraphics[width=\textwidth]{examples/map_anton_e26_k01k08k19_Tfuel.pdf}
+
+    \includegraphics[width=\textwidth]{examples/map_anton_e26_i09i26j09j26j43_Tfuel.pdf}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Comparison with other calculations}
+
+    \begin{itemize}
+        \item Solution 1: Internal MCNP-SCF coupling (A. Ivanov, INR)
+        \item Solution 2: PIRS-based 
+        \item Solution 3: Internal Serpent2-SCF coupling (M. Daeubler, INR)
+        \item Solution 4: Internal MCNP-SCF coupling (E. Hoogenboom, DNC)
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{K-eff and statistics}
+    \begin{columns}
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth,page=22,trim=0.8in 4.0in 1.0in 1.6in,clip=true]{examples/benchmark_.pdf}
+        \column{0.4\textwidth}{\scriptsize
+        \begin{itemize}
+            \item Difference in K-eff about 200 pcm (except solution 4 with lower statistics)
+            \item Different relaxation schemes
+            \item Fuel temperature converged to less than 0.2\%
+        \end{itemize}
+        }
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Heat deposition}
+    \begin{columns}
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth,page=25,trim=1.2in 2.6in 0.65in 5.6in,clip=true]{examples/benchmark_.pdf}
+        \column{0.4\textwidth}{\scriptsize
+        \begin{itemize}
+            \item Shift to lower part: coolant density (slowing down and leakage) and fuel temperature (U8 capture).
+            \item Solution 4 has the strongest power, Tf and density axial shift.
+            \item Tf axial shift more pronounced in S2, while density axial
+                shift -- in S3. Since power shift is stronger in S2,  Tf has
+                larger impact onto power axial profile in comparison to
+                density.
+        \end{itemize}
+        }
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Fuel temperature}
+    \begin{columns}
+        \column{0.7\textwidth}
+        \includegraphics[width=\textwidth,page=25,trim=1.2in 6.6in 0.65in 1.6in,clip=true]{examples/benchmark_.pdf}
+        \column{0.3\textwidth}{\scriptsize
+        \begin{itemize}
+            \item Average values within 0.3 K (1. K for s.4)
+            \item Max. values within 20 K
+            \item Tfuel shifted to lower part
+            \item U assemblies are about 50 K hotter. Difference grows from solution 1 to 4.
+        \end{itemize}
+        }
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Solution-to-solution max. differences}
+    \begin{columns}
+        \column{0.6\textwidth}
+        \includegraphics[width=\textwidth,page=27,trim=1.2in 2.2in 0.65in 5.8in,clip=true]{examples/benchmark_.pdf}
+        \column{0.4\textwidth}{\scriptsize
+        \begin{itemize}
+            \item Max. difference in Tf and coolant density found between solutions 1 and 3: 26 K and 1.66 kg/m3.
+            \item Colormaps for differences (not shown) demonstrate that they are systematic.
+            \item Discrepancies in results still need analysis, but 
+                  overall good agreement indicate that all implementations are free from coding errors.
+        \end{itemize}
+        }
+    \end{columns}
+\end{frame}
+
+

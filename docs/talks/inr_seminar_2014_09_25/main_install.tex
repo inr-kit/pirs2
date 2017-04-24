@@ -1,0 +1,52 @@
+\section{PIRS installation and setup}
+% dependencies
+% user-local installation, e.g. for use on a server
+% environment variables
+\begin{frame}[fragile]
+    \frametitle{Dependencies}
+    \begin{block}{Python interpreter}
+    \begin{itemize}
+        \item PIRS is developed with Python 2.7 and tested with Python 2.6.
+        \item Python 3.x: ?
+        \item Linux distributions usually have Python 2.6 or 2.7 preinstalled. Under Windows, administrator rights are necessary to install Python.
+    \end{itemize}
+    \end{block}
+
+    \begin{block}{Optional third-party packages}
+    \begin{itemize}
+
+        \item uncertainties package, http://pythonhosted.org/uncertainties/. To handle results of 
+    Monte-Carlo calculations.
+
+        \item Matplotlib package, http://matplotlib.org/. To generate geometry and result plots.
+    \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{PIRS setup}
+    \begin{block}{Install package}
+        \begin{bashcode}
+            $> tar -xzf pirs-X.Y.Z.tar.gz
+            $> cd pirs-X.Y.Z
+            $> python setup.py install --user
+        \end{bashcode}
+
+        The \bashinline/--user/ option to install locally
+    \end{block}
+
+    \begin{block}{Define environmental variables}
+        \begin{bashcode}
+            $> export DATAPATH=/path/to/folder/with/xsdir
+            $> export MCNP=/path/to/mcnp/executable
+            $> export SCF=/path/to/scf/executable
+        \end{bashcode}
+
+        \begin{itemize}
+            \item \bashinline/$DATAPATH/: Path to default xsdir used to define available cross-sections.
+
+            \item \bashinline/$MCNP/ and \bashinline/$SCF/: paths to code executables.
+        \end{itemize}
+
+    \end{block}
+\end{frame}

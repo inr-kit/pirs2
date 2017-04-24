@@ -1,0 +1,1 @@
+c:\scf\release\scf.exe > scf.stdout

@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: SNA-MC2013_travleev_paper.aux
+The style file: ans.bst
+Database file #1: hpmc.bib
+Warning--empty title in natAbund2011
+Warning--empty year in PWRbenchmark
+You've used 17 entries,
+            2064 wiz_defined-function locations,
+            552 strings with 5759 characters,
+and the built_in function-call counts, 14645 in all, are:
+= -- 2187
+> -- 115
+< -- 0
++ -- 1973
+- -- 95
+* -- 149
+:= -- 2316
+add.period$ -- 17
+call.type$ -- 17
+change.case$ -- 1
+chr.to.int$ -- 0
+cite$ -- 19
+duplicate$ -- 2190
+empty$ -- 323
+format.name$ -- 33
+if$ -- 2608
+int.to.chr$ -- 0
+int.to.str$ -- 17
+missing$ -- 7
+newline$ -- 80
+num.names$ -- 10
+pop$ -- 126
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 100
+stack$ -- 0
+substring$ -- 2004
+swap$ -- 41
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 2
+while$ -- 46
+width$ -- 19
+write$ -- 149
+(There were 2 warnings)

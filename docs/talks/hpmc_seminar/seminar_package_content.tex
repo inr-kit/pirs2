@@ -1,0 +1,59 @@
+\begin{frame}[fragile]
+    \frametitle{PIRS classes and functions}
+
+    \begin{block}{Classes for geometry description}
+        \begin{pythoncode}
+            from pirs.solids import zmesh
+            from pirs.solids import Cylinder, Box, Sphere
+        \end{pythoncode}
+    \end{block}
+
+    \begin{block}{High-level interfaces}
+        \begin{pythoncode}
+            from pirs import McnpInterface
+            from pirs import ScfInterface
+        \end{pythoncode}
+    \end{block}
+
+    \begin{block}{Low-level interface to MCNP}
+        \begin{pythoncode}
+            from pirs.mcnp import Material, MaterialCollection
+            from pirs.mcnp import MeshTally, TallyCollection
+            from pirs.mcnp import Xsdir
+            from pirs.mcnp import Surface, Volume, SurfaceCollection
+            from pirs.mcnp import Cell, Model
+            from pirs.mcnp import xs_interpolation
+        \end{pythoncode}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{PIRS classes and functions}
+
+    \begin{block}{Low-level interface to SCF}
+        \begin{pythoncode}
+            from pirs.scf2 import Input
+            from pirs.scf2 import read_output, OutputTable
+        \end{pythoncode}
+    \end{block}
+
+    \begin{block}{Tools}
+        \begin{pythoncode}
+            from pirs.tools import LoadMap
+            from pirs.tools import load, dump
+
+            from pirs.tools.plots import MeshPlotter, colormap
+        \end{pythoncode}
+    \end{block}
+
+    \begin{block}{Base classes}
+        Not needed to end-user of PIRS.
+        \begin{pythoncode}
+            from pirs.core.tramat import Nuclide, Mixture, zai
+            from pirs.core.trageom import Vector3, pi, pi2
+            from pirs.core.scheduler import Job, Scheduler, enva, WorkPlace, InputFile
+        \end{pythoncode}
+    \end{block}
+
+\end{frame}
+

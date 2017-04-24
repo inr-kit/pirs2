@@ -1,0 +1,132 @@
+\documentclass{snamc2013}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}  % allows inclusion of graphics
+\usepackage{booktabs}  % nice rules (thick lines) for tables
+\usepackage{microtype} % improves typography for PDF
+
+\usepackage[breaklinks=true,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Writing a SNA+MC Submission in \LaTeX}
+
+\author[1]{First M. Last}
+\author[1]{John G. Gabriel}
+\author[2]{Some Z. Author}
+
+\affil[1]{Nuclear University, Department of Engineering, 1234 Main Street, Townville, MA 02139}
+\affil[2]{College of Supercomputing, Department of Physics, 4321 Washington Avenue, Someplace, NY 10001}
+
+\abstract{This is where the abstract goes. Note that the abstract environment
+  has been replaced by the $\backslash$abtract\{\} command. There is also a
+  $\backslash$keywords\{\} command that can be used to list the keywords.}
+
+\keywords{Monte Carlo, nuclear engineering, supercomputers, parallel}
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus elementum
+viverra. Mauris dolor metus, porttitor id volutpat sed, hendrerit eu
+massa. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Method}
+
+Vivamus a dui odio. Nunc ut erat dolor, ut vestibulum erat. Suspendisse semper,
+orci sed congue faucibus, est erat laoreet eros, at rhoncus sapien orci sed
+arcu.
+\begin{equation}
+  \label{eq:gkd}
+  G_k (D) = \int_D s_k(P) \phi(P) \, dP
+\end{equation}
+
+\subsection{Algorithm}
+
+Nunc vel diam lectus, nec ultrices orci. Mauris fermentum metus nec justo
+pretium tincidunt sed nec dolor~\cite{goto-1997, mc2011-hoogenboom}. Cras
+ornare, quam a blandit accumsan, urna arcu auctor neque, placerat dapibus augue
+purus sed eros. Nulla commodo metus at tortor commodo mollis vitae quis magna.
+
+\subsection{Statistical}
+
+Class aptent taciti sociosqu ad litora torquent per conubia
+nostra~\cite{friedman-1979}, per inceptos himenaeos. In risus eros, bibendum vel
+venenatis et, pellentesque pretium eros.
+\begin{equation}
+  \label{eq:nr}
+  N_R = g(\phi_R) \ne E \left [ G(\bar{\phi}) \right ]
+\end{equation}
+Nulla sed erat turpis.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Application}
+
+Donec at magna commodo arcu viverra egestas ut nec erat. Suspendisse congue elit
+vel risus cursus tincidunt nec luctus magna.
+
+\subsection{Description}
+
+Donec eu luctus urna. Nulla facilisi. Curabitur dolor elit, faucibus id volutpat
+at, interdum quis neque:
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=1.0in]{fig1}
+  \caption{Geometry}
+  \label{fig:geometry}
+\end{figure}
+Aliquam nisi velit, consequat ac \autoref{fig:geometry} condimentum aliquam,
+mollis in tortor. Vestibulum pretium posuere luctus.
+
+\subsection{Results}
+
+Vestibulum elementum pulvinar purus, vel congue enim lobortis id. Nam molestie
+commodo elit, eu fermentum turpis rutrum vel. \autoref{fig:concentration} morbi
+non orci nulla.
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=2.5in]{fig2}
+  \caption{Concentration of \dots}
+  \label{fig:concentration}
+\end{figure}
+Suspendisse eget eros ligula. Ut quis leo velit. Sed sapien quam, vehicula in
+viverra sed, semper ut sapien. Sed id purus quam, ut commodo est.
+\begin{table}[htb]
+  \footnotesize
+  \centering
+  \begin{tabular}{*5c}
+    \toprule
+    & \multicolumn{2}{c}{5x5} & \multicolumn{2}{c}{20x20} \\
+    \midrule
+    Isotope & $\Delta$ \% & $p$ & $\Delta$ \% & $p$ \\
+    \midrule
+    Xe133 & 1.4 & 0.15 & -0.14 & 0.48 \\
+    Xe134 & -0.56 & $2.1\cdot10^{-4}$ & -0.049 & 0.12 \\
+    Xe135 & 15.00 & $3.2\cdot10^{-13}$ & 0.79 & 0.061 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Test of compatibility between \dots}
+  \label{tab:test}
+\end{table}
+Donec vel ante sed metus euismod blandit a vitae mauris. \autoref{tab:test} ut
+fringilla dui magna. Morbi a varius tortor. Nam quis est sapien, vel facilisis
+ipsum. Quisque ac tincidunt magna.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions}
+
+Ut risus ipsum, bibendum in venenatis non, iaculis a elit. In auctor nulla sit
+amet lacus accumsan ornare. Sed fringilla tincidunt suscipit. Cras vel lectus
+metus, eget iaculis augue. Duis et consequat purus.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgments}
+
+Nam urna velit, lobortis vitae condimentum sed, cursus eu ipsum. Aliquam sem
+lectus, bibendum sit amet sodales eget, rhoncus vel risus.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{ans}
+\bibliography{references}
+\end{document}

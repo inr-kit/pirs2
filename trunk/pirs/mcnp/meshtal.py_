@@ -1,0 +1,114 @@
+"""
+Handle meshtal files.
+"""
+
+#at
+# Author: Anton Travleev, anton.travleev@kit.edu
+# Developed at INR, Karlsruhe Institute of Technology
+#at
+
+from uncertainties import Variable
+from .tallies import MeshTally
+
+def read_meshtal(fname, use_uncertainties=True):
+    """
+    Reads meshtal file fname. Returns a list of instances of the MeshTally class.
+
+    >>> t, n, r = read_meshtal('meshtal')
+    >>> print t        # title
+    >>> print n        # number of histories
+    >>> print r.keys() # dictionary with results.
+    >>> for (n, mt) in r.items():
+    ...     print n
+    ...     print mt.values
+
+    """
+    Noh = 0
+    res = {}
+    tit = [] # title
+    data_block = False          # flag to specify if results (True) or tally specs (False) are read
+    for l in open(fname, 'r'):
+        if len(tit) < 2:
+            # first two lines go to the tit list.
+            tit.append(l)
+        elif not data_block:
+            if Noh == 0 and ' Number of histories' == l[0:20]:
+                Noh = float(l.split()[-1])  # in meshtal number of histories is written with two zeroes after the decimal point
+            if l == '\n':
+                pass
+            if ' Mesh Tally Number' == l[0:18]:
+                tid = int(l.split()[-1])
+                mt = MeshTally()
+                res[tid] = mt
+            if '  Cylinder origin at' == l[0:20]:
+                mt.geom = 'cyl'
+                ll = l.split()
+                mt.origin = ( ll[3], ll[4], ll[5][:-1] ) # the last entry followed by comma
+                mt.axs = tuple( ll[8:11] )
+            if '    X direction:' == l[0:16]:
+                for ll in l.split()[2:]:
+                    mt.imesh.append(float(ll))
+                mt.origin.x = mt.imesh.pop(0)
+            if '    Y direction:' == l[0:16]:
+                for ll in l.split()[2:]:
+                    mt.jmesh.append(float(ll))
+                mt.origin.y = mt.jmesh.pop(0)
+            if '    Z direction:' == l[0:16]:
+                if mt.geom == 'xyz':
+                    for ll in l.split()[2:]:
+                        mt.kmesh.append(float(ll))
+                    mt.origin.z = mt.kmesh.pop(0)
+                elif mt.geom == 'cyl':
+                    for ll in l.split()[2:]:
+                        mt.jmesh.append(float(ll))
+                else:
+                    raise ValueError('Cannot read Z direction boundaries for geometry type ', mt.geom)
+
+            if '    R direction:' == l[0:16]:
+                for ll in l.split()[2:]:
+                    mt.imesh.append(float(ll))
+            if '    Theta direction:' == l[0:20]:
+                for ll in l.split()[3:]:
+                    mt.kmesh.append(float(ll))
+            if '    Energy bin bound' == l[0:20]:
+                lll = l.split()
+                if lll[-2:] == ['0.00E+00', '1.00E+36']:
+                    # this is default.
+                    pass
+                else:
+                    for ll in lll[3:]:
+                        mt.emesh.append(float(ll))
+            if 'Result     Rel Error' in l:
+                # this is the head line for the table with results.
+                data_block = True
+                # define the column indices containing Result and Error:
+                l = l.replace('Rel Error', 'Err')    # ensure that number of tokens after split() is equal to the number of data columns
+                l = l.replace('Rslt * Vol', 'RxV')
+                columns = l.split()
+                iv = columns.index('Result')
+                ir = columns.index('Err')
+        else:
+            # reading the table with tally results.
+            if l == '\n':
+                # this is the end of table with results.
+                data_block = False
+            else:
+                ll = l.split()
+                v = float(ll[iv])
+                r = float(ll[ir])
+                # Variable requires std_dev of the variable. In MCNP, r is a
+                # relative error, r = S/v, where S is the estimated standard
+                # deviation.
+                if use_uncertainties:
+                    value = Variable(v, r*v)
+                else:
+                    value = v
+                mt.values.append(value)
+    return tit[-1], Noh, res
+
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+

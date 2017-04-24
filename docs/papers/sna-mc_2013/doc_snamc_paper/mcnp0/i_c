@@ -1,0 +1,7 @@
+bas 1 0 0 0 1 0 ext 0.66 0.66 or 0.0 0.0 0.0 lab 0 0.3 sca 1 color by mat  &    
+mesh 1                                                                          
+bas 1 0 0 0 0 1 ext 0.66 60.5 or 0.0 0.0 0.0 lab 0 0.3 sca 1 color by mat  &    
+mesh 1                                                                          
+bas 0 1 0 0 0 1 ext 0.66 60.5 or 0.0 0.0 0.0 lab 0 0.3 sca 1 color by mat  &    
+mesh 1                                                                          
+end                                                                             

@@ -1,0 +1,43 @@
+
+\subsection{MCNP interface minimal example: K-inf in nat. U}
+\begin{frame}[fragile]
+    \frametitle{K-inf in nat. U}
+
+    \begin{columns}
+        \column{0.7\textwidth}
+        \inputminted[frame=single,fontfamily=tt,fontsize=\scriptsize]{python}{examples/ex1.py}
+
+        \column{0.3\textwidth}{\tiny
+        \begin{itemize}
+            \item Default box dimensions 1x1x1 cm
+            \item \pythoninline/b.dens/ represents density axial distribution. 
+            \item general model contain material names, which meaning/properties are specified in the
+                  code interface.
+            \item \pythoninline/McnpInterface/ -- MCNP high-level interface.
+            \item \pythoninline/Material/ -- part of low-level interface.
+        \end{itemize}
+        }
+     \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Output}
+    \inputminted[frame=single,fontfamily=tt,fontsize=\scriptsize]{python}{examples/ex1.out}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{MCNP input file}
+    \begin{columns}
+        \column{0.7\textwidth}
+        \inputminted[frame=single,fontfamily=tt,fontsize=\scriptsize]{bash}{examples/mcnp0/i_}
+        \column{0.3\textwidth}{\tiny
+        \begin{itemize}
+            \item Cell, surface and material numbers assigned automatically
+            \item Macrobodies are used when possible
+            \item Cross-section suffix chosen for default temperature from existing xs in xsdir
+        \end{itemize}
+        }
+    \end{columns}
+\end{frame}
+
+

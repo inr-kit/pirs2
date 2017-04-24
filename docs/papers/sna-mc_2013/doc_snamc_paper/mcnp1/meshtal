@@ -1,0 +1,25 @@
+mcnp   version 5     ld=04052013  probid =  09/10/13 13:02:39 
+ c title                                                                         
+ Number of histories used for normalizing tallies =         40000.00
+
+ Mesh Tally Number        14
+ This is a neutron mesh tally.
+
+ Tally bin boundaries:
+  Cylinder origin at   0.00E+00  0.00E+00 -5.00E+01, axis in  0.000E+00 0.000E+00 1.000E+00 direction
+    R direction:      0.00      0.50
+    Z direction:      0.00     10.00     20.00     30.00     40.00     50.00     60.00     70.00     80.00     90.00    100.00
+    Theta direction (revolutions):     0.000     1.000
+    Energy bin boundaries: 0.00E+00 1.00E+36
+
+        R         Z         Th    Result     Rel Error
+      0.250     5.000     0.500 2.56798E-01 1.82278E-02
+      0.250    15.000     0.500 3.56890E-01 1.47048E-02
+      0.250    25.000     0.500 4.62353E-01 1.28501E-02
+      0.250    35.000     0.500 5.31590E-01 1.18098E-02
+      0.250    45.000     0.500 5.58639E-01 1.15862E-02
+      0.250    55.000     0.500 5.50598E-01 1.16290E-02
+      0.250    65.000     0.500 5.05471E-01 1.21491E-02
+      0.250    75.000     0.500 4.45029E-01 1.31651E-02
+      0.250    85.000     0.500 3.53641E-01 1.48641E-02
+      0.250    95.000     0.500 2.49196E-01 1.84620E-02

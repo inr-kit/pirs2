@@ -1,0 +1,114 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Prerequisites}
+
+\begin{frame}{Python version}
+
+    \begin{block}{Python 2 or 3?}
+    "Python 2.x is legacy, Python 3.x is the present and future of the language" from www.python.org/doc 
+    \end{block}
+
+    \begin{block}{PIRS uses Python 2.x}
+    PIRS is developed for Python 2.6.x or above. Not for Python 3.x!
+    \end{block}
+                
+    Usually Python 2.6.x or 2.7.x is already installed. If not, can be
+    installed using OS installer (e.g. Ubuntu Software Center), or compiled
+    from sources.
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Required packages}
+    \begin{block}{uncertainties} 
+        Needed to preserve information about errors in MC calculations. 
+
+        \begin{bashcode*}{gobble=12}
+            $ wget https://pypi.python.org/.../uncertainties-2.4.6.tar.gz
+            $ tar -xzf uncertainties-2.4.6.tar.gz
+            $ cd uncertainties-2.4.6
+            $ python setup.py install --user
+        \end{bashcode*}
+    \end{block}
+
+    \begin{block}{matplotlib}
+        Optional. Needed to plot geometry and results of calculations. 
+        
+        Simplest way to install -- using OS installer. Compilation from sources
+        is difficult due to lot of dependencies.
+    \end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Environmental variables}
+    Several enviromental variables should be defined.
+
+    \begin{block}{\$DATAPATH}
+        Path to xsdir file and files with cross-sections.
+
+        \begin{bashcode}
+            $ echo $DATAPATH
+            /home/data/mcnp
+        \end{bashcode}
+    \end{block}
+
+    \begin{block}{\$MCNP}
+        Path to MCNP executable
+
+        \begin{bashcode}
+            $ echo $MCNP
+            /home/bin/mcnp5_linux_i386_omp
+        \end{bashcode}
+    \end{block}
+
+    \begin{block}{\$SCF}
+        Path to SCF executable
+
+        \begin{bashcode}
+            $ echo $SCF
+            /home/bin/scf25_intel
+        \end{bashcode}
+    \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{PIRS installation}
+
+\begin{frame}[fragile]
+    \frametitle{How to install PIRS}
+    
+    \begin{block}{Standard method}
+        \begin{bashcode}
+            $ tar -xzf pirs-0.2a.0.tar.gz
+            $ cd pirs-0.2a.0
+            $ python setup.py install --user
+        \end{bashcode}
+
+        Dependencies should be installed separately.
+    \end{block}
+
+
+    \begin{block}{2-nd method}
+        It uses pip -- python package installer that is not available by default.
+
+        \begin{bashcode}
+            $ pip install pirs-0.2a.0.tar.gz --user
+        \end{bashcode}
+
+        Dependencies will be installed by pip, if necessary.
+    \end{block}
+
+    \begin{block}{Test}
+        \begin{pythoncode}
+            from pirs.solids import Box
+            from pirs import McnpInterface
+            b = Box()
+            m = McnpInterface(b)
+            m.run('r')
+        \end{pythoncode}
+    \end{block}
+
+\end{frame}
+
+
+
