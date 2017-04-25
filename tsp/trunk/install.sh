@@ -5,5 +5,5 @@ rm dist/*
 
 python setup.py sdist
 
-pip install dist/tsp*.tar.gz --user
+pip install -e .
 
