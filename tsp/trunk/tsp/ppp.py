@@ -36,7 +36,7 @@ snippets in `template`.
         if len(argv) == 3:
             preamb = argv[2]
         else:
-            preamb = None
+            preamb = ''
         pre_pro(fname=argv[1], level='main', preamb = preamb)
 
 if __name__ == '__main__':

@@ -58,7 +58,7 @@ _OptionsList = ['-r',  # adjust right
                 '-D',  # default. Do not preserve snippet place.
                 ]
 
-def pre_pro(fname, level='default', preamb=None):
+def pre_pro(fname, level='default', preamb=''):
     """
     Preprocess template file fname.
 
@@ -156,6 +156,8 @@ def pre_pro(fname, level='default', preamb=None):
     # Regular expression to match insertions:
     t_ins = re.compile('(' + Schar + '.*?' + Echar + ')', re.DOTALL)
 
+    # Add command line snippet as the first snippet to the file:
+    s = '-d{}{}{}'.format(Schar, preamb, Echar)  + s
 
     # find all insertions in the file:
     spl = t_ins.split(s)    # this splits the text into parts matching and not matching the pattern.
@@ -175,9 +177,6 @@ def pre_pro(fname, level='default', preamb=None):
     # global namespace, which is returned by globals() function.  This ensures
     # that variables defined in one template will be visible in another
     # template.
-    if preamb is not None:
-        spl = (preamb, ) + tuple(spl)
-        nl_spl = (-1, ) + tuple(nl_spl)
 
     res = [] # resulting strings.
     for n, t in zip(nl_spl, spl):
