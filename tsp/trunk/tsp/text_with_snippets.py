@@ -1,4 +1,4 @@
-#!/bin/env python 
+#!/bin/env python
 
 """
 The module defines function :func:`pre_pro`, which evaluates or executes python
@@ -58,7 +58,7 @@ _OptionsList = ['-r',  # adjust right
                 '-D',  # default. Do not preserve snippet place.
                 ]
 
-def pre_pro(fname, level='default'):
+def pre_pro(fname, level='default', preamb=None):
     """
     Preprocess template file fname.
 
@@ -66,12 +66,17 @@ def pre_pro(fname, level='default'):
 
         String, name of the template file to be processed.
 
-    :arg level:        
+    :arg level:
 
         level is necessary to distinguish the top-level template from templates
         called from withing the top or above templates. Only for the top-level
         template (which has level not equal to 'default') all resulting strings
         are written to resulting file.
+
+    :arg preamb:
+
+        A string representing the snippet to be evaluated/executed before
+        snippets in the file. This is to allow snippets in the command line.
 
     ``fname`` is a text file with python snippets. The function evaluates or
     executes snippets and replace the snippet code with the evaluation or
@@ -81,7 +86,7 @@ def pre_pro(fname, level='default'):
     list of strings. Otherwise, the resulting text will be written to file with
     the name ``fname + '.res'``, and the modification time of the resulting
     file will set to the modification time of the template.
-    
+
     Before writing the resulting file, its modification time is compared with
     the modification time of the template. If the template is older (i.e. the
     resulting file was changed after it was generated with ``pre_pro``), the
@@ -110,7 +115,7 @@ def pre_pro(fname, level='default'):
     s  = s[s.index('\n')+1:]         # Do not put this line to the resulting file. '+1' to avoid empty line at the begining of the resulting file.
     if len(l1) < 2:
         raise SystemExit('ERROR in template: The first line of template must specify')
-        raise SystemExit('                   optional comment string,  starting  and') 
+        raise SystemExit('                   optional comment string,  starting  and')
         raise SystemExit('                   ending delimiters,  i.e.  be at least 2')
         raise SystemExit('                   characters long.')
     else:
@@ -128,7 +133,7 @@ def pre_pro(fname, level='default'):
                     l1 = l1.replace(TemplateOpt, '')
                     break
                 cprev = c
-            # the rest in the first line is the string of commenting characters:            
+            # the rest in the first line is the string of commenting characters:
             Cchar = l1[:] # empy indices to make copy of l1.
 
     # perform some check of the Schar and Echar:
@@ -147,7 +152,7 @@ def pre_pro(fname, level='default'):
         print >>sys.__stdout__, '         is empty.  Multi-line  snippets'
         print >>sys.__stdout__, '         will not be commented out'
 
-        
+
     # Regular expression to match insertions:
     t_ins = re.compile('(' + Schar + '.*?' + Echar + ')', re.DOTALL)
 
@@ -165,14 +170,17 @@ def pre_pro(fname, level='default'):
     # the last element of spl should have one.
     if Schar in spl[-1] or Echar in spl[-1]:
         print >>sys.__stdout__, 'WARNING: there are unpaired delimiters.'
-                       
+
     # try to evaluate and to execute. Snippets are evaluated or executed in the
     # global namespace, which is returned by globals() function.  This ensures
     # that variables defined in one template will be visible in another
     # template.
+    if preamb is not None:
+        spl = (preamb, ) + tuple(spl)
+        nl_spl = (-1, ) + tuple(nl_spl)
 
-    res = [] # resulting strings. 
-    for n,t in zip(nl_spl, spl):
+    res = [] # resulting strings.
+    for n, t in zip(nl_spl, spl):
         # If the first and last characters of the string in spl are
         # respectively Schar and Echar, this is a snippet string. Try to
         # evaluate or execute it.
@@ -186,8 +194,8 @@ def pre_pro(fname, level='default'):
             t_is_snippet = False
 
         if not t_is_snippet:
-            # this is not a snippet. 
-            
+            # this is not a snippet.
+
             # Find options for the next snippet, remember them and remove them from result:
             if t[-2:] in _OptionsList:
                 SnippetOpt = t[-2:]
@@ -195,20 +203,20 @@ def pre_pro(fname, level='default'):
                     t = t[:-2]        # just remove option from result. The following snippet will be also removed.
                 elif SnippetOpt == '-s':
                     pass              # Do not remove snippet option.
-                else:    
+                else:
                     t = t[:-2] + '  ' # instead of option put spaces
             else:
                 SnippetOpt = TemplateOpt
             # Just copy it to the resulting file.
             res.append(t)
-        else:    
+        else:
             # if snippet option set to -s, skip the snippet, i.e., do not evaluate it and put its string to the result
             if SnippetOpt == '-s':
                 res.append( t )
             else:
                 # this is a snippet. Evaluate or execute it.
                 # ml.log_print('\n\nsnippet code at line ', n, ': ', SnippetOpt, t)
-                snippet = t[1:-1] # strip delimiters. Now the string is ready for evaluation/execution. 
+                snippet = t[1:-1] # strip delimiters. Now the string is ready for evaluation/execution.
 
                 # prepare stdout capturer:
                 # To separate outputs from different snippets, their stdouts
@@ -234,7 +242,7 @@ def pre_pro(fname, level='default'):
                         if   SnippetOpt == '-l':
                             # adjust left:
                             et = et + ' '*d
-                        elif SnippetOpt == '-r':    
+                        elif SnippetOpt == '-r':
                             # adjust right:
                             et = ' '*d + et
                         elif SnippetOpt == '-c':
@@ -242,9 +250,9 @@ def pre_pro(fname, level='default'):
                             dl = d / 2
                             dr = d - dl
                             et = ' '*dl + et + ' '*dr
-                            
+
                     # add snippet evaluation result only if no -d option is given.
-                    if SnippetOpt != '-d':                            
+                    if SnippetOpt != '-d':
                         res.append( et )
 
                     # res.append( ' '*(len(t) - len(et)) + et )
@@ -262,10 +270,10 @@ def pre_pro(fname, level='default'):
                     # prepared for execution: indentation possibly used in the
                     # input file should be removed.
                     if snippet.count('\n') > 0:
-                        # there is a multi-line snippet, remove indentation 
+                        # there is a multi-line snippet, remove indentation
                         snippet = dedent(snippet)
 
-                    # If snippet is multi-line, comment the snippet strings. 
+                    # If snippet is multi-line, comment the snippet strings.
                     # Copy snippet to the result (do not copy if option -d is specified):
                     if SnippetOpt != '-d':
                         res.append( t.replace('\n', '\n'+Cchar) )
@@ -286,8 +294,8 @@ def pre_pro(fname, level='default'):
                     res.append(t)
 
                 # if there were some outputs in snippet, add it to ther resulting
-                # strings:            
-                res += pCatcher.content            
+                # strings:
+                res += pCatcher.content
                 # return old stdout and stderr. Sys module belongs to globals,
                 # therefore changing it inside a function will interfer also
                 # parent functions. By setting it back, this interference is
@@ -298,7 +306,7 @@ def pre_pro(fname, level='default'):
     if level != 'default':
         # if the level is not default, i.e. corresponds to the main template,
         # print resulting strings into file:
-        rname = tfile.name + '.res' 
+        rname = tfile.name + '.res'
         try:
             rfile = open(rname, 'w')
         except IOError as err:
@@ -320,14 +328,14 @@ def pre_pro(fname, level='default'):
                     tstmp = datetime.now().strftime('%y-%m-%d-%H-%M-%S')
                     rfile = open(rname + tstmp, 'w')
 
-        rfile.write( ''.join(res))                    
+        rfile.write( ''.join(res))
         rfile.close()
         print >>sys.__stdout__, 'Result is written to {0}'.format(rfile.name)
         # Often, a user starts to change the resulting file instead of changing the template,
-        # and all the changes went when the template is processed. To warn user if he tries to 
+        # and all the changes went when the template is processed. To warn user if he tries to
         # change the resulting file, the permission is set to 'read-only'.
         utime(rfile.name, (tatime, tmtime))
-        chmod(rfile.name, S_IREAD) 
+        chmod(rfile.name, S_IREAD)
     else:
         # when a template is included with the direct call to pre_pro,
         # the last line of the included template ands with the new-line
@@ -336,7 +344,7 @@ def pre_pro(fname, level='default'):
             res[-1] = res[-1][:-1]
         return ''.join(res)
 
-                                                      
+
 if __name__ == '__main__':
     from sys import argv
     ppp(fname=argv[1], level='main')
