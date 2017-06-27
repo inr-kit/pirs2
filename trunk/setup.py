@@ -22,7 +22,7 @@ setup(
         #
         # R -- Bugs counter.
         #
-        version = '2.17a.10',
+        version = '2.18a.10',
         description = 'Python Interfaces for Reactor Simulations',
         author = 'Anton Travleev',
         author_email = 'anton.travleev@kit.edu',

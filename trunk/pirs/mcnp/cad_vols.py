@@ -15,7 +15,56 @@ two sets as function of volume. Optionally:
 
 """
 
-def compare(s1, s2, deviations=(1, 2, 3)):
+"""
+TODO: transform to a class with the following API:
+    c = CompareClass()
+    nc = c.add_cad('model_cad_volumes.txt')
+    nm1 = c.add_mctal('mctal1')
+    nm2 = c.add_mctal('mctal2')
+
+    axs = c.compare(nc, nm1, excludecells = (10050, 10051), labellimit = 100)
+    axs.get_figure().savefig('{}_{}.pdf'.format(nc, nm1))
+"""
+
+import numpy
+
+def get_cad(filename):
+    """
+    Read CAD volumes from a file. The file should have 2 columns, cell numbers
+    and cell volumes.
+
+    Volumes are multiplied by 1e-3.
+
+    Returns two numpy arrays, with cell numbers (int type) and cell volumes
+    (float type).
+    """
+    import numpy
+    try:
+        n = numpy.loadtxt(filename, usecols=(0,), dtype=int)
+        v = numpy.loadtxt(filename, usecols=(1,), dtype=float)
+        return (n, v *1e-3)
+    except:
+        return None
+
+
+def get_mctal(filename, tally=4):
+    """
+    Read MCNP computed volumes from tally in mctal.
+
+    Returns two numpy arrays, with cell numbers (int type) and comuted volumes
+    (float type, with rel.errors).
+    """
+    from pirs.mcnp.mctal import Mctal
+
+    m = Mctal()
+    m.read_complete(filename)
+    t = m.mctaltallies[tally]
+    nl = t.fnl_numpy
+    vl = t.vals_numpy
+
+    return nl, vl.transpose()
+
+def compare(s1, s2, exclude_cells = ()):
     """
     s1, s2:
         Sets with cell volumes. It is a 2 dimensional array, with shape (N, 2)
@@ -28,158 +77,105 @@ def compare(s1, s2, deviations=(1, 2, 3)):
     """
 
     # Ensure that the set of cell numbers is the same
+    na, va = _prepare(s1, s2)
 
+    u = va[:, 0]
+    v = va[:, 1]
+    r = va[:, 2]
 
+    x = u
+    y = (u/v - 1.0)/r
 
-def _prepare(s1, s2):
-    d = {}
-    for s in (s1, s2):
-        if s.shape[1] == 2:
-
-    for :
-        d[int(n)] = ()
-
-
-
-
-
-def _prepare_data(m1, m2):
-    if len(m1.shape) > 1:
-        m1 = m1[0, :]
-
-    # remove values corresponding to zero rel.er in m2
-    mask = m2[1, :] > 0
-    m2 = m2[:, mask]
-    m1 = m1[mask]
-
-    # Remove values that correspond to zero values in m1
-    mask = m1 > 0
-    m1 = m1[mask]
-    m2 = m2[:, mask]
-
-    return m1, m2
-
-
-
-def compare(m1, m2, groups = (0, 1, 2, 3)):
-    """
-    Return a matplotlib figure.
-
-    m1, m2 -- arrays with mcnp volumes from two independent runs.
-
-    m1[N, 2], m2[N, 2], where N -- number of cell volumes to compare.
-    """
-
-    m1, m2 = _prepare_data(m1, m2)
-    # # Use only values form the 1-st set:
-    # if len(m1.shape) > 1:
-    #     m1 = m1[0, :]
-
-    # # Remove zero values from m1
-    # zm = m1 > 0
-    # m1 = m1[zm]
-    # m2 = m2[:, zm]
-    print m1.shape
-
-    g = m2[0, :] / m1 - 1.0
-    r = m2[1, :]
-
-    gabs = abs(g)
 
     import matplotlib.pyplot as plt
+    from matplotlib.ticker import NullFormatter
+
     fig = plt.figure(figsize=(10, 6))
-    axs = fig.add_subplot(1, 1, 1)
+    # axs = fig.add_subplot(1, 1, 1)
 
-    l1 = ''
-    for u  in reversed(groups):
-        m = gabs >= u * r
-        if len(m1[m]) > 0:
-            l0 = r'{} \leq |\gamma|'.format(u)
-            label = '$' + l0 + l1 + '$' + '({})'.format(len(m1[m]))
-            print repr(label)
-            axs.errorbar(x = m1[m], y = g[m], yerr = r[m], fmt='.', label = label)
-        l1 = r'< {}'.format(u)
+    # Axes for the scatter and histogram
+    asctr = fig.add_axes((0.1, 0.1, 0.7, 0.8))
+    ahist = fig.add_axes((0.85, 0.1, 0.1, 0.8))
 
-        m = ~m
-        m1 = m1[m]
-        g = g[m]
-        r = r[m]
-        gabs = gabs[m]
-        # axs.errorbar(x = m1, y = g, yerr = r, fmt='.', label = r'$|\gamma| < {}$: {}'.format(u, len(m1)))
-    axs.set_xscale('log')
-    axs.legend()
+    # Mask cells to exclude:
+    mc = na > 0   # set all to True
+    for c in exclude_cells:
+        mc = mc ^ (na == c)
 
-    axs.set_xlabel('CAD volume, $cm^3$')
-    axs.set_ylabel('$\gamma = V_M/V_C - 1$')
+
+    asctr.plot(x[mc], y[mc], '.')
+
+
+    # put labels onto most extending points:
+    imax = y[mc].argmax()
+    imin = y[mc].argmin()
+    for i in (imin, imax):
+        nl = na[mc][i]
+        xl = x[mc][i]
+        yl = y[mc][i]
+        asctr.annotate(str(nl),
+                       xy = (xl, yl),
+                       xytext = (-20, 20),
+                       ha = 'right',
+                       va = 'bottom',
+                       bbox = dict(boxstyle='round,pad=0.5',
+                                   fc='yellow',
+                                   alpha=0.3),
+                       textcoords = 'offset points',
+                       arrowprops = dict(arrowstyle='->',
+                                         connectionstyle='arc3,rad=0')
+                       )
+
+    asctr.set_xscale('log')
+    asctr.set_xlabel('volume, $cm^3$')
+    asctr.set_ylabel(r'$\gamma = \frac{V_M/V_C - 1}{R_C}$')
+
+
+    # Histogram does not need axis labels
+    ahist.xaxis.set_major_formatter(NullFormatter())
+    ahist.yaxis.set_major_formatter(NullFormatter())
+
+    # Plot histogram
+    ahist.hist(y[mc], orientation='horizontal')
+
+    # Use the same limits
+    ahist.set_ylim(asctr.get_ylim())
+
     return fig
 
-def compare_txt(m1, m2, f, groups=(0, 1, 2, 3), cells=None):
-    """
-    Print comparison to a file f
-    """
+def _prepare(s1, s2):
 
-    m1, m2 = _prepare_data(m1, m2)
-    # # Use only values form the 1-st set:
-    # if len(m1.shape) > 1:
-    #     m1 = m1[0, :]
+    # Resulting dictionary, mapping cell number to tuple (ui, vi, Ri).
+    d = {}
 
-    # # Remove zero values from m1
-    # zm = m1 > 0
-    # m1 = m1[zm]
-    # m2 = m2[:, zm]
-    print m1.shape
-
-    g = m2[0, :] / m1 - 1.0
-    r = m2[1, :]
-
-    gabs = abs(g)
-
-    with open(f, 'w') as ff:
-        for i in range(len(g)):
-            gi = g[i]
-            ci = m1[i]
-            ri = r[i]
-            ai = gabs[i]
-            for u in reversed(groups):
-                if ai > u * ri:
-                    break
-            if u >= 3:
-                j = '{} *'.format(u)
+    for s in (s1, s2):
+        for n, a in zip(*s):
+            try:
+                v, rv = a
+            except:
+                v, rv = a, 0.0
+            if n in d:
+                u, ru = d[n]
+                d[n] = (u, v, (ru**2 + rv**2)**0.5)
             else:
-                j = '{}'.format(u)
+                d[n] = v, rv
 
-            # else:
-            #     j = '-'
-            print >> ff, '{:6d} {:12.4e} {:12.4e} {:12e} {}'.format(i + 1, ci, gi, ri, j)
+    # remove keys in d with uncomplete data
+    for n, uvr in d.items():
+        if len(uvr) == 2:
+            d.pop(n)
 
+    na = numpy.zeros((len(d), ), dtype=int)
+    va = numpy.zeros((len(d), 3), dtype=float)
+    for (i, (n, (u, v, r)))  in enumerate(d.items()):
+        na[i] = n
+        va[i, :] = u, v, r
 
+    # don't use data with v=0 or r=0
+    m1 = va[:, 1] > 0.0
+    m2 = va[:, 2] > 0.0
 
+    na = na[m1 * m2]
+    va = va[m1 * m2, :]
 
-if __name__ == '__main__':
-    from pirs.mcnp.mctal import Mctal
-    from sys import argv
-
-    # get CAD volumes
-    from numpy import loadtxt
-    cells = loadtxt('DEMO_TBM_PP1.cad', dtype=int, usecols=(0, ))
-    cvols = loadtxt('DEMO_TBM_PP1.cad', dtype=float, usecols=(1, )) * 1e-3
-
-
-    t0 = None
-    for f in argv[1:]:
-        m = Mctal()
-        m.read_complete(f)
-        mvols = m.mctaltallies[4].vals_numpy[:, 0:cells.shape[0]]
-        mcells = m.mctaltallies[4].fnl_numpy[0:cells.shape[0]]
-
-        if all(cells == mcells):
-            fig = compare(cvols, mvols)
-            fig.savefig('{}.pdf'.format(f))
-            compare_txt(cvols, mvols, '{}.txt'.format(f), cells=cells)
-
-
-
-
-
-
-
+    return na, va
