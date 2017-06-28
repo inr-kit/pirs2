@@ -6,13 +6,7 @@ another MCNP calculations. A list of correspondent cells is necessary. Each MCNP
 set contains statistical errors, while CAD sets not.
 
 The result of comparison -- is a Matplotlib figure showing relative deviation of
-two sets as function of volume. Optionally:
-
-    * Use different colors to specify deviation from expected values. Generate
-    optionally a label with this information
-
-    * Generate text output with most deviating cell numbers
-
+two sets as function of volume.
 """
 
 """
@@ -84,7 +78,7 @@ def compare(s1, s2, exclude_cells = ()):
     r = va[:, 2]
 
     x = u
-    y = (u/v - 1.0)/r
+    y = (u - v)/(r*v)
 
 
     import matplotlib.pyplot as plt
@@ -143,6 +137,32 @@ def compare(s1, s2, exclude_cells = ()):
 
     return fig
 
+def report(s1, s2, limit=100):
+    """
+    Print out all cells with y above limit.
+    """
+    na, va = _prepare(s1, s2)
+
+    u = va[:, 0]
+    v = va[:, 1]
+    r = va[:, 2]
+
+    y = (u - v)/(r*v)
+
+    mask = abs(y) > limit
+
+    fmt =  '{:9d}' + ' {:15.4e}'*2 + ' {:10.7f}' + ' {:10.2g}'
+
+    for n, (u, v, r), yy in zip(na[mask], va[mask], y[mask]):
+        print fmt.format(n, u, v, r, yy)
+
+def report_title():
+    ttl = ('{:>9s}' + ' {:>15s}'*2 + ' {:>10s}'*2).format('Cell',
+                                                       'Ref_vol', 'MCTAL_vol',
+                                                       'Rel.err', 'Dev/sigma')
+    print ttl
+
+
 def _prepare(s1, s2):
 
     # Resulting dictionary, mapping cell number to tuple (ui, vi, Ri).
@@ -179,3 +199,62 @@ def _prepare(s1, s2):
     va = va[m1 * m2, :]
 
     return na, va
+
+
+def main():
+    import argparse
+
+    # Define command line arguments
+    parser = argparse.ArgumentParser(description='Compare CAD and MCNP volumes')
+
+    parser.add_argument('--cad', default = '',
+                        help = "File with cell numbers (1-st column) and cell volumes (2-nd column)",
+                        type=str)
+    parser.add_argument('--mctal', nargs='+', type=str,
+                        help = 'MCTAL files to read MCNP computed volumes from')
+    parser.add_argument('--tally', nargs='*', type=int, default=(4,),
+                        help = 'Tally number containing volumes. One for all mctal files or per-mctal, in the same order as --mctal')
+    parser.add_argument('--cells', nargs='*', type=int, default = (),
+                        help = 'Cells to exclude from the plots.')
+    parser.add_argument('--limit', type=int, default=100,
+                        help = 'Limit for report')
+
+    args = parser.parse_args()
+
+    # Generator to extend list of tally numbers to the list of mctals.
+    def tally_number(lst):
+        l = list(lst)
+        while l:
+            yield l.pop(0)
+            if not l:
+                l.extend(lst)
+
+    # Read all mctal files
+    m = []
+    for mfile, tn in zip(args.mctal, tally_number(args.tally)):
+        m.append((mfile, get_mctal(mfile, tally=tn)))
+
+    # Read file with CAD volumes
+    c = get_cad(args.cad)
+    cname = args.cad
+    if c is None:
+        cname, c = m.pop(0)
+        print 'The first MCNP data is used as a reference'
+
+    # Generate figures comparing CAD with each MCTAL
+    for mfile, mm in m:
+        fig = compare(c, mm, exclude_cells = args.cells)
+        figname = '{}_{}.pdf'.format(cname, mfile)
+        fig.savefig(figname)
+        print 'Plot written to ', figname
+
+    print '\n\n\nCells deviating more than {} sigma:'.format(args.limit)
+    report_title()
+    for mfile, mm in m:
+        print 'In {}:'.format(mfile)
+        report(c, mm, limit = args.limit)
+
+
+
+if __name__ == '__main__':
+    main()
