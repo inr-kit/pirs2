@@ -9,8 +9,9 @@ Classes to represent data from xsdir file.
 import os
 import sys
 import linecache
+from pirs.core.trageom.vector import _are_close
 
-#: the $DATAPATH environmental variable. 
+#: the $DATAPATH environmental variable.
 XSDIRPATH = os.environ.get('DATAPATH')
 if XSDIRPATH is None:
     print 'WARNING: Environmental variable DATAPATH is not defined.'
@@ -24,9 +25,9 @@ XSDIRFILE = os.path.join(XSDIRPATH, 'xsdir')
 
 
 class Xsdir(object):
-    """Container for data from xsdir file. 
+    """Container for data from xsdir file.
 
-    Data can be added manually or read from existing file. 
+    Data can be added manually or read from existing file.
 
     """
 
@@ -68,7 +69,7 @@ class Xsdir(object):
         """
         Read existing xsdir file.
 
-        The path argument specifies relative or absolute path to the 
+        The path argument specifies relative or absolute path to the
         xsdir file.
 
         If the optional argument append is True, data read from the xsdir file are
@@ -78,7 +79,7 @@ class Xsdir(object):
         """
         if not append:
             self.clear()
-        
+
         apath = os.path.abspath(path)
         # print 'READ XSDIR {}'.format(apath)
         # raise ValueError
@@ -103,8 +104,8 @@ class Xsdir(object):
                     # case, the first line ends with '+'.
                     if l1[-2] == '+':              # last character in l1 is new-line
                         l1 = l1[:-2] + xfile.next()
-                        
-                    self.__dir.append( DirEntry(l1) ) 
+
+                    self.__dir.append( DirEntry(l1) )
                 elif csec == 'awr':
                     # awr section is followed by other sections.  The awr
                     # section ends, when entries on the line cannot be
@@ -131,7 +132,7 @@ class Xsdir(object):
         Directory entries with thermal data do not necessarily contain temperature.
 
         This method reads temperature from the correspondent data file, if it
-        is in ASCII format. 
+        is in ASCII format.
 
         """
         # print 'called mcnp.Xsdir._get_thermal_temperatures()'
@@ -179,8 +180,9 @@ class Xsdir(object):
                 XX = de.XX
                 if (smin is None or smin <= XX) and (smax is None or smax >= XX):
                     deT = de.TEMP / 8.617343e-11 # temperature of de is in MeV, while T and Tol are in Kelvin.
-                    if T is None:
+                    if T is None or _are_close(deT, T):
                         return [(deT, de.SUFF), (deT, de.SUFF)]
+
                     if   T1 < deT <= T:
                         T1 = deT
                         S1 = de.SUFF
@@ -228,7 +230,7 @@ class Xsdir(object):
     def dir(self):
         """
         A list whose elements represent lines from the directory section of the
-        xsdir file. Elements are instances of the DirEntry() class. 
+        xsdir file. Elements are instances of the DirEntry() class.
         """
         return self.__dir
 
@@ -285,8 +287,8 @@ class DirEntry(object):
 
     def read(self, _str):
         """
-        Read data from xsdir line. 
-        
+        Read data from xsdir line.
+
         Just pass a line from directory section of an xsdir file.  Currently,
         it understands entries for 'c' and 't' types of cross-sections.
 

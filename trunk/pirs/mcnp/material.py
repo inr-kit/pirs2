@@ -80,6 +80,31 @@ class Material(tramat.Mixture):
         mat.name = card.values[0][0]
         return mat
 
+    @classmethod
+    def parseText(cls, s):
+        """
+        Reads definition from string s, which has the following form:
+
+            E1 a1 unit1
+            E2 a2 unit2
+            ...
+            EN aN unitN
+
+        where Ei -- chemical element name, ai -- amount of element Ei and
+        unit_i -- units of ai.
+        """
+        t = s.split()
+
+        e = t[0::3]
+        a = map(float, t[1::3])
+        u = t[2::3]
+
+        recipe = []
+        for ee, aa, uu in zip(e, a, u):
+            recipe.extend([ee, (aa, uu)])
+
+        return cls(*recipe)
+
     @property
     def thermal(self):
         """Part of the cross-section data set name for thermal scattering.
@@ -214,8 +239,8 @@ class Material(tramat.Mixture):
         XX <= smax are returned.
 
         The material number is NOT defined explicitly, there is just a
-        placeholder for it. Use the format() method of the returned string to put particular
-        material ID:
+        placeholder for it. Use the format() method of the returned string to
+        put particular material ID:
 
         >>> m = Material(1001)
         >>> print m.card().format(1)   # put 1 as material number
@@ -225,14 +250,15 @@ class Material(tramat.Mixture):
         """
         space1 = ' '*5
         space2 = ' '*3
-        matID = '{0:<}' # placeholder for material ID
+        matID = '{0:<}'  # placeholder for material ID
         res = ['m{0:<} $ {1} '.format(matID, self.name, self.__t)]
         if suffixes:
             res[0] += 'at {0} K '.format(self.__t)
 
         # append density and concentration, if they are set:
         if self.conc is not None:
-            res.append('c density {0:20.14e} g/cc, {1:20.14e} 1/cm-barn'.format(self.dens, self.conc*1e-24))
+            res.append('c density {0:20.14e} g/cc, '
+                       '1:20.14e} 1/cm-barn'.format(self.dens, self.conc*1e-24))
 
         # Temperature
         if suffixes:
@@ -241,9 +267,9 @@ class Material(tramat.Mixture):
             Txsdir = None
 
         # format strings
-        zfmt = self.__fmt['zaid']     # for zaid
-        sfmt = '.{0}'                 # for suffix
-        ffmt = self.__fmt['fraction'] # for fraction
+        zfmt = self.__fmt['zaid']      # for zaid
+        sfmt = '.{0}'                  # for suffix
+        ffmt = self.__fmt['fraction']  # for fraction
         if suffixes:
             me = self._expanded()
         else:
@@ -272,7 +298,7 @@ class Material(tramat.Mixture):
                 f1, f2 = 1., 0.
 
             szd = zfmt.format(zaid)
-            sf1 = ' ' + ffmt.format(av*f1) # space -- to ensure that fraction is separated from previous entry
+            sf1 = ' ' + ffmt.format(av*f1) # space to ensure that fraction is separated from previous entry
             sf2 = ' ' + ffmt.format(av*f2)
             if suffixes:
                 ss1 = sfmt.format(TS1[1])
