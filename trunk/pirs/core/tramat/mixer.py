@@ -633,15 +633,13 @@ class Mixture(object):
         ed = {}
         mexp = self.expanded()
         mexp.remove_duplicates()
-        ir = mexp.recipe()
-        for n in ir:
+        for n, a in mexp.recipe(order=1):
             # n is a nuclide
             # a is an amount
-            a = ir.next()
             z = n.Z
-            el = ed.get(z, {})
-            if not el:
-                ed[z] = el
+            if z not in ed:
+                ed[z] = {}
+            el = ed[z]
             el[n.ZAID] = el.get(n.ZAID, 0.*a) + a
         # replace z numbers with chemical names and el dictionaries with lists,
         # ready to pass to Material() constructor.
@@ -650,9 +648,9 @@ class Mixture(object):
         for z, el in ed.items():
             # sum() adds elements from 1-st argument to the 2-nd, which is by
             # def 0.
-            l = sum(sorted(el.items()), ())
-            zl = l[0::2]  # list of zaids
-            vl = l[1::2]  # list of values (fractions)
+            # zl -- list of zaids,
+            # vl -- list of fractoins
+            zl, vl = zip(*sorted(el.items()))
             if norm == 1:
                 att = sum(vl, 0.*vl[0])
                 vl = map(lambda v: v/att, vl)  # normalized values
@@ -773,6 +771,24 @@ class Mixture(object):
         res = self.__class__(*res)
         res.conc = self.conc
         return res
+
+    def collapsed(self, units=1):
+        """
+        Return a new instance, which ingredients are mixtures representing
+        chemical elements.
+        """
+        d = self.elements(norm=3)
+        r = []
+        for k, er in d.items():
+            ei = self.__class__(*er)
+            ea = ei.how_much(units)
+            # ea = sum(er[1::2], er[1]*0)  # start must be of appropriate type
+            ei.name = k.strip()
+            r.extend((ei, ea))
+        res = self.__class__(*r)
+        res.name = self.name
+        return res
+
 
     def remove_duplicates(self):
         """
@@ -1053,18 +1069,20 @@ class Mixture(object):
             res[-1] += ' or {0}'.format(str(cc))
 
         res.append('Nuclide composition:')
-        res.append(indent +
-                   '{0:>19s} {1:>13s} {2:>13s}'.format('Nuclide',
-                                                       'At.frac',
-                                                       'Wgt.frac'))
+        res.append(indent + '{0:>19s} {1:>13s} {2:>13s} {3:>13s} {4:>13s}'
+                   ''.format('Nuclide', 'At.frac', 'Wgt.frac',
+                             'amount, m', 'weight, g'))
         # print 'call expanded from report'
         e = self.expanded()
         e.remove_duplicates()
         e.normalize(1, 1)
         eG = e.grams()
+        sG = self.grams().v
+        sM = self.moles().v
         for (m, a) in sorted(zip(e.__m, e.__a), key=lambda x: x[0].ZAID):
-            s = indent + '{0} {1:13.5e} {2:13.5e}'.format(str(m), a.v,
-                                                          e.how_much(2, m)/eG)
+            ww = e.how_much(2, m)
+            s = (indent + '{0:>19s} {1:13.5e} {2:13.5e} {3:13.5e} {4:13.5e}'
+                 ''.format(str(m), a.v, ww/eG, a.v*sM, ww/eG*sG))
             res.append(s)
         return '\n'.join(res)
 
@@ -1309,9 +1327,9 @@ class Mixture(object):
         a2 = self.__a[i2] * 1
         # during the tuning, amounts of variable materials are in moles.
         if a1.t != 1:
-            self.__a[i1] = Mixture((var[0], self.__a[i1]).moles())
+            self.__a[i1] = Mixture(var[0], self.__a[i1]).moles()
         if a2.t != 1:
-            self.__a[i2] = Mixture((var[1], self.__a[i2]).moles())
+            self.__a[i2] = Mixture(var[1], self.__a[i2]).moles()
         Smol = (self.__a[i1] + self.__a[i2]).v
 
         # function to set new recipe definition with respect to the independent
@@ -1327,7 +1345,7 @@ class Mixture(object):
             change_recipe(x)
             return objective(self)
             # return curr_val() - goal_val
-        # searching loop. Starts at f=0. Uses the method of division by half.
+        # searching loop. Starts at f=0. Uses bisection method
         x1 = 0.
         x2 = 1.
         y1 = y(x1)
