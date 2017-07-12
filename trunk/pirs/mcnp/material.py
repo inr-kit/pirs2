@@ -258,7 +258,7 @@ class Material(tramat.Mixture):
         # append density and concentration, if they are set:
         if self.conc is not None:
             res.append('c density {0:20.14e} g/cc, '
-                       '1:20.14e} 1/cm-barn'.format(self.dens, self.conc*1e-24))
+                       '{1:20.14e} 1/cm-barn'.format(self.dens, self.conc*1e-24))
 
         # Temperature
         if suffixes:
@@ -270,10 +270,15 @@ class Material(tramat.Mixture):
         zfmt = self.__fmt['zaid']      # for zaid
         sfmt = '.{0}'                  # for suffix
         ffmt = self.__fmt['fraction']  # for fraction
-        if suffixes:
-            me = self._expanded()
-        else:
-            me = self.expanded()
+        try:
+            if suffixes:
+                me = self._expanded()
+            else:
+                me = self.expanded()
+        except ValueError:
+            res.append('c ERROR: cannot define nuclide cmposition')
+            return '\n'.join(res)
+
         itre = me.recipe()
         for n in itre:
             a = itre.next()

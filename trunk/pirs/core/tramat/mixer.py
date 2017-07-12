@@ -935,14 +935,22 @@ class Mixture(object):
                 c = m.conc
                 if c is None:
                     raise ValueError('Volume of ingredient cannot be defined')
-                a = a * NAVOGAD / c
+                if c != 0:
+                    a = a * NAVOGAD / c
+                else:
+                    a = a * NAVOGAD
+                    a.v = float('inf')
                 a.t = 3
             elif a.t == 2:
                 d = m.dens
                 if d is None:
                     raise ValueError('Volume of ingredient cannot be defined')
-                a = a / d
-                a.t = 2
+                if d != 0:
+                    a = a / d
+                else:
+                    a = a * 1.0
+                    a.v = float('inf')
+                a.t = 3
             res += a
         return res
 
@@ -1062,7 +1070,12 @@ class Mixture(object):
         return Sn/Sv
 
     def __str__(self):
-            return '<{0:8s} {1:8.4f}>'.format(self.name, self.M())
+        try:
+            m = self.M()
+        except ValueError:
+            m = 0.0
+
+        return '<{0:8s} {1:8.4f}>'.format(self.name, m)
 
     def report(self):
         """
