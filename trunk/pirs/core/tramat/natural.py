@@ -20,7 +20,7 @@ def get_default_isotopic_composition(element=1):
     """
     Returns an instance of the :class:`_recipe` class, representing natural
     isotopic composition of chemical element.
-    
+
     Natural isotoic abundancies are taken from the :mod:`data_natural`
     module, see references there.
 
@@ -29,11 +29,11 @@ def get_default_isotopic_composition(element=1):
         The chemical element can be specified by an integer (treated as Z
         number) or by a string with one or two characters (treated as the
         chemical name).
-    
+
     """
 
     # analyse argument:
-    if   isinstance(element, int): 
+    if   isinstance(element, int):
         Z = element
     elif isinstance(element, basestring):
         try:
@@ -45,7 +45,7 @@ def get_default_isotopic_composition(element=1):
 
     # By default, use predefined natural abundancies from data_natural
     nat_ab = __natabu
-    r = [] 
+    r = []
     for (k,v) in nat_ab.items():
         if type(k) is int and k/1000 == Z:
             # add this nuclide to material recipe
@@ -57,10 +57,10 @@ def get_default_isotopic_composition(element=1):
 import re
 
 # Capital letter followed optionally with small letter, followed optionally with digits
-re_names = re.compile('(([A-Z][a-z]*)(\d*))') 
+re_names = re.compile('(([A-Z][a-z]*)(\d*))')
 def formula_to_tuple(cf, names={}):
     """
-    Return a tuple that can be passes to the Mixture constructor.
+    Return a tuple that can be passed to the Mixture constructor.
 
     Chemical composition string is a concatenation of valid chemical element
     names as defined in ./data_names._symbol dictionary, concatenated
@@ -71,7 +71,7 @@ def formula_to_tuple(cf, names={}):
         C2H5OH
 
     Chemical element name has 1 or two letters, the 1-st one is capital, the
-    second one -- small. Chemical element names are not checked whether they are 
+    second one -- small. Chemical element names are not checked whether they are
     valid names.
     """
     check = ''
@@ -81,7 +81,7 @@ def formula_to_tuple(cf, names={}):
         check += part
         if check not in cf:
             raise ValueError('Cannot process chemical formula {}, see part preceeding {}'.format(repr(cf), repr(part)))
-        
+
         # convert integer to amount of moles (chemical formulae always express amount, not weight/mass)
         mult = 1 if mult == '' else int(mult)
         mult = (mult, 1)

@@ -77,6 +77,19 @@ class Nuclide(object):
         else:
             self.__m = float(M)
 
+        # For consistency with Mixture:
+        self.__c = None
+
+    @property
+    def conc(self):
+        """
+        Rear-only property, returning None.
+
+        Introduced for consistency with the Mixture class
+        """
+        return self.__c
+
+
     @property
     def ZAID(self):
         """
@@ -314,9 +327,9 @@ class Amount(object):
 
     # Aliases for unit names:
     type_alias = {
-            1: ('m', 'mol', 'mole', 'moles'),
-            2: ('g', 'gr', 'gram', 'grams'),
-            3: ('cc', 'cm3')}
+            1: ('m', 'mol', 'mole', 'moles', 1),
+            2: ('g', 'gr', 'gram', 'grams', 2),
+            3: ('cc', 'cm3', 3)}
 
     def __init__(self, value=0., unit=1):
         """
@@ -377,20 +390,12 @@ class Amount(object):
 
     @t.setter
     def t(self, value):
-        if isinstance(value, basestring):
-            v = value.lower()
-            for tid, tnames in self.type_alias.items():
-                if v in tnames:
-                    self.__t = tid
-                    break
-            else:
-                raise ValueError('Unknown units name: ', value)
+        for tid, tnames in self.type_alias.items():
+            if value in tnames:
+                self.__t = tid
+                break
         else:
-            v = int(value)
-            if v in [1, 2, 3]:
-                self.__t = v
-            else:
-                raise ValueError('Unknown units ID: ' + str(value))
+            raise ValueError('Unknown unit: ', value)
 
     def __str__(self):
         return '{0} {1}'.format(self.__v, self.name)
@@ -583,7 +588,7 @@ class Mixture(object):
             ai = iter(args)  # iterator on args, to get next element
             for mraw in ai:
                 m = None
-                # iterprete definition of material
+                # interprete definition of material
                 if (isinstance(mraw, self.__class__) or
                    isinstance(mraw, Nuclide)):
                     # use the specified in arguments material directry as
@@ -829,7 +834,7 @@ class Mixture(object):
 
     def normalize(self, a, t=1):
         """
-        Change the amounts of ingredients in the recipe proportionally, so that
+        Change amount of ingredients in the recipe proportionally, so that
         the resulting amount is a (if a is a float, one has to specify also
         units by setting t=1, 2 or 3).
 
@@ -875,7 +880,10 @@ class Mixture(object):
                 a = a / m.M() / G_MOL_AWR
                 a.t = 1
             elif a.t == 3:
-                a = a / m.M() / G_MOL_AWR * m.dens
+                c = m.conc
+                if c is None:
+                    raise ValueError('Amount of ingredient cannot be derived')
+                a = a * c / NAVOGAD
                 a.t = 1
             res += a
         return res
@@ -896,7 +904,10 @@ class Mixture(object):
                 a.t = 2
             elif a.t == 3:
                 # v in cc:
-                a = a * m.dens
+                d = m.dens
+                if d is None:
+                    raise ValueError('Mass of ingredient cannot be derived')
+                a = a * d
                 a.t = 2
             res += a
         return res
@@ -920,21 +931,18 @@ class Mixture(object):
         """
         res = Amount(0, 3)
         for (m, a) in zip(self.__m, self.__a):
-            if a.t != 3:
-                try:
-                    # v in grams or in moles:
-                    a = a / m.dens  # [g cc/g]
-                except (AttributeError, TypeError):
-                    if self.dens is None:
-                        return None
-                    else:
-                        res = self.grams() / self.dens
-                        res.t = 3
-                        return res
-                if a.t == 1:
-                    # v in moles:
-                    a = a * (m.M() * G_MOL_AWR)  # [mol awr g/mol/awr cc/g]
+            if a.t == 1:
+                c = m.conc
+                if c is None:
+                    raise ValueError('Volume of ingredient cannot be defined')
+                a = a * NAVOGAD / c
                 a.t = 3
+            elif a.t == 2:
+                d = m.dens
+                if d is None:
+                    raise ValueError('Volume of ingredient cannot be defined')
+                a = a / d
+                a.t = 2
             res += a
         return res
 
@@ -1035,18 +1043,23 @@ class Mixture(object):
         conentration/density attributes either set explicitly or can be
         computed.
         """
-        Smol = 0.
-        Svol = 0.
+        # For each ingredient, define its amount, Ni and its volume, Vi. The
+        # derived conc is sum(Ni) / sum(Vi).
+
+        Sv = 0.
+        Sn = 0.
+
         for (m, a) in zip(self.__m, self.__a):
-            moles = Mixture((m, a)).moles().v
-            Smol += moles
+            mm = Mixture(m, a)
             try:
-                Svol += moles / m.conc  # [mole cc]
-            except (AttributeError, TypeError):
-                # attribute error -- if there is no m.conc attribute
-                # type error -- if m.conc is None
+                n = mm.moles()
+                v = mm.cc()
+            except ValueError:
                 return None
-        return Smol / Svol
+
+            Sv += v.v
+            Sn += n.v * NAVOGAD
+        return Sn/Sv
 
     def __str__(self):
             return '<{0:8s} {1:8.4f}>'.format(self.name, self.M())
@@ -1061,29 +1074,39 @@ class Mixture(object):
         for (m, a) in zip(self.__m, self.__a):
             s = indent + '{0}: {1}'.format(str(m), str(a))
             res.append(s)
-        res.append(indent +
-                   'total: {0} or {1}'.format(str(self.moles()),
-                                              str(self.grams())))
-        cc = self.cc()
-        if not (cc is None):
-            res[-1] += ' or {0}'.format(str(cc))
+        # If possible, provide amount in other units:
+        s = 'total: '
+        for f in (self.moles, self.grams, self.cc):
+            try:
+                a = f()
+            except ValueError:
+                pass
+            else:
+                s += ' or {0}'.format(str(a))
+        s = s.replace(':  or', ': ')
+        res.append(s)
 
         res.append('Nuclide composition:')
         res.append(indent + '{0:>19s} {1:>13s} {2:>13s} {3:>13s} {4:>13s}'
                    ''.format('Nuclide', 'At.frac', 'Wgt.frac',
                              'amount, m', 'weight, g'))
         # print 'call expanded from report'
-        e = self.expanded()
-        e.remove_duplicates()
-        e.normalize(1, 1)
-        eG = e.grams()
-        sG = self.grams().v
-        sM = self.moles().v
-        for (m, a) in sorted(zip(e.__m, e.__a), key=lambda x: x[0].ZAID):
-            ww = e.how_much(2, m)
-            s = (indent + '{0:>19s} {1:13.5e} {2:13.5e} {3:13.5e} {4:13.5e}'
-                 ''.format(str(m), a.v, ww/eG, a.v*sM, ww/eG*sG))
-            res.append(s)
+        try:
+            e = self.expanded()
+        except ValueError:
+            res.append(indent + 'cannot define nuclide composition while '
+                       'not all ingredients have conc set')
+        else:
+            e.remove_duplicates()
+            e.normalize(1, 1)
+            eG = e.grams()
+            sG = self.grams().v
+            sM = self.moles().v
+            for (m, a) in sorted(zip(e.__m, e.__a), key=lambda x: x[0].ZAID):
+                ww = e.how_much(2, m)
+                s = (indent + '{0:>19s} {1:13.5e} {2:13.5e} {3:13.5e} {4:13.5e}'
+                    ''.format(str(m), a.v, ww/eG, a.v*sM, ww/eG*sG))
+                res.append(s)
         return '\n'.join(res)
 
     @property
@@ -1271,7 +1294,7 @@ class Mixture(object):
                         r += Mixture((m, a)).amount(tt)
                     elif isinstance(arg, basestring):
                         # e = Mixture( *natural.recipe(arg) )
-                        e = Mixture(*natural.formula_to_tuple(arg))
+                        e = Mixture(*formula_to_tuple(arg))
                         if isinstance(m, self.__class__) and e == m:
                             r += Mixture((e, a)).amount(tt)
                     elif arg == m:
