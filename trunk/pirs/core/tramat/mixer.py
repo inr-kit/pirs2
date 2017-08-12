@@ -89,6 +89,14 @@ class Nuclide(object):
         """
         return self.__c
 
+    @property
+    def dens(self):
+        """
+        Read-only property, returning None.
+
+        See conc.
+        """
+        return self.__c
 
     @property
     def ZAID(self):
@@ -766,10 +774,19 @@ class Mixture(object):
         for (m, a) in zip(self.__m, self.__a):
             if isinstance(m, Nuclide):
                 if a.t != 1:
-                    a = Mixture((m, a)).moles()
+                    if a.t == 3:
+                        print 'Warning: Nuclide content given by cc'
+                    a = Mixture(m, a).moles()
                 res += [m, a]
             else:
+                # em is a material consisting of nuclides, with amounts given
+                # in moles, and conc taken from m.
                 em = m.expanded()
+
+                # em's recipe should be normalized so that the amount of
+                # ingredients in em is equal to the amount of material m
+                # in self, expressed in moles
+                a = Mixture(m, a).moles()
                 em.normalize(a)
                 #
                 res += list(em.recipe())    # zip( em.__m, em.__a )
@@ -1116,10 +1133,11 @@ class Mixture(object):
             sG = self.grams().v
             sM = self.moles().v
             for (m, a) in sorted(zip(e.__m, e.__a), key=lambda x: x[0].ZAID):
-                ww = e.how_much(2, m)
-                s = (indent + '{0:>19s} {1:13.5e} {2:13.5e} {3:13.5e} {4:13.5e}'
-                    ''.format(str(m), a.v, ww/eG, a.v*sM, ww/eG*sG))
-                res.append(s)
+                if a.v != 0:
+                    ww = e.how_much(2, m)
+                    s = (indent + '{0:>19s} {1:13.5e} {2:13.5e} {3:13.5e} {4:13.5e}'
+                        ''.format(str(m), a.v, ww/eG, a.v*sM, ww/eG*sG))
+                    res.append(s)
         return '\n'.join(res)
 
     @property

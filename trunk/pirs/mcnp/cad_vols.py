@@ -122,7 +122,7 @@ def compare(s1, s2, exclude_cells = ()):
 
     asctr.set_xscale('log')
     asctr.set_xlabel('volume, $cm^3$')
-    asctr.set_ylabel(r'$\gamma = \frac{V_M/V_C - 1}{R_C}$')
+    asctr.set_ylabel(r'$\gamma = \frac{V_c/V_m - 1}{R_m}$')
 
 
     # Histogram does not need axis labels

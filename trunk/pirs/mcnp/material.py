@@ -293,7 +293,11 @@ class Material(tramat.Mixture):
 
             if suffixes:
                 TS1, TS2 = self.xsdir.suffix(zaid, Txsdir, smin=smin, smax=smax)
-                f1, f2 = self.__Tif(self.__t, TS1[0], TS2[0])
+                if self.__t is None:
+                    f1 = 1.0
+                    f2 = 0.0
+                else:
+                    f1, f2 = self.__Tif(self.__t, TS1[0], TS2[0])
                 try:
                     f1 = f1.nominal_value
                     f2 = f2.nominal_value
@@ -316,7 +320,8 @@ class Material(tramat.Mixture):
                 line = space1
             if f2:
                 line += szd + ss2 + sf2
-            res.append(line)
+            if av != 0:
+                res.append(line)
         # append comment with temperatures and fractions
         if suffixes and f1 and f2:
            res[0] += ' as mix {0:.3G} {1:.2f} K,  {2:.3G} {3:.2f} K'.format(f1, TS1[0], f2, TS2[0])
