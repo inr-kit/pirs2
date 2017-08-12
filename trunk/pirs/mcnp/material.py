@@ -80,31 +80,6 @@ class Material(tramat.Mixture):
         mat.name = card.values[0][0]
         return mat
 
-    @classmethod
-    def parseText(cls, s):
-        """
-        Reads definition from string s, which has the following form:
-
-            E1 a1 unit1
-            E2 a2 unit2
-            ...
-            EN aN unitN
-
-        where Ei -- chemical element name, ai -- amount of element Ei and
-        unit_i -- units of ai.
-        """
-        t = s.split()
-
-        e = t[0::3]
-        a = map(float, t[1::3])
-        u = t[2::3]
-
-        recipe = []
-        for ee, aa, uu in zip(e, a, u):
-            recipe.extend([ee, (aa, uu)])
-
-        return cls(*recipe)
-
     @property
     def thermal(self):
         """Part of the cross-section data set name for thermal scattering.
