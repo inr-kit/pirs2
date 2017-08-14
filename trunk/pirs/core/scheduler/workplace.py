@@ -2,7 +2,7 @@ import os
 import stat
 import shutil
 import __main__ as main
-from datetime import datetime 
+from datetime import datetime
 
 from .scheduler import Scheduler, Job
 
@@ -15,7 +15,7 @@ from .scheduler import Scheduler, Job
 def find_highest_index(dir_, prefix):
         #
         # author: Richard Molitor, KIT, 2012
-        # 
+        #
         files    = os.listdir(dir_)
         matches  = filter(lambda f: f.startswith(prefix), files)
         # suffixes = map(lambda f: f.strip(prefix), matches)  # this strips all characters specified in prefix from both sides of f. Try: 'c1wp1'.strip('c1wp')
@@ -37,7 +37,7 @@ class InputFile(object):
         """
         Keyword arguments can specify all properties of the instance.
 
-        If arguments 'exfile', 'string' and 'spf' are specified in kwargs, 
+        If arguments 'exfile', 'string' and 'spf' are specified in kwargs,
         the order they are set is exactly as specified here.
 
         >>> f = InputFile(basename='if.init', string='string', exfile='_inp')
@@ -58,6 +58,7 @@ class InputFile(object):
         self.__bn = 'inputfile'
         self.__mode = 'w'
         self.__executable = False
+        self.__cmd = None
 
         # process keyword arguments
         pkeys = ['basename', 'mode', 'exfile', 'string', 'psf'] # possible keys. The order is imoprtant!
@@ -78,7 +79,7 @@ class InputFile(object):
     def string(self, value):
         self.__str = value
         if value is not None:
-            self.__psf = True  
+            self.__psf = True
         else:
             self.__psf = False
         return
@@ -102,12 +103,12 @@ class InputFile(object):
     @property
     def psf(self):
         r"""
-        The "Prefer String Flag". 
-        
+        The "Prefer String Flag".
+
         Specifies what to put to the target file if both ``string`` and ``exfile``
         attributes are specified. If True, string is preffered, if False, exfile
         is preffered.
-        
+
         This property set automatically each time string or exfile is set.
 
         Can be manually set by user.
@@ -139,7 +140,7 @@ class InputFile(object):
     @property
     def defined(self):
         """
-        Returns True if string or exfile is specififed. 
+        Returns True if string or exfile is specififed.
         """
         return (self.string is not None) or (self.exfile is not None)
 
@@ -180,7 +181,7 @@ class InputFile(object):
         True this file should be marked executable (necessary for scripts);
         False otherwise (appropriate for input and output files). Default value
         is False.
-        
+
         """
         return self.__executable
 
@@ -190,6 +191,23 @@ class InputFile(object):
             self.__executable = value
         else:
             raise ValueError('Non-boolean value for executable flag: ', value)
+        return
+
+    @property
+    def cmd(self):
+        """
+        Command used to run input file. Setting this value also sets
+        `executable` property to True.
+        """
+        if self.__cmd is None:
+            return './' + self.basename
+        else:
+            return self.__cmd
+
+    @cmd.setter
+    def cmd(self, value):
+        self.__cmd = str(value)
+        self.executable = True
         return
 
     @property
@@ -228,7 +246,7 @@ class InputFile(object):
             i.writelines(string)
             i.close()
             self.__rep = "generated from string"
-        else: 
+        else:
             # copy the external file to the target file
             if self.__mode == 'w':
                 shutil.copy(self.__exf, target)
@@ -281,7 +299,7 @@ class WorkPlace(object):
     >>> f3 = InputFile()
     >>> f3.basename = 'f3'
     >>> f3.string = 'f3 content'
-    >>> wp.files.append(f1)   
+    >>> wp.files.append(f1)
     >>> wp.files.append(f2)
     >>> wp.files.append(f3)
     >>> wp.prepare()
@@ -378,9 +396,10 @@ class WorkPlace(object):
                 break
         if e is not None:
             # create Job:
-            j = Job(e.basename, self.lcd)
-            self.scheduler.add('auto', j)
-            r = self.scheduler.run('auto', **kwargs)
+            j = Job(e.cmd, self.lcd)
+            n = self.lcd + e.cmd
+            self.scheduler.add(n, j)
+            r = self.scheduler.run(n, **kwargs)
             return r
 
     def __str__(self):

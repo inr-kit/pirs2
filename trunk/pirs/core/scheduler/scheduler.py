@@ -94,7 +94,7 @@ class Job(object):
     def dir(self, value):
         if not os.path.isdir(value):
             raise ValueError('not a directory: %s' % dir)
-        
+
         if not os.access(value, os.X_OK):
             raise ValueError('cannot access directory: %s' % dir)
         self.__dir = value
@@ -107,7 +107,7 @@ class Scheduler(object):
     and a queue. The ``add()`` method registers a new job, the ``queue()`` method adds
     a job to the queue and the ``wait()`` method waits for a queued job to finish.
     The convenience method ``run()`` does both queuing and waiting in one call and
-    returns the result of the wait. 
+    returns the result of the wait.
 
     Currently, all jobs will be run in the OS shell using the subprocess
     module, this may change at some point in the future.
@@ -175,7 +175,7 @@ class Scheduler(object):
         >>> s.run('t', sec=1, file='test')
         ''
 
-        The kwargs dictionary is passed to the wait() method, see description of 
+        The kwargs dictionary is passed to the wait() method, see description of
         allowed keyword arguments there.
 
         """
@@ -198,7 +198,7 @@ class Scheduler(object):
 
         if name in self.jobs:
             job = self.get_job(name)
-            print 'scheduler queued job', job
+            print 'scheduler queued job', job, name
             data = self.__queue_shelljob(job)
             self.queued[name].append(data)
         else:
@@ -243,7 +243,7 @@ class Scheduler(object):
             while not os.access(f, os.R_OK):
                 # print 'scheduler.wait(): sleep for 5 sec'
                 time.sleep(5)
-                
+
 
         try:
 
@@ -305,7 +305,7 @@ class Scheduler(object):
             while not passed:
                 print time.strftime('%c', time.localtime())
                 for f, r in zip(files, regex):
-                    print '    ', f, 
+                    print '    ', f,
                     if os.access(f, os.R_OK):
                         print 'exists',
                         ll = get_last_line(f)
@@ -328,7 +328,7 @@ class Scheduler(object):
             while not passed:
                 for f in files:
                     if os.access(f, os.R_OK):
-                        passed = True 
+                        passed = True
                     else:
                         passed = False
                         break
@@ -349,7 +349,7 @@ class Scheduler(object):
         """
         proc is an instance of subprocess.Popen() created in __queu_shelljob.
         """
-        proc.wait()
+        # proc.wait()
         (out,err) = proc.communicate()
         return out
 
