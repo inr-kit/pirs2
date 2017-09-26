@@ -41,9 +41,10 @@ def main():
 
         print 'Material ', mn
         e = m.elements(keyform='Z')
+        wt = m.amount(2)
         for z in e.keys():
-            w = m.how_much(2, Z=z)
-            print ' ', f.format(chemical_names[z], z, w/wtot*factor)
+            we = m.how_much(2, Z=z)
+            print ' ', f.format(chemical_names[z], z, we/wt*factor)
 
 
 
