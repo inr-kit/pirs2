@@ -49,6 +49,28 @@ class Material(tramat.Mixture):
         return new
 
     @classmethod
+    def read_from_input(cls, fname):
+        """
+        Return a dictionary of mixtures defined by material cards `n` in the
+        input file `fname`.
+        """
+        from numjuggler.parser import get_cards, CID
+        # All data cards from fname:
+        cards = filter(lambda c: c.ctype == CID.data, get_cards(fname))
+        # All material cards from fname:
+        for c in cards:
+            c.get_values()
+        cards = filter(lambda c: c.dtype == 'Mn', cards)
+
+        dm = {}
+        for c in cards:
+            m = cls.parseCard(c)
+            m.name = 'M{} from {}'.format(c.name, fname)
+            m.T = None
+            dm[c.name] = m
+        return dm
+
+    @classmethod
     def parseCard(cls, card):
         """
         Returns a new instance of Material class representing the card -- as
@@ -72,9 +94,7 @@ class Material(tramat.Mixture):
                 unit = 'grams'
 
             if '.' in zaid:
-                zaid, suffix = zaid.split('.')
-            else:
-                suffix = ''
+                zaid, _ = zaid.split('.')
             recipe.extend([int(zaid), (abs(fr), unit)])
         mat = cls(*recipe)
         mat.name = card.values[0][0]

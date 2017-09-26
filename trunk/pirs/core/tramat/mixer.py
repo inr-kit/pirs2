@@ -6,6 +6,7 @@ Definition of the Nuclide and Mixture classes.
 # Author: Anton Travleev, anton.travleev@kit.edu
 # Developed at INR, Karlsruhe Institute of Technology
 # at
+from collections import OrderedDict
 
 from .data_masses import xsdir1 as AWR_SET
 from .data_names import name as _chemical_names
@@ -652,11 +653,11 @@ class Mixture(object):
 
         return cls(*recipe)
 
-    def elements(self, norm=1):
+    def elements(self, norm=1, keyform='Z'):
         """
         Return dictionary with chemical elements that are found in the material.
 
-        Optional argument norm takes the following values:
+        Optional argument `norm` takes the following values:
 
             1: (default) sum of isotopes of each element is equal to 1.
 
@@ -665,10 +666,19 @@ class Mixture(object):
             any other: sum of isotopes of each element is equal to frac. of this
             element in the material.
 
+        Optional argumen `keyform` defines the keys of the returned dictionary.
+        It can take the following values:
+
+            'name': The element's key is a string of the form 'Cc', representing
+                    the element's name.
+
+            'Z': The element's key is an integer, representing the element's
+                 Z-number.
+
 
         """
         # collect isotopes into elements. ed: z -> el, where el: ZAID -> moles
-        ed = {}
+        ed = OrderedDict()
         mexp = self.expanded()
         mexp.remove_duplicates()
         for n, a in mexp.recipe(order=1):
@@ -681,7 +691,7 @@ class Mixture(object):
             el[n.ZAID] = el.get(n.ZAID, 0.*a) + a
         # replace z numbers with chemical names and el dictionaries with lists,
         # ready to pass to Material() constructor.
-        res = {}
+        res = OrderedDict()
         atot = mexp.amount()
         for z, el in ed.items():
             # sum() adds elements from 1-st argument to the 2-nd, which is by
@@ -696,7 +706,13 @@ class Mixture(object):
                 vl = map(lambda v: v/atot, vl)
             else:
                 pass
-            res[_chemical_names[z]] = sum((e for e in zip(zl, vl)), ())
+            if keyform == 'Z':
+                ekey = z
+            elif keyform == 'name':
+                ekey = _chemical_names[z]
+            else:
+                raise ValueError('Wrong value of `keyform`:', keyform)
+            res[ekey] = sum((e for e in zip(zl, vl)), ())
         return res
 
     def recipe(self, order=0):

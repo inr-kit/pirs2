@@ -24,7 +24,7 @@ setup(
         #
         # R -- Bugs counter.
         #
-        version='2.22a.11',
+        version='2.23a.11',
         description='Python Interfaces for Reactor Simulations',
         author='Anton Travleev',
         author_email='anton.travleev@kit.edu',
@@ -53,7 +53,8 @@ setup(
                   'pirs.hli.scf2',
                   ],
         scripts=['scripts/mcnp.outp.walltime', ],
-        entry_points={'console_scripts': ['cadmcnp = pirs.mcnp.cad_vols:main']},
+        entry_points={'console_scripts': ['cadmcnp = pirs.mcnp.cad_vols:main',
+                                          'ewf = pirs.mcnp.ewf:main']},
         install_requires=['uncertainties == 2.4.4'],
         provides=['pirs'],
      )
