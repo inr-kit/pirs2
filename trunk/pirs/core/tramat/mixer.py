@@ -510,7 +510,7 @@ class Mixture(object):
             else:
                 raise ValueError('Unsupported type of ingredient, ', type(arg))
         else:
-            cls._print_log('new: create new')
+            cls._print_log('new: create new ' + str(args) + str(kwargs))
             res = super(Mixture, cls).__new__(cls)
             cls.nMix += 1
         return res
@@ -567,8 +567,8 @@ class Mixture(object):
             # print 'init: already initialized'
             pass
         else:
-            self.__class__._print_log('init: initialize self: {} ' +
-                                      'args: {} ' +
+            self.__class__._print_log('init: initialize self: {} '
+                                      'args: {} '
                                       'kwargs: {}'.format(repr(self),
                                                           args, kwargs))
             # a new instance is returned, setup it.
@@ -653,9 +653,8 @@ class Mixture(object):
 
         recipe = []
         for ee, aa, uu in zip(e, a, u):
-            ee = ingredients.get(e, e)
+            ee = ingredients.get(ee, ee)
             recipe.extend([ee, (aa, uu)])
-
         return cls(*recipe)
 
     def elements(self, norm=1):
