@@ -628,7 +628,7 @@ class Mixture(object):
         return
 
     @classmethod
-    def parseText(cls, s):
+    def parseText(cls, s, ingredients={}):
         """
         Reads definition from string s, which has the following form:
 
@@ -639,6 +639,11 @@ class Mixture(object):
 
         where Ei -- chemical element name, ai -- amount of element Ei and
         unit_i -- units of ai.
+
+        The optional disctionary `ingredients` provides definition of the
+        names `Ei`. If name `Ei` is among its keys, the correspondent value is
+        used as the ingredient. Otherwise, the string `Ei` is passed as the
+        ingredient.
         """
         t = s.split()
 
@@ -648,6 +653,7 @@ class Mixture(object):
 
         recipe = []
         for ee, aa, uu in zip(e, a, u):
+            ee = ingredients.get(e, e)
             recipe.extend([ee, (aa, uu)])
 
         return cls(*recipe)
