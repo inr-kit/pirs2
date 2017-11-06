@@ -660,6 +660,8 @@ class Mixture(object):
     def elements(self, norm=1):
         """
         Return dictionary with chemical elements that are found in the material.
+        Dictionary keys are element names, dictionary values are tuples of the
+        form (ZAID1, f1, ZAID2, f2, ...), where ZAIDi are sorted.
 
         Optional argument norm takes the following values:
 
