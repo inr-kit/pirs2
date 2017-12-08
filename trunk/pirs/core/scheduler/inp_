@@ -1,0 +1,12 @@
+ c MCNP input file
+1 0 -1 imp:n=1
+2 0  1 imp:n=0
+
+1 so 10
+
+sdef pos 0 0 0
+nps 100000000
+prdmp j j 1
+print
+
+    
