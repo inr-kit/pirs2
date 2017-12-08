@@ -382,11 +382,14 @@ class WorkPlace(object):
 
     def run(self, **kwargs):
         """
-        Find executable input file in files and starts it using scheduler module.
+        Find executable input file in files and starts it using scheduler
+        module.
 
-        Assumes that directory containing all input files allready created with the prepare() method.
+        Assumes that directory containing all input files allready created with
+        the prepare() method.
 
-        Keyword arguments are all passed to the scheduler.Scheduler.run() method, see description there.
+        Keyword arguments are all passed to the scheduler.Scheduler.run()
+        method, see description there.
         """
         # find 1-st executable InputFile:
         e = None
