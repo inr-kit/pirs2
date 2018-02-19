@@ -20,7 +20,7 @@ general_title = 'TSP Python package: Preprocessor for Text files with Python Sni
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', # 'sphinx.ext.intersphinx',
-              'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.pngmath', 'sphinx.ext.mathjax',
+              'sphinx.ext.todo', 'sphinx.ext.coverage', # 'sphinx.ext.mathjax',
               'sphinx.ext.ifconfig', 'sphinx.ext.viewcode',
               'rst2pdf.pdfbuilder',
               ]
@@ -48,7 +48,7 @@ copyright = u'2012, Anton Travleev'
 # built documents.
 #
 # The short X.Y version.
-version = '1.2' 
+version = '1.2'
 # The full version, including alpha/beta/rc tags.
 release = '1.2.b' # beta, while no response from users
 
@@ -181,7 +181,7 @@ mypreamble=open('preamble.tex', 'r').read()
 #   frame=single
 #   }
 #   """
-#   
+#
 #   u"""%
 #   \\usepackage{listings}
 #   \\renewcommand{\code}[1]{\\begin{lstlisting} #1 \\end{lstlisting}}
@@ -325,7 +325,7 @@ epub_copyright = u'2012, Anton Travleev'
 
 
 pdf_documents = [('index', 'tsp', general_title, r'A. Travleev'),]
-   
+
 # index - master document
 # sample - name of the generated pdf
 # Sample rst2pdf doc - title of the pdf

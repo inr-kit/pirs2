@@ -1,13 +1,16 @@
 $ ppp.py
 
 (P)ython (P)re(P)rocessor: script from the tsp Python package. Abbreviation
-"tsp" means (T)ext with (S)nippets (P)reprocessor. 
+"tsp" means (T)ext with (S)nippets (P)reprocessor.
 
 Usage:
-    
-> ppp.py template 
-   
+
+> ppp.py template [snippet]
+
 where `template' is a text file containing python snippets.  Snippets are
 evaluated/executed and the snippet code is replaced with the result of
 evaluation/execution. The resulting file is saved to `template.res'.
+
+When optional `snippet` is given, it is evaluated or executed before the
+snippets in `template`.
 
