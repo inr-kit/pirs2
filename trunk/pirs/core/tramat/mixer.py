@@ -511,7 +511,7 @@ class Mixture(object):
             else:
                 raise ValueError('Unsupported type of ingredient, ', type(arg))
         else:
-            cls._print_log('new: create new')
+            cls._print_log('new: create new ' + str(args) + str(kwargs))
             res = super(Mixture, cls).__new__(cls)
             cls.nMix += 1
         return res
@@ -568,8 +568,8 @@ class Mixture(object):
             # print 'init: already initialized'
             pass
         else:
-            self.__class__._print_log('init: initialize self: {} ' +
-                                      'args: {} ' +
+            self.__class__._print_log('init: initialize self: {} '
+                                      'args: {} '
                                       'kwargs: {}'.format(repr(self),
                                                           args, kwargs))
             # a new instance is returned, setup it.
@@ -629,7 +629,7 @@ class Mixture(object):
         return
 
     @classmethod
-    def parseText(cls, s):
+    def parseText(cls, s, ingredients={}):
         """
         Reads definition from string s, which has the following form:
 
@@ -640,6 +640,11 @@ class Mixture(object):
 
         where Ei -- chemical element name, ai -- amount of element Ei and
         unit_i -- units of ai.
+
+        The optional disctionary `ingredients` provides definition of the
+        names `Ei`. If name `Ei` is among its keys, the correspondent value is
+        used as the ingredient. Otherwise, the string `Ei` is passed as the
+        ingredient.
         """
         t = s.split()
 
@@ -649,13 +654,15 @@ class Mixture(object):
 
         recipe = []
         for ee, aa, uu in zip(e, a, u):
+            ee = ingredients.get(ee, ee)
             recipe.extend([ee, (aa, uu)])
-
         return cls(*recipe)
 
     def elements(self, norm=1, keyform='Z'):
         """
         Return dictionary with chemical elements that are found in the material.
+        Dictionary keys are element names, dictionary values are tuples of the
+        form (ZAID1, f1, ZAID2, f2, ...), where ZAIDi are sorted.
 
         Optional argument `norm` takes the following values:
 
