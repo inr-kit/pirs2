@@ -118,7 +118,7 @@ def find_elements(mlist):
     return elements
 
 
-def report_element(edd, ename, fout):
+def report_element(edd, ename, f):
     """
     Print table containing all isotopic compositions in edd.
 
@@ -126,37 +126,52 @@ def report_element(edd, ename, fout):
     and keys -- list of material names. This dictionary is prepared by
     find_elements() above.
     """
-    print >> fout, '"{}" composition:'.format(ename)
+    print >> f, '"{}" composition:'.format(ename)
     # common list of ZAIDs
     zaids = set(sum(map(lambda l: l[0::2], edd.keys()), ()))
     zaids = sorted(zaids)
-    print >> fout, '    ', ''.join(map('{:>14d}'.format, zaids)), '  in materials'
+    print >> f, '    ', ''.join(map('{:>14d}'.format, zaids)), '  in materials'
 
     for ed, ml in edd.items():
         d = dict(zip(ed[0::2], ed[1::2]))
-        print >> fout, '     ',
+        print >> f, '     ',
         for za in zaids:
-            print >> fout, '{:>13.4e}'.format(d.get(za, 0.0)),
-        print >> fout, ' ', ml
+            print >> f, '{:>13.4e}'.format(d.get(za, 0.0)),
+        print >> f, ' ', ml
 
 
 def main():
     import argparse
     parser = argparse.ArgumentParser(description='Extract elemental '
                                      'compositions from MCNP input file')
-    parser.add_argument('--input',
+    parser.add_argument('--input', nargs='+', type=str,
                         help='MCNP input file with material specifications')
-    parser.add_argument('--out', default=None,
+    parser.add_argument('--out', type=str, default='',
                         help='Output filename')
+    parser.add_argument('--elements', nargs='*', type=str, default=(),
+                        help='Elements to be printed out. By default, '
+                        'all mentioned in the input file.')
     args = parser.parse_args()
-    if args.out is None:
-        args.out = '{}.isocomps'.format(args.input)
+    if args.elements == ():
+        def to_print(ename):
+            return True
+    else:
+        def to_print(ename):
+            return ename in args.elements
 
-    mats = read_input(args.input)
-    elements = find_elements(mats.values())
-    fout = open(args.out, 'w')
-    for ename, edd in sorted(elements.items()):
-        report_element(edd, ename, fout)
+    for inp in args.input:
+        if args.out == '':
+            nout = '{}.isocomps'.format(inp)
+        else:
+            nout = args.out
+        print 'Results for input file "{}" written to "{}"'.format(inp, nout)
+
+        mats = read_input(inp)
+        elements = find_elements(mats.values())
+        fout = open(nout, 'w')
+        for ename, edd in sorted(elements.items()):
+            if to_print(ename):
+                report_element(edd, ename, fout)
 
 
 if __name__ == '__main__':
