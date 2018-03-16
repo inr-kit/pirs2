@@ -35,10 +35,10 @@ _E = float_info.epsilon
 # check if two values are close to each other
 def _are_close(v1, v2, epsilon_multiplier=10., rel_err=None, abs_err=None):
     """
-    Checks if v1 is close to v2. 
-    
-    Should be used instead of v1 == v2, which works bad for float operands. 
-    
+    Checks if v1 is close to v2.
+
+    Should be used instead of v1 == v2, which works bad for float operands.
+
     Returns True, if |v1-v2| less or equal than max(v1, v2, 1) multiplied with
     machine epsilon. The latter is taken form sys.float_info.
 
@@ -50,17 +50,17 @@ def _are_close(v1, v2, epsilon_multiplier=10., rel_err=None, abs_err=None):
     True
     """
     # First, check if v1 and v2 are equal, and if not, check if they are within machine epsilon
-    if v1 == v2: 
+    if v1 == v2:
         return True
     else:
         if rel_err != None:
-            vmax = float(max( abs(v1), abs(v2) ))
+            vmax = float(max(abs(v1), abs(v2) ))
             return abs(v1 - v2) <= rel_err * vmax
         if abs_err != None:
             return abs(v1 - v2) <= abs_err
 
-        vmax = float(max( abs(v1), abs(v2), 1. ))
-        return abs(v1 - v2)/vmax <=  _E * epsilon_multiplier
+        vmax = float(max(abs(v1), abs(v2), 1e-3))
+        return abs(v1 - v2) * vmax <=  _E * epsilon_multiplier
 
 def _theta(x, y):
     """
@@ -95,15 +95,15 @@ def _theta(x, y):
 
     In the case when x and y are non-zero, the resulting value lies in [0, 2pi]:
 
-    >>> _theta( 1.,  1.)   #doctest: +ELLIPSIS
+    >>> _theta(1.,  1.)   #doctest: +ELLIPSIS
     0.785...
     >>> _theta(-1.,  1.)   #doctest: +ELLIPSIS
     2.356...
     >>> _theta(-1., -1.)   #doctest: +ELLIPSIS
     3.926...
-    >>> _theta( 1., -1.)   #doctest: +ELLIPSIS
+    >>> _theta(1., -1.)   #doctest: +ELLIPSIS
     5.497...
-    
+
     """
     if x == 0. and y == 0.:
         # By default, this means theta = 0, i.e. zero
@@ -111,7 +111,7 @@ def _theta(x, y):
         t = 0.
     elif x == 0.:
         # in this case y is nonzero and theta is +-pi/2
-        t = copysign( pi2, y) 
+        t = copysign(pi2, y)
     elif y == 0.:
         # in this case x is nonzero and theta is 0 or pi
         if x > 0.:
@@ -120,7 +120,7 @@ def _theta(x, y):
             t = pi
     else:
         # nondegenerated case,  both x and y are nonzero. Use atan()
-        t = atan( y/x )
+        t = atan(y/x )
         if x < 0. and y > 0.:
             t = t + pi
         elif x < 0. and y < 0.:
@@ -165,7 +165,7 @@ def _phi(r, z):
             p = pi
     else:
         # nondegenerate case. use atan to get phi:
-        p = atan( r/z )
+        p = atan(r/z )
         if z < 0.:
             p = p + pi
     if 0. < p < pi: return p
@@ -194,22 +194,22 @@ def _cossin(a):
     a = a % (2*pi)
     if a < pi:
         # use sin
-        s = sin( a )
+        s = sin(a )
         c = (1. - s**2.)**0.5
         # cos(a) for a in 0,pi can take positive or negative values.
         c = copysign(c, pi2-a)
     else:
         # use cos:
-        c = cos( a )
+        c = cos(a )
         # sin(a) for a in pi,2pi is allways negative
         s = -(1. - c**2.)**0.5
-    return (c,s)        
+    return (c,s)
 
 def _car2(x, y, z):
     """
     Given cartesian coordinates x, y, z, returns a 4-tuple with coordinates in cylindrical and spherical systems.
 
-    >>> r,t,R,p = _car2( 0,0,0 ) # zero vector "looks" along x-axis.
+    >>> r,t,R,p = _car2(0,0,0 ) # zero vector "looks" along x-axis.
     >>> r                        # radius in cylinder CS
     0.0
     >>> t                        # angle theta in cylinder CS
@@ -225,7 +225,7 @@ def _car2(x, y, z):
 
     R = (r**2 + z**2)**0.5
     p = _phi(r, z)
-    return (r,t,R,p)            
+    return (r,t,R,p)
 
 def _cyl2(r,t,z):
     """
@@ -245,7 +245,7 @@ def _cyl2(r,t,z):
     R = (r**2 + z**2)**0.5
     p = _phi(r, z)
 
-    return (x,y,R,p)            
+    return (x,y,R,p)
 
 
 def _sph2(R,t,p):
@@ -274,12 +274,12 @@ def _sph2(R,t,p):
 def _base_theta(t):
     """
     Returns the base value of angle t, i.e., which lies in the interval [0, 2pi).
-    
+
     >>> _base_theta(0.)
     0.0
-    >>> _base_theta(pi)    #doctest: +ELLIPSIS  
+    >>> _base_theta(pi)    #doctest: +ELLIPSIS
     3.14159...
-    >>> _base_theta(pi + 2*pi)    #doctest: +ELLIPSIS  
+    >>> _base_theta(pi + 2*pi)    #doctest: +ELLIPSIS
     3.14159...
     >>> _base_theta(2*pi)
     0.0
@@ -289,7 +289,7 @@ def _base_theta(t):
 def _base_phi(p):
     """
     Returns the base value of angle phi, i.e. which lies in the interval [0,pi].
-    
+
     >>> _base_phi(0.)
     0.0
     >>> _base_phi(pi2)        #doctest: +ELLIPSIS
@@ -303,11 +303,11 @@ def _base_phi(p):
     p = p % (2*pi)
     if p > pi:
         p = 2*pi - p
-    return p    
+    return p
 
 class Vector3(object):
-    """Vector in three-dimensional space. 
-    
+    """Vector in three-dimensional space.
+
     Coordinate conversion between cartesian (car), cylindrical (cyl)  and
     spherical (sph) coordinate systems is performed "on demand", i.e. when
     values of these coordinates are inquired by user.
@@ -315,9 +315,9 @@ class Vector3(object):
     Vectors are created by specifying a 3-tuple containing coordinates in
     cartesian, cylinder, or spherical coordinate system (CS):
 
-    >>> v1 = Vector3(  car=(1, 0, 0) )     # cartesian coordinates
-    >>> v2 = Vector3(  cyl=(1, 0, 0) )     # cylinder coordinates
-    >>> v3 = Vector3(  sph=(1, 0, pi2))    # spherical coordinates (pi2 is defined in the module as pi2 = pi/2)
+    >>> v1 = Vector3( car=(1, 0, 0) )     # cartesian coordinates
+    >>> v2 = Vector3( cyl=(1, 0, 0) )     # cylinder coordinates
+    >>> v3 = Vector3( sph=(1, 0, pi2))    # spherical coordinates (pi2 is defined in the module as pi2 = pi/2)
 
     The order of values in tuples is the following::
 
@@ -326,13 +326,13 @@ class Vector3(object):
         (R, theta, phi) # for spherical CS
 
     Coordinates R and r used in the spherical and cylinder CS, have different meaning:
-    R is the vector's length, r is the length of vector's projection onto xy plane.    
+    R is the vector's length, r is the length of vector's projection onto xy plane.
 
     If the type of coordinate system is not given explicitly, the cartesian is
     assumed. The following two definitions are equal:
 
-    >>> v4 = Vector3(     (1, 0, 0)) 
-    >>> v5 = Vector3( car=(1, 0, 0))
+    >>> v4 = Vector3(    (1, 0, 0))
+    >>> v5 = Vector3(car=(1, 0, 0))
     >>> v4 == v5
     True
 
@@ -344,10 +344,10 @@ class Vector3(object):
     True
 
     If the 'car' argument is another Vector3 object, its copy is returned.
-    This is to make Vector3() method a type convertor. 
+    This is to make Vector3() method a type convertor.
 
-    >>> v1 = Vector3( (1, 2, 3) )
-    >>> v2 = Vector3( v1 )
+    >>> v1 = Vector3((1, 2, 3) )
+    >>> v2 = Vector3(v1 )
     >>> v1 == v2
     True
     >>> v1 is v2
@@ -364,7 +364,7 @@ class Vector3(object):
     (x,y,z), cylindrical (r, t[heta], z), or spherical (R[ho], t[heta], p[hi])
     systems.
 
-    >>> v = Vector3( (1,1,1) )
+    >>> v = Vector3((1,1,1) )
     >>> v.x, v.y, v.z            # cartesian coordinates
     (1.0, 1.0, 1.0)
     >>> v.r, v.t, v.z            # cylinder coordinates #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -376,10 +376,10 @@ class Vector3(object):
     Thus, they always can be used to get the coordinates in another system.
 
     The transition from one coordinate system to another is performed when a
-    coordinate is set.  For example, 
+    coordinate is set.  For example,
 
-       >>> v = Vector3( (0,0,0) )   
-       >>> v.r                      
+       >>> v = Vector3((0,0,0) )
+       >>> v.r
        0.0
        >>> v.r = 3
 
@@ -405,15 +405,15 @@ class Vector3(object):
     ###           v2 = Vector3 (v1 )
 
     ###       The call to Vector3(v) acts also as type conversion. In the case v
-    ###       is allready of type Vector3, a new instance is returned, i.e. 
+    ###       is allready of type Vector3, a new instance is returned, i.e.
     ###           Vector3(v)  is  v   =   False
     ###           Vector3(v) ==   v   =   True
 
-    ###       """    
+    ###       """
     ###       if isinstance(arg, cls):
     ###           # if the argument is of type Vector3, make copy of it.
     ###           return arg.copy()
-    ###       # Otherwise, call the pre-class constructor    
+    ###       # Otherwise, call the pre-class constructor
     ###       return object.__new__(cls)
 
     @classmethod
@@ -423,31 +423,31 @@ class Vector3(object):
 
         >>> v1 = Vector3.Zero()
         >>> v2 = Vector3()
-        >>> v3 = Vector3( car=(0,0,0) )
+        >>> v3 = Vector3(car=(0,0,0) )
         >>> v1 == v2
         True
         >>> v2 == v3
         True
-        
+
         """
-        return cls( car=(0., 0., 0.) )
+        return cls(car=(0., 0., 0.) )
 
     @classmethod
     def UnitX(cls):
         """Returns unit vector along X axis"""
-        return cls( car=(1., 0., 0.) )
+        return cls(car=(1., 0., 0.) )
     @classmethod
     def UnitY(cls):
         """Returns unit vector along Y axis"""
-        return cls( car=(0., 1., 0.) )
+        return cls(car=(0., 1., 0.) )
     @classmethod
     def UnitZ(cls):
         """Returns unit vector along Z axis"""
-        return cls( car=(0., 0., 1.) )
+        return cls(car=(0., 0., 1.) )
 
     ###   def __init__(self, car=None, cyl=None, sph=None):
     ###       if isinstance(car, self.__class__):
-    ###           # in this case, the __new__ method returns a copy of it. 
+    ###           # in this case, the __new__ method returns a copy of it.
     ###           # In this case nothing to do.
     ###           ###   pass
     ###           raise ValueError('Use of Vector3(Vector3()) deprecated. To copy use Vector3().copy()')
@@ -471,8 +471,8 @@ class Vector3(object):
     ###   def set(self, car=None, cyl=None, sph=None):
     def __init__(self, car=None, cyl=None, sph=None):
         """
-        Sets coordinates of the vector. 
-        
+        Sets coordinates of the vector.
+
         Arguments car, cyl or sph must be a tuple specifying coordinates in the
         cartesian, cylinder or spherical coordinate systems, respectively.
 
@@ -481,7 +481,7 @@ class Vector3(object):
         """
         if car != None:
             self.__cs = 'car'
-            if len(car) < 3: car = car + (0.,0.) 
+            if len(car) < 3: car = car + (0.,0.)
             self.__z = float(car[2])
             self.__y = float(car[1])
             self.__x = float(car[0])
@@ -500,8 +500,8 @@ class Vector3(object):
         else:
             self.__cs = 'car'
             self.__z = 0.
-            self.__y = 0. 
-            self.__x = 0. 
+            self.__y = 0.
+            self.__x = 0.
         self.__rehash = True
         return
 
@@ -514,9 +514,9 @@ class Vector3(object):
         >>> v1 is v2, v1 == v2
         (False, True)
         """
-        if   self.__cs == 'car': new = Vector3( car=(self.__x, self.__y, self.__z) )
-        elif self.__cs == 'cyl': new = Vector3( cyl=(self.__r, self.__t, self.__z) )
-        elif self.__cs == 'sph': new = Vector3( sph=(self.__R, self.__t, self.__p) )
+        if   self.__cs == 'car': new = Vector3(car=(self.__x, self.__y, self.__z) )
+        elif self.__cs == 'cyl': new = Vector3(cyl=(self.__r, self.__t, self.__z) )
+        elif self.__cs == 'sph': new = Vector3(sph=(self.__R, self.__t, self.__p) )
         return new
 
     def __all_coords(self):
@@ -538,35 +538,35 @@ class Vector3(object):
             R = self.__R
             t = self.__t
             p = self.__p
-        #       0  1  2  3  4  5  6    
+        #       0  1  2  3  4  5  6
         return (x, y, z, r, t, R, p)
 
     @property
     def x(self):
         """
         Returns x coordinate in cartesian CS.
-        
+
         When x is set, the vector internal representation is changed to
         cartesian (thus x, y and z are computed from cyl. or sph coordinates),
         and then new value is set to x.
-        
-        >>> Vector3( (1,1,1) ).x                   #doctest: +ELLIPSIS
+
+        >>> Vector3((1,1,1) ).x                   #doctest: +ELLIPSIS
         1.0
         >>> Vector3(cyl=(2**0.5, pi/4, 1.)).x      #doctest: +ELLIPSIS
         1.00...
         >>> Vector3(sph=(2**0.5, pi/4, pi/2)).x    #doctest: +ELLIPSIS
         1.00...
 
-        >>> v = Vector3( sph=(1,0,0) )
+        >>> v = Vector3(sph=(1,0,0) )
         >>> v.x = 1
         >>> print v
         car (x=1, y=0, z=1)
 
-        >>> v = Vector3( cyl=(2**0.5, pi/4, 1))
+        >>> v = Vector3(cyl=(2**0.5, pi/4, 1))
         >>> v.x = 4
         >>> print v
         car (x=4, y=1, z=1)
-        
+
         """
         if self.__cs is 'car':
             return self.__x
@@ -589,24 +589,24 @@ class Vector3(object):
     def y(self):
         """
         Returns y coordinate in cartesian CS.
-        
+
         When y is set, the vector internal representation is changed to
         cartesian (thus x, y and z are computed from cyl. or sph coordinates),
         and then new value is set to y.
 
-        >>> Vector3( (1,1,1) ).y                   #doctest: +ELLIPSIS
+        >>> Vector3((1,1,1) ).y                   #doctest: +ELLIPSIS
         1.0
         >>> Vector3(cyl=(2**0.5, pi/4, 1.)).y      #doctest: +ELLIPSIS
         1.0
         >>> Vector3(sph=(2**0.5, pi/4, pi/2)).y    #doctest: +ELLIPSIS
         1.0
 
-        >>> v = Vector3( sph=(1,0,0) )
+        >>> v = Vector3(sph=(1,0,0) )
         >>> v.y = 1
         >>> print v
         car (x=0, y=1, z=1)
 
-        >>> v = Vector3( cyl=(2**0.5, pi/4, 1))
+        >>> v = Vector3(cyl=(2**0.5, pi/4, 1))
         >>> v.y = 4
         >>> print v
         car (x=1, y=4, z=1)
@@ -632,24 +632,24 @@ class Vector3(object):
     def z(self):
         """
         Returns z coordinate in cartesian or cylinder CS.
-        
+
         When z is set in a vector with spherical internal representation, the
         new CS will be cartesian. In other cases, i.e. when z is set to a
         cartesian or cylinder vector, its type is not changed.
-        
-        >>> Vector3( (1,1,1) ).z                   #doctest: +ELLIPSIS
+
+        >>> Vector3((1,1,1) ).z                   #doctest: +ELLIPSIS
         1.0
         >>> Vector3(cyl=(2**0.5, pi/4, 1.)).z      #doctest: +ELLIPSIS
         1.0
         >>> Vector3(sph=(2**0.5, pi/4, pi/2)).z    #doctest: +ELLIPSIS
         0.0
 
-        >>> v = Vector3( sph=(1,0,pi/2) )
+        >>> v = Vector3(sph=(1,0,pi/2) )
         >>> v.z = 1
         >>> print v
         car (x=1, y=0, z=1)
 
-        >>> v = Vector3( cyl=(2**0.5, pi/4, 1))
+        >>> v = Vector3(cyl=(2**0.5, pi/4, 1))
         >>> v.z = 4
         >>> print v                                #doctest: +ELLIPSIS
         cyl (r=1.41..., t=0.785..., z=4)
@@ -669,12 +669,12 @@ class Vector3(object):
             self.__y = c[1]
             self.__z = v
             self.__cs = 'car'
-        self.__rehash = True            
+        self.__rehash = True
 
     @property
     def r(self):
         """r coordinate in cylinder CS.
-        
+
         When r is set, the vector internal representation is changed to
         cylinder (thus r, t and z are computed from cartesian or spherical coordinates),
         and then new value is set to r."""
@@ -698,7 +698,7 @@ class Vector3(object):
     @property
     def t(self):
         """t (theta) coordinate in cylinder CS.
-        
+
         When t is set to a vector with cylinder or spherical coordinates, the
         internal CS is not changed.  If t is set to a vector with cartesian
         coordinates, the spherical coordinates are computed from cartesian, and
@@ -723,7 +723,7 @@ class Vector3(object):
     @property
     def R(self):
         """R coordinate in spherical CS.
-        
+
         When R is set, the vector internal representation is changed to
         spherical (thus R, t and p are computed from cartesian or cylinder coordinates),
         and then new value is set to R."""
@@ -747,7 +747,7 @@ class Vector3(object):
     @property
     def p(self):
         """p (phi) coordinate in spherical CS.
-        
+
         When p is set, the vector internal representation is changed to
         spherical (thus R, t and p are computed from cartesian or cylinder coordinates),
         and then new value is set to p."""
@@ -837,7 +837,7 @@ class Vector3(object):
     @property
     def alld(self):
         """
-        Returns a dictionary with coordinates in all systems,:: 
+        Returns a dictionary with coordinates in all systems,::
 
             {'x':x, 'y':y, 'z':z, 'r':r, 't':t, 'R':R, 'p':p}
         """
@@ -891,7 +891,7 @@ class Vector3(object):
             X,Y,Z = othr.car
         except AttributeError:
             raise TypeError('Cannot add ' + repr(othr) + ' to ' + repr(self) )
-        return Vector3( car=(x+X,y+Y,z+Z) )
+        return Vector3(car=(x+X,y+Y,z+Z) )
 
     def __radd__(self, othr):
         return self + othr
@@ -904,11 +904,11 @@ class Vector3(object):
         # About the usage of try-except construction, see comment in __add__ method.
         try:
             if self.__cs == 'car':
-                r = Vector3( car=(-self.__x, -self.__y,      -self.__z     ) )
+                r = Vector3(car=(-self.__x, -self.__y,      -self.__z     ) )
             if self.__cs == 'cyl':
-                r = Vector3( cyl=( self.__r,  self.__t + pi, -self.__z     ) )
+                r = Vector3(cyl=(self.__r,  self.__t + pi, -self.__z     ) )
             if self.__cs == 'sph':
-                r = Vector3( sph=( self.__R,  self.__t + pi, pi - self.__p ) )
+                r = Vector3(sph=(self.__R,  self.__t + pi, pi - self.__p ))
         except AttributeError:
             raise TypeError
         return r
@@ -924,11 +924,11 @@ class Vector3(object):
         Multiplication by a scalar.
         """
         if self.__cs == 'car':
-            res = Vector3( car=(self.__x*v, self.__y*v, self.__z*v) )
+            res = Vector3(car=(self.__x*v, self.__y*v, self.__z*v))
         elif self.__cs == 'cyl':
-            res = Vector3( cyl=(self.__r*v, self.__t,   self.__z*v) )
+            res = Vector3(cyl=(self.__r*v, self.__t,   self.__z*v))
         elif self.__cs == 'sph':
-            res = Vector3( sph=(self.__R*v, self.__t,   self.__p  ) )
+            res = Vector3(sph=(self.__R*v, self.__t,   self.__p  ))
         return res
 
     def __div__(self, v):
@@ -940,30 +940,19 @@ class Vector3(object):
 
     def __eq__(self, othr):
         # compare taking into account machine epsilon, see function _are_close() above.
-        if not isinstance(othr, Vector3): 
+        if not isinstance(othr, Vector3):
             return False
 
-        # compare in the coordinate system of self:
-        c1 = self.__all_coords()
-        c2 = othr.__all_coords()
-        if self.__cs == 'car':
-            return ( _are_close(c1[0], c2[0])  and
-                     _are_close(c1[1], c2[1])  and
-                     _are_close(c1[2], c2[2]))
-        elif self.__cs == 'cyl':
-            t1 = _base_theta(c1[4])
-            t2 = _base_theta(c2[4])
-            return ( _are_close(c1[3], c2[3])  and
-                     _are_close(   t1,    t2)  and
-                     _are_close(c1[2], c2[2]))
-        else:
-            t1 = _base_theta(c1[4])
-            t2 = _base_theta(c2[4])
-            p1 = _base_phi(c1[6])
-            p2 = _base_phi(c2[6])
-            return ( _are_close(c1[5], c2[5])  and
-                     _are_close(   t1,    t2)  and
-                     _are_close(   p1,    p2))
+        x1, y1, z1, r1, t1, R1, p1 = self.__all_coords()
+        x2, y2, z2, r2, t2, R2, p2 = othr.__all_coords()
+        t1 = _base_theta(t1)
+        t2 = _base_theta(t2)
+        p1 = _base_phi(p1)
+        p2 = _base_phi(p2)
+        return (
+          (_are_close(x1, x2) and _are_close(y1, y2) and _are_close(z1, z2)) or
+          (_are_close(r1, r2) and _are_close(t1, t2) and _are_close(z1, z2)) or
+          (_are_close(R1, R2) and _are_close(t1, t2) and _are_close(p1, p2)))
 
     def __ne__(self, othr):
         return not self == othr
@@ -987,7 +976,7 @@ class Vector3(object):
         obtained, it is saved to __hash for later use, and flag __rehash set to
         False.
         """
-        if self.__rehash: 
+        if self.__rehash:
             t =  (self.__cs,)
             if self.__cs == 'car': t += self.car
             if self.__cs == 'cyl': t += self.cyl
@@ -1000,26 +989,26 @@ class Vector3(object):
         """Vector product"""
         a = self.car
         b = othr.car
-        return Vector3( ( a[1]*b[2] - a[2]*b[1],
+        return Vector3((a[1]*b[2] - a[2]*b[1],
                           a[2]*b[0] - a[0]*b[2],
                           a[0]*b[1] - a[1]*b[0]  ) )
 
     def is_perpendicular(self, othr):
         """ check that two vectors are perpendicular taking into account the machine epsilon."""
-        return _are_close( self.dot(othr), 0.)
+        return _are_close(self.dot(othr), 0.)
 
     def is_parallel(self, othr):
         """check if self and othr are parallel taking into account machine epsilon."""
-        return _are_close( self.dot(othr), self.R*othr.R)
+        return _are_close(self.dot(othr), self.R*othr.R)
 
 #      def is_in_plane(self, P):
 #         """
 #         Point lies on the plane P if its
 #         projection coincides with the point itself:
-#         """            
+#         """
 #         op = P._project_point(self, cs='')
 #         return  op == self
-# 
+#
 #     def distance_to_plane(self, P):
 #         """project self to P and return length of the vector from self to projection"""
 #         pr = P._project_point(self, cs='')
@@ -1033,7 +1022,7 @@ class Vector3(object):
         """ test if self is on axis"""
         a = axis.lower()
         c = self.__all_coords()
-        if   a == 'x':
+        if a == 'x':
             return _are_close(c[1], 0.) and _are_close(c[2], 0.)
         elif a == 'y':
             return _are_close(c[0], 0.) and _are_close(c[2], 0.)
@@ -1064,6 +1053,29 @@ class Vector3(object):
             r.p += pi2
         else:
             r.p += -pi2
-        return r    
+        return r
 
+    def basis(self):
+        """
+        Return 3 unit vectors i, j, k perpendicular to each other, where i is
+        parallel to the vector.
+        """
+        if self.R == 0:
+            raise ValueError('Cannot define basis for zero vector')
+        else:
+            i = self.copy()
+        i.R = 1
+        j = self._arbitrary_normal()
+        k = i.cross(j)
+        j = k.cross(i)
 
+        ij = i.dot(j)
+        ik = i.dot(k)
+        jk = j.dot(k)
+        if not (_are_close(0, ij) and _are_close(0, ik) and _are_close(0, jk)):
+            print 'basis not orthogonal'
+            print 'ij', ij
+            print 'ik', ik
+            print 'jk', jk
+            raise AssertionError()
+        return i, j, k
