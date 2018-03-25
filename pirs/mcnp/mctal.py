@@ -31,13 +31,13 @@ except ImportError:
 import re
 def add_e_to_exp(s, e='e'):
     """
-    MCNP uses float point format without 'E' when exponent has 3 digits, 
+    MCNP uses float point format without 'E' when exponent has 3 digits,
     i.e. 1.2e-123 is printed out as 1.2-123.
 
     This function adds 'e' or 'E' to such strings.
     """
 
-    # Expression to search for exponent without "e" or "E". 
+    # Expression to search for exponent without "e" or "E".
     large_exp = re.compile('\d([-+]\d)')
     r = large_exp.search(s)
     if r:
@@ -58,7 +58,7 @@ def read_values(lines, N, type_=str, check=True):
 
     Returns a tuple of N values. of type `type_`.
 
-    The lines needed to read N values are removed from the list. If only part of 
+    The lines needed to read N values are removed from the list. If only part of
     the line is necessary, it is truncated and the rest is still in lines.
 
 
@@ -70,7 +70,7 @@ def read_values(lines, N, type_=str, check=True):
     list of lines. THis mean that the whole mctal file is first read into a
     list of lines and than this list is processed. This should not cause memory
     problems: for example, a 800MB file is read with `readlines` within several
-    seconds and fits to about 6 GB memory. 
+    seconds and fits to about 6 GB memory.
 
     """
     res = []
@@ -85,15 +85,15 @@ def read_values(lines, N, type_=str, check=True):
             tokens = cline.split()
 
     if type_ is float:
-        # check special format used for float values with large exponent: 
+        # check special format used for float values with large exponent:
         # the exponent part starts with the sign only, without "e" or "E".
         res = map(add_e_to_exp, res)
-        
+
     res = map(type_, res)
     if not check:
         # put the rest of tokens to lines:
         if tokens:
-            lines.insert(0, cline.lstrip()) 
+            lines.insert(0, cline.lstrip())
     else:
         assert tokens == []
     return res
@@ -133,7 +133,7 @@ class KcodeArray(object):
 class _MctalTally(object):
     # see attributes in Mctal.read_complete()
     pass
-                
+
 
 class Mctal(object):
     def __init__(self):
@@ -191,7 +191,14 @@ class Mctal(object):
             ver = t.pop(0)
             rnr = int(t.pop(-1))
             nps = int(t.pop(-1))
-            knod = int(t.pop(-1))
+
+            # For large nps, knod can disappear from the 1-st line.
+            try:
+                knod = int(t[-1])
+            except ValueError:
+                knod = -1
+            else:
+                t.pop(-1)
             probid = ' '.join(t)
             # try to get mcnp version.
             if '6' in ver:
@@ -206,7 +213,7 @@ class Mctal(object):
             prtitle = lines.pop(0)
             # NTAL NPERT
             t = lines.pop(0).lower().split()
-            
+
             ntal = int(t[1])
             if 'npert' in t:
                 npert = int(t[3])
@@ -214,7 +221,7 @@ class Mctal(object):
                 npert = 0
             # List of tally names
             tals = read_values(lines, ntal, int) # list of tally names
-            # 
+            #
             self.kod = kod
             self.ver = ver
             self.probid = probid
@@ -293,9 +300,9 @@ class Mctal(object):
                 en = int(efl.pop())
                 efl = efl.pop()
                 # print 'ef, en, efl', ef, en, efl
-                # 
+                #
                 if en > 0:
-                    # number of energy values depends on the total bin 
+                    # number of energy values depends on the total bin
                     if 't' in efl:
                         # there is total bin, so number of energy values is en - 1
                         nev = en - 1
@@ -311,7 +318,7 @@ class Mctal(object):
                 tf = int(tfl.pop()) if len(tfl) == 3 else 0
                 tn = int(tfl.pop())
                 tfl = tfl.pop()
-                # 
+                #
                 if tn > 0:
                     tvl = read_values(lines, tn, float)
                 else:
@@ -327,7 +334,7 @@ class Mctal(object):
                 tfcl = lines.pop(0).split()
                 ntfc = int(tfcl[1])
                 jtf = map(int, tfcl[2:])
-                tfc = read_values(lines, ntfc*4, float)
+                tfc = read_values(lines, ntfc*4, str)
 
                 # put all into an object
                 tll.name = m
@@ -392,8 +399,8 @@ if __name__ == '__main__':
         print read_values(o, 2, int)
         print read_values(o, 5, int)
 
-    
+
     # m = Mctal()
     # m.read('mctal')
-    # print m.final() 
+    # print m.final()
 
