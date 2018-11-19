@@ -619,15 +619,18 @@ class Mixture(object):
                    isinstance(mraw, Nuclide)):
                     # use the specified in arguments material directry as
                     # ingredient.
+                    self._print_log('Using {} as ingredient'.format(mraw))
                     m = mraw
                 elif isinstance(mraw, int):
                     # if integer, assume it is ZAID representation of a nuclide
+                    self._print_log('Using {} as ZAID'.format(mraw))
                     m = Nuclide(mraw)
                 elif isinstance(mraw, basestring):
                     # Assume that string gives a chemical name or a chemical
                     # formula.  Optional keyword argument with natural
                     # isotopical abundancies
                     # may be specified.
+                    self._print_log('Using {} as chemical formula'.format(mraw))
                     mraw = formula_to_tuple(mraw, names=dn)
                 if isinstance(mraw, tuple):
                     m = self.__class__(*mraw, **kwargs)
@@ -671,7 +674,11 @@ class Mixture(object):
 
         recipe = []
         for ee, aa, uu in zip(e, a, u):
-            ee = ingredients.get(ee, ee)
+            ee = ingredients.get(ee, ee)  # Use given definition of ee, if given
+            try:
+                ee = int(ee)
+            except:
+                pass
             recipe.extend([ee, (aa, uu)])
         return cls(*recipe)
 
