@@ -97,7 +97,8 @@ def formula_to_tuple(cf, names={}):
         # use part to check whether all parts of cf are parsed
         check += part
         if check not in cf:
-            raise ValueError('Cannot process chemical formula {}, see part preceeding {}'.format(repr(cf), repr(part)))
+            raise ValueError('Cannot process chemical formula {}, see part ',
+                             'preceeding {}'.format(repr(cf), repr(part)))
 
         # convert integer to amount of moles (chemical formulae always express amount, not weight/mass)
         mult = 1 if mult == '' else int(mult)
@@ -111,13 +112,16 @@ def formula_to_tuple(cf, names={}):
             elem = get_default_isotopic_composition(elem)
 
         res.extend( [elem, mult] )
+        print 'From f_to_tuple:', res
 
     # Simplify definition, if necessary
     if len(res) == 2 and res[1] == (1, 1):
         res = (res[0], )
 
     # print '{} -> {}'.format(cf, res)
-    return tuple(res)
+    res = tuple(*res)
+    print 'From f_to_tuple:', res
+    return res
 
 
 

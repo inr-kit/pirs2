@@ -25,6 +25,8 @@ MCNP.
 # Developed at INR, Karlsruhe Institute of Technology
 #at
 
+import autologging
+
 from ..core import tramat
 from . import xsdir as xsdir_module
 # from .auxiliary import xs_interpolation as xs_int
@@ -33,6 +35,7 @@ from . import auxiliary
 from . import formatter
 
 
+@autologging.traced
 class Material(tramat.Mixture):
     """
     Object-oriented representation of material composition for MCNP.
