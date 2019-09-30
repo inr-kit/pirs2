@@ -110,17 +110,13 @@ def formula_to_tuple(cf, names={}):
             elem = names[elem]
         else:
             elem = get_default_isotopic_composition(elem)
-
         res.extend( [elem, mult] )
-        print 'From f_to_tuple:', res
-
     # Simplify definition, if necessary
     if len(res) == 2 and res[1] == (1, 1):
         res = (res[0], )
 
     # print '{} -> {}'.format(cf, res)
     res = tuple(*res)
-    print 'From f_to_tuple:', res
     return res
 
 

@@ -44,7 +44,7 @@ G_MOL_AWR = AMU_AWR * G_AMU * NAVOGAD  # Conversion factor g/mol/awr
 _nMix = 0
 
 
-@autologging.traced
+# @autologging.traced
 class Nuclide(object):
     """
     Representation of a nuclide. A nuclide is defined by its mass and charge
@@ -245,7 +245,7 @@ class Nuclide(object):
             return NotImplemented
 
     def __str__(self):
-        return '<{0:8d} {1:8.4f}>'.format(self.ZAID, self.M())
+        return '<N {0:8d} {1:8.4f}>'.format(self.ZAID, self.M())
 
     def __repr__(self):
         # If autologging.traced is used, it puts a repr(self) at the very begin
@@ -312,7 +312,7 @@ class Nuclide(object):
         return za in (92235, 94239, 94241)
 
 
-@autologging.traced
+# @autologging.traced
 class Amount(object):
     """
     Is a set of two entries: a value and its unit. The value must be a float (or
@@ -437,7 +437,7 @@ class Amount(object):
             raise ValueError('Unknown unit: ', value)
 
     def __str__(self):
-        return '{0} {1}'.format(self.__v, self.name)
+        return '<A {0} {1}>'.format(self.__v, self.name)
 
     def __repr__(self):
         try:
@@ -499,7 +499,7 @@ class Amount(object):
 
 
 @autologging.logged
-@autologging.traced()
+# @autologging.traced()
 class Mixture(object):
     """Mixture of nuclides or other mixtures.
 
@@ -532,7 +532,7 @@ class Mixture(object):
             elif isinstance(arg, basestring): 
                 # A string is given. Consider it is a formula that can be converted into a Mixture
                 t = formula_to_tuple(arg, names=kwargs.get('names', {}))
-                cls.__log.info('Single string argument converted to tuple: {}'.format(t))
+                cls.__log.info('Single string argument converted to tuple: {} -> {}'.format(arg, t))
                 res = cls(*t)
             elif isinstance(arg, int):
                 # An integer is given. Consider this as ZAID and provide with default unit.
@@ -582,7 +582,9 @@ class Mixture(object):
         element is 1 for moles, 2 for grams and 3 for cubic centimeters.
 
         """
-        if hasattr(self, '__m'):
+        self.__log.info('Initializing for object {}'.format(repr(self)))
+        self.__log.info(self.__dict__)
+        if hasattr(self, '_Mixture__m'):
             # check that the new method already passed an initialized instance:
             return
 
@@ -626,7 +628,7 @@ class Mixture(object):
                 # isotopical abundancies
                 # may be specified.
                 # self._print_log('Using {} as chemical formula'.format(mraw))
-                mraw = formula_to_tuple(mraw, names=dn)
+                mraw = self.__class__(*formula_to_tuple(mraw, names=dn))
 
             if m is None:
                 raise TypeError('Unsupported type of material definition, ',
@@ -995,6 +997,11 @@ class Mixture(object):
 
     def cc(self):
         """
+        As used in report(), this function should give the sum of ingredient's
+        volumes. This value is independent on the user-specified conc of the mixture itself.
+        Therefore, the presence of self.conc should not be checked at all.
+
+
         returns total volume in cubic centimeters of the ingredients, specified
         in the recipe definition.
 
@@ -1011,33 +1018,29 @@ class Mixture(object):
         is thrown.
 
         """
-        if self.conc is not None:
-            v = self.grams() / self.dens
-            res = Amount(v, 3)
-        else:
-            res = Amount(0, 3)
-            for (m, a) in zip(self.__m, self.__a):
-                if a.t == 1:
-                    c = m.conc
-                    if c is None:
-                        raise ValueError('Volume of ingredient cannot be defined')
-                    if c != 0:
-                        a = a * NAVOGAD / c
-                    else:
-                        a = a * NAVOGAD
-                        a.v = float('inf')
-                    a.t = 3
-                elif a.t == 2:
-                    d = m.dens
-                    if d is None:
-                        raise ValueError('Volume of ingredient cannot be defined')
-                    if d != 0:
-                        a = a / d
-                    else:
-                        a = a * 1.0
-                        a.v = float('inf')
-                    a.t = 3
-                res += a
+        res = Amount(0, 3)
+        for (m, a) in zip(self.__m, self.__a):
+            if a.t == 1:
+                c = m.conc
+                if c is None:
+                    raise ValueError('Volume of ingredient cannot be defined')
+                if c != 0:
+                    a = a * NAVOGAD / c
+                else:
+                    a = a * NAVOGAD
+                    a.v = float('inf')
+                a.t = 3
+            elif a.t == 2:
+                d = m.dens
+                if d is None:
+                    raise ValueError('Volume of ingredient cannot be defined')
+                if d != 0:
+                    a = a / d
+                else:
+                    a = a * 1.0
+                    a.v = float('inf')
+                a.t = 3
+            res += a
         return res
 
     def amount(self, t=1):
@@ -1071,7 +1074,7 @@ class Mixture(object):
             if a.t == 1:
                 mole = a.v
             else:
-                mole = Mixture((m, a)).moles().v
+                mole = Mixture(m, a).moles().v
             Smass += m.M() * mole
             Smole += mole
         if Smass == 0.:
@@ -1168,7 +1171,7 @@ class Mixture(object):
         except ValueError:
             m = 0.0
 
-        return '<{0:8s} {1:8.4f}>'.format(self.name, m)
+        return '<M {0:8s} {1:8.4f}>'.format(self.name, m)
 
     def report(self):
         """
@@ -1421,7 +1424,7 @@ class Mixture(object):
                     if tt.t == 1:
                         r += a
                     else:
-                        r += Mixture((m, a)).amount(tt)
+                        r += Mixture(m, a).amount(tt)
             return r
         else:
             return self.amount(tt)

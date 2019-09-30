@@ -47,6 +47,10 @@ class Material(tramat.Mixture):
     which is used to find cross-section data suffixes.
 
     """
+    def __new__(cls, *args, **kwargs):
+        r = super(Material, cls).__new__(cls, *args, **kwargs)
+        return r
+
     def __init__(self, *args, **kwargs):
         super(Material, self).__init__(*args, **kwargs)
         self.__sdict = {}
