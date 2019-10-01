@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/inr-kit/pirs2.svg?branch=autologger)](https://travis-ci.org/inr-kit/pirs2)
+
+
+
 (P)ython (I)nterfaces for (R)eactor (S)imulations 
 ===================================================
 
