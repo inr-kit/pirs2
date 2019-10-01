@@ -44,7 +44,7 @@ G_MOL_AWR = AMU_AWR * G_AMU * NAVOGAD  # Conversion factor g/mol/awr
 _nMix = 0
 
 
-# @autologging.traced
+@autologging.traced
 class Nuclide(object):
     """
     Representation of a nuclide. A nuclide is defined by its mass and charge
@@ -434,7 +434,7 @@ class Amount(object):
                 self.__t = tid
                 break
         else:
-            raise ValueError('Unknown unit: ', value)
+            raise ValueError('Unknown unit: ', repr(value))
 
     def __str__(self):
         return '<A {0} {1}>'.format(self.__v, self.name)
@@ -499,7 +499,7 @@ class Amount(object):
 
 
 @autologging.logged
-# @autologging.traced()
+@autologging.traced
 class Mixture(object):
     """Mixture of nuclides or other mixtures.
 
@@ -538,7 +538,7 @@ class Mixture(object):
                 # An integer is given. Consider this as ZAID and provide with default unit.
                 res = cls(Nuclide(arg), Amount(1, kwargs.get('units', 1)))
             else:
-                raise TypeError('Single argument cannot be interpreted')
+                raise TypeError('Single argument of type {} cannot be interpreted'.format(type(arg)))
         else:
             cls.__log.info('New Mixture instance created')
             res = super(Mixture, cls).__new__(cls)
@@ -596,7 +596,7 @@ class Mixture(object):
         self.__name = None       # recipe's given name.
 
         # default names:
-        du = kwargs.get('units', {})
+        du = kwargs.get('units', 1)
         dn = kwargs.get('names', {})
 
         # New args interpretation
@@ -617,18 +617,26 @@ class Mixture(object):
             if isinstance(mraw, (self.__class__, Nuclide)):
                 # use the specified in arguments material directry as
                 # ingredient.
+                self.__log.info('Ingredient added as is')
                 m = mraw
             elif isinstance(mraw, int):
                 # if integer, assume it is ZAID representation of a nuclide
                 # self._print_log('Using {} as ZAID'.format(mraw))
+                self.__log.info('Int ingredient added as Nuclide')
                 m = Nuclide(mraw)
+            elif isinstance(mraw, tuple) and len(mraw) % 2 == 0:
+                # For a tuple to be interpreted as a mixture definition, it must contain even number of entries
+                self.__log.info('Tuple ingredient added as Mixture')
+                m = self.__class__(*mraw)
+                
             elif isinstance(mraw, basestring):
                 # Assume that string gives a chemical name or a chemical
                 # formula.  Optional keyword argument with natural
                 # isotopical abundancies
                 # may be specified.
                 # self._print_log('Using {} as chemical formula'.format(mraw))
-                mraw = self.__class__(*formula_to_tuple(mraw, names=dn))
+                self.__log.info('String ingredient converted to tuple')
+                m = self.__class__(*formula_to_tuple(mraw, names=dn))
 
             if m is None:
                 raise TypeError('Unsupported type of material definition, ',
