@@ -294,7 +294,7 @@ class Nuclide(object):
         Two Nuclide instances are equal, if they have equal ZAID and M.
         """
         if isinstance(othr, self.__class__):
-            return self.ZAID == othr.ZAID and self.__m == othr.__m
+            return self.ZAID == othr.ZAID and self.M() == othr.M()
         else:
             return NotImplemented
 
@@ -791,9 +791,7 @@ class Mixture(object):
         >>> m.index(26058)
         3
         """
-        if isinstance(i, self.__class__):
-            return self.__m.index(i)
-        elif isinstance(i, Nuclide):
+        if isinstance(i, (self.__class__, Nuclide)):
             return self.__m.index(i)
         elif isinstance(i, int):
             n = Nuclide(i)
@@ -1406,22 +1404,29 @@ class Mixture(object):
 
         """
         tt = Amount(t, t)
-        if tt.t not in [1, 2]:
-            raise ValueError('Unsupported value of t argument: ' + str(t))
+        # if tt.t not in [1, 2]:
+        #     raise ValueError('Unsupported value of t argument: ' + str(t))
         if len(args) != 0:
             r = Amount(0, tt.t)
             for arg in args:
+                if isinstance(arg, int):
+                    arg = Nuclide(arg)
+                elif isinstance(arg, basestring):
+                    arg = self.__class__(*formula_to_tuple(arg))
                 for (m, a) in zip(self.__m, self.__a):
-                    if (isinstance(arg, int) and
-                       isinstance(m, Nuclide) and
-                       m.ZAID == arg):
-                        r += Mixture((m, a)).amount(tt)
-                    elif isinstance(arg, basestring):
-                        e = Mixture(*formula_to_tuple(arg))
-                        if isinstance(m, self.__class__) and e == m:
-                            r += Mixture(e, a).amount(tt)
-                    elif arg == m:
-                        r += Mixture(m, a).amount(tt)
+                    if m == arg:
+                        r += Mixture(arg, a).amount(tt)
+
+                    # if (isinstance(arg, int) and
+                    #    isinstance(m, Nuclide) and
+                    #    m.ZAID == arg):
+                    #     r += Mixture(m, a).amount(tt)
+                    # elif isinstance(arg, basestring):
+                    #     e = Mixture(*formula_to_tuple(arg))
+                    #     if isinstance(m, self.__class__) and e == m:
+                    #         r += Mixture(e, a).amount(tt)
+                    # elif arg == m:
+                    #     r += Mixture(m, a).amount(tt)
             return r
         elif len(kwargs) != 0:
             e = self.expanded()
@@ -1523,17 +1528,20 @@ class Mixture(object):
 
         # go back to initial units for materials m1 and m2:
         if a1.t != 1:
-            self.__v[i1] = Mixture((var[0], self.__a[i1]).amount(a1))
+            self.__a[i1] = Mixture(var[0], self.__a[i1]).amount(a1)
         if a2.t != 1:
-            self.__v[i2] = Mixture((var[1], self.__a[i2]).amount(a2))
+            self.__a[i2] = Mixture(var[1], self.__a[i2]).amount(a2)
 
     def __eq__(self, othr):
         """
         Two mixture instances are equal, if they have equal recipies, names and
         concentrations.
         """
+        if self is othr:
+            return True
         if isinstance(othr, self.__class__):
-            return (self.recipe() == othr.recipe() and
+            return (self.__m == othr.__m and
+                    self.__a == othr.__a and
                     self.name == othr.name and
                     self.conc == othr.conc)
         else:
