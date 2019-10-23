@@ -604,10 +604,12 @@ class Mixture(object):
         # if len(args) == 1:
         #     args = tuple(args) + (Amount(1, du), )
         #     self.__log.info("Updated list of arguments: {}".format(args))
-        if len(args) == 0 or len(args) % 2 != 0:
+        if not (len(args) in (0, 1) or len(args) % 2 == 0):
             # Check that the number of arguments is odd, i.e. i1, a1, i2, a2, ...iN, aN
-            raise TypeError('Method __init__ takes exactly one ' +
-                            'or an odd number of arguments')
+            print len(args) not in (0, 1)
+            print len(args) % 2
+            raise TypeError('Method __init__ takes exactly zero, one ' +
+                            'or an odd number of arguments', len(args), args)
 
         # interprete each pair of arguments
         for mraw, araw in zip(args[0::2], args[1::2]):
@@ -1074,6 +1076,10 @@ class Mixture(object):
         Effective molar mass of the recipe.
 
         """
+        # If mixture is empty, consider it as void
+        if not self.__m:
+            return 0.
+
         Smass = 0.
         Smole = 0.
         for (m, a) in zip(self.__m, self.__a):
@@ -1153,6 +1159,10 @@ class Mixture(object):
         # Note that for an ingredient of the Nuclide class one cannot define the correspondent
         # volume. Therefore, if at least one ingredient of the Mixture is a Nuclide, the 
         # derived concentration of the Mixture cannot be defined.
+
+        # If mixture contains no ingredients, assume its conc is zero
+        if not self.__m:
+            return 0.0
 
         Sv = 0.
         Sn = 0.
