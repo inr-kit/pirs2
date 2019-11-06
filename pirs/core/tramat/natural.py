@@ -25,6 +25,7 @@ natural composition recipe of chemical element Z
 # Author: Anton Travleev, anton.travleev@kit.edu
 # Developed at INR, Karlsruhe Institute of Technology
 #at
+import autologging
 
 from . import data_natural
 from . import data_names
@@ -62,19 +63,22 @@ def get_default_isotopic_composition(element=1):
 
     # By default, use predefined natural abundancies from data_natural
     nat_ab = __natabu
-    r = []
-    for (k,v) in nat_ab.items():
+    r = tuple() 
+    for (k, v) in nat_ab.items():
         if type(k) is int and k/1000 == Z:
             # add this nuclide to material recipe
-            r += [k, (v, 1)]
+            r += (k, (v, 1))
     if len(r) == 0:
         raise ValueError('No natural abundancy data found for element: ' + str(element))
-    return tuple(r)
+    return r
 
 import re
 
 # Capital letter followed optionally with small letter, followed optionally with digits
 re_names = re.compile('(([A-Z][a-z]*)(\d*))')
+
+@autologging.logged
+@autologging.traced
 def formula_to_tuple(cf, names={}):
     """
     Return a tuple that can be passed to the Mixture constructor.
@@ -92,12 +96,14 @@ def formula_to_tuple(cf, names={}):
     valid names.
     """
     check = ''
-    res = []
+    res = tuple() 
     for part, elem, mult in re_names.findall(cf):
         # use part to check whether all parts of cf are parsed
+        formula_to_tuple._log.info("Part {}: element {}, amount {}".format(part, elem, mult))
         check += part
         if check not in cf:
-            raise ValueError('Cannot process chemical formula {}, see part preceeding {}'.format(repr(cf), repr(part)))
+            raise ValueError('Cannot process chemical formula {}, see part ',
+                             'preceeding {}'.format(repr(cf), repr(part)))
 
         # convert integer to amount of moles (chemical formulae always express amount, not weight/mass)
         mult = 1 if mult == '' else int(mult)
@@ -109,16 +115,13 @@ def formula_to_tuple(cf, names={}):
             elem = names[elem]
         else:
             elem = get_default_isotopic_composition(elem)
-
-        res.extend( [elem, mult] )
-
+            if len(elem) == 2 and elem[1] == (1, 1):
+                elem = elem[0]
+        res += (elem, mult)
+        formula_to_tuple._log.info(repr(res))
     # Simplify definition, if necessary
-    if len(res) == 2 and res[1] == (1, 1):
-        res = (res[0], )
-
-    # print '{} -> {}'.format(cf, res)
-    return tuple(res)
-
-
+    if len(res) == 2 and res[1] == (1, 1) and isinstance(res[0], tuple):
+        res = res[0]
+    return res
 
 
