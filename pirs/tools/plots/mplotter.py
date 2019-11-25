@@ -22,9 +22,9 @@ It is realized outside zmesh to make possible the general model specifications
 even if matplotlib is not installed.
 """
 # first, specify pdf backend:
-from matplotlib import use
+# from matplotlib import use
 # use('Cairo.pdf')
-use('cairo')
+# use('cairo')
 import matplotlib.pyplot as pyplot
 
 
