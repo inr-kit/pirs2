@@ -1,0 +1,254 @@
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:CALL *(<class 'pirs.core.tramat.mixer.Mixture'>, 92235, (1, 1), 92238, (1, 1)) **{}
+INFO:pirs.core.tramat.mixer.Mixture:__new__:New Mixture instance created
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:RETURN <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.__init__ of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *(92235, (1, 1), 92238, (1, 1)) **{}
+INFO:pirs.core.tramat.mixer.Mixture:__init__:Pair ingredient -- amount: 92235 -- (1, 1)
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.__init__ of <Nuclide  at 0x2b27c97d7650>>:CALL *(92235,) **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.__init__ of <Nuclide 92235 at 0x2b27c97d7650>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27ce8a1e90>>:CALL *((1, 1), {}) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(1.0, 1) at 0x2b27ce8a1e90>>:RETURN None
+INFO:pirs.core.tramat.mixer.Mixture:__init__:Pair ingredient -- amount: 92238 -- (1, 1)
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.__init__ of <Nuclide  at 0x2b27d6006210>>:CALL *(92238,) **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.__init__ of <Nuclide 92238 at 0x2b27d6006210>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006250>>:CALL *((1, 1), {}) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(1.0, 1) at 0x2b27d6006250>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.__init__ of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:RETURN None
+m1 created
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.report of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:RETURN 233.024781
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:RETURN 236.00581
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.moles of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006090>>:CALL *(0, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.0, 1) at 0x2b27d6006090>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006190>>:CALL *(1.0, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(1.0, 1) at 0x2b27d6006190>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006090>>:CALL *(2.0, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(2.0, 1) at 0x2b27d6006090>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.moles of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:RETURN <Amount(2.0, 1) at 0x2b27d6006090>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.grams of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006150>>:CALL *(0.0, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.0, 2) at 0x2b27d6006150>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:RETURN 233.024781
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60061d0>>:CALL *(233.024781, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(233.024781, 1) at 0x2b27d60061d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006050>>:CALL *(235.04393303299085, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(235.043933033, 1) at 0x2b27d6006050>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60061d0>>:CALL *(235.04393303299085, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(235.043933033, 2) at 0x2b27d60061d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:RETURN 236.00581
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006050>>:CALL *(236.00581, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(236.00581, 1) at 0x2b27d6006050>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006150>>:CALL *(238.0507925508436, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(238.050792551, 1) at 0x2b27d6006150>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006050>>:CALL *(473.0947255838345, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(473.094725584, 2) at 0x2b27d6006050>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.grams of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:RETURN <Amount(473.094725584, 2) at 0x2b27d6006050>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.cc of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.derived_conc of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.derived_conc of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006090>>:CALL *(0, 3) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.0, 3) at 0x2b27d6006090>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.derived_conc of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.derived_conc of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.derived_conc of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.derived_conc of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.expanded of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:CALL *(<class 'pirs.core.tramat.mixer.Mixture'>, <Nuclide 92235 at 0x2b27c97d7650>, <Amount(1.0, 1) at 0x2b27ce8a1e90>, <Nuclide 92238 at 0x2b27d6006210>, <Amount(1.0, 1) at 0x2b27d6006250>) **{}
+INFO:pirs.core.tramat.mixer.Mixture:__new__:New Mixture instance created
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:RETURN <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.__init__ of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:CALL *(<Nuclide 92235 at 0x2b27c97d7650>, <Amount(1.0, 1) at 0x2b27ce8a1e90>, <Nuclide 92238 at 0x2b27d6006210>, <Amount(1.0, 1) at 0x2b27d6006250>) **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:RETURN 233.024781
+INFO:pirs.core.tramat.mixer.Mixture:__init__:Pair ingredient -- amount: <   92235 233.0248> -- 1.0 m
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006190>>:CALL *(<Amount(1.0, 1) at 0x2b27ce8a1e90>, {}) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(1.0, 1) at 0x2b27d6006190>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:RETURN 236.00581
+INFO:pirs.core.tramat.mixer.Mixture:__init__:Pair ingredient -- amount: <   92238 236.0058> -- 1.0 m
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60061d0>>:CALL *(<Amount(1.0, 1) at 0x2b27d6006250>, {}) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(1.0, 1) at 0x2b27d60061d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.__init__ of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.derived_conc of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.derived_conc of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.expanded of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:RETURN <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.remove_duplicates of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.remove_duplicates of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.normalize of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:CALL *(1, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006150>>:CALL *(1, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(1.0, 1) at 0x2b27d6006150>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.moles of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006290>>:CALL *(0, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.0, 1) at 0x2b27d6006290>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006310>>:CALL *(1.0, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(1.0, 1) at 0x2b27d6006310>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006290>>:CALL *(2.0, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(2.0, 1) at 0x2b27d6006290>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.moles of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:RETURN <Amount(2.0, 1) at 0x2b27d6006290>
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006310>>:CALL *(1.0, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(1.0, 1) at 0x2b27d6006310>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006350>>:CALL *(0.5, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.5, 1) at 0x2b27d6006350>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006310>>:CALL *(1.0, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(1.0, 1) at 0x2b27d6006310>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006390>>:CALL *(0.5, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.5, 1) at 0x2b27d6006390>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.normalize of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.grams of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006290>>:CALL *(0.0, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.0, 2) at 0x2b27d6006290>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:RETURN 233.024781
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006190>>:CALL *(116.5123905, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(116.5123905, 1) at 0x2b27d6006190>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60061d0>>:CALL *(117.52196651649543, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(117.521966516, 1) at 0x2b27d60061d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006190>>:CALL *(117.52196651649543, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(117.521966516, 2) at 0x2b27d6006190>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:RETURN 236.00581
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60061d0>>:CALL *(118.002905, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(118.002905, 1) at 0x2b27d60061d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006290>>:CALL *(119.0253962754218, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(119.025396275, 1) at 0x2b27d6006290>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60061d0>>:CALL *(236.54736279191724, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(236.547362792, 2) at 0x2b27d60061d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.grams of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:RETURN <Amount(236.547362792, 2) at 0x2b27d60061d0>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.grams of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006290>>:CALL *(0.0, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.0, 2) at 0x2b27d6006290>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:RETURN 233.024781
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006190>>:CALL *(233.024781, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(233.024781, 1) at 0x2b27d6006190>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60062d0>>:CALL *(235.04393303299085, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(235.043933033, 1) at 0x2b27d60062d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006190>>:CALL *(235.04393303299085, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(235.043933033, 2) at 0x2b27d6006190>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:RETURN 236.00581
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60062d0>>:CALL *(236.00581, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(236.00581, 1) at 0x2b27d60062d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006290>>:CALL *(238.0507925508436, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(238.050792551, 1) at 0x2b27d6006290>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60062d0>>:CALL *(473.0947255838345, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(473.094725584, 2) at 0x2b27d60062d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.grams of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:RETURN <Amount(473.094725584, 2) at 0x2b27d60062d0>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.moles of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60062d0>>:CALL *(0, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.0, 1) at 0x2b27d60062d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006150>>:CALL *(1.0, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(1.0, 1) at 0x2b27d6006150>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60062d0>>:CALL *(2.0, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(2.0, 1) at 0x2b27d60062d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.moles of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:RETURN <Amount(2.0, 1) at 0x2b27d60062d0>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.how_much of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:CALL *(2, <Nuclide 92235 at 0x2b27c97d7650>) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006050>>:CALL *(2, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(2.0, 2) at 0x2b27d6006050>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006290>>:CALL *(0, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.0, 2) at 0x2b27d6006290>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:CALL *(<class 'pirs.core.tramat.mixer.Mixture'>, <Nuclide 92235 at 0x2b27c97d7650>, <Amount(0.5, 1) at 0x2b27d6006350>) **{}
+INFO:pirs.core.tramat.mixer.Mixture:__new__:New Mixture instance created
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:RETURN <pirs.core.tramat.mixer.Mixture object at 0x2b27d6006310>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.__init__ of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6006310>>:CALL *(<Nuclide 92235 at 0x2b27c97d7650>, <Amount(0.5, 1) at 0x2b27d6006350>) **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:RETURN 233.024781
+INFO:pirs.core.tramat.mixer.Mixture:__init__:Pair ingredient -- amount: <   92235 233.0248> -- 0.5 m
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006410>>:CALL *(<Amount(0.5, 1) at 0x2b27d6006350>, {}) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.5, 1) at 0x2b27d6006410>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.__init__ of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6006310>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.amount of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6006310>>:CALL *(<Amount(2.0, 2) at 0x2b27d6006050>,) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60063d0>>:CALL *(<Amount(2.0, 2) at 0x2b27d6006050>, <Amount(2.0, 2) at 0x2b27d6006050>) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(2.0, 2) at 0x2b27d60063d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.grams of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6006310>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006450>>:CALL *(0.0, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.0, 2) at 0x2b27d6006450>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:RETURN 233.024781
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60064d0>>:CALL *(116.5123905, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(116.5123905, 1) at 0x2b27d60064d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006510>>:CALL *(117.52196651649543, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(117.521966516, 1) at 0x2b27d6006510>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60064d0>>:CALL *(117.52196651649543, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(117.521966516, 2) at 0x2b27d60064d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.grams of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6006310>>:RETURN <Amount(117.521966516, 2) at 0x2b27d60064d0>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.amount of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6006310>>:RETURN <Amount(117.521966516, 2) at 0x2b27d60064d0>
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006310>>:CALL *(117.52196651649543, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(117.521966516, 2) at 0x2b27d6006310>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.how_much of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:RETURN <Amount(117.521966516, 2) at 0x2b27d6006310>
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92235 at 0x2b27c97d7650>>:RETURN 233.024781
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.how_much of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:CALL *(2, <Nuclide 92238 at 0x2b27d6006210>) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006050>>:CALL *(2, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(2.0, 2) at 0x2b27d6006050>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006150>>:CALL *(0, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.0, 2) at 0x2b27d6006150>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:CALL *(<class 'pirs.core.tramat.mixer.Mixture'>, <Nuclide 92238 at 0x2b27d6006210>, <Amount(0.5, 1) at 0x2b27d6006390>) **{}
+INFO:pirs.core.tramat.mixer.Mixture:__new__:New Mixture instance created
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:RETURN <pirs.core.tramat.mixer.Mixture object at 0x2b27d60064d0>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.__init__ of <pirs.core.tramat.mixer.Mixture object at 0x2b27d60064d0>>:CALL *(<Nuclide 92238 at 0x2b27d6006210>, <Amount(0.5, 1) at 0x2b27d6006390>) **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:RETURN 236.00581
+INFO:pirs.core.tramat.mixer.Mixture:__init__:Pair ingredient -- amount: <   92238 236.0058> -- 0.5 m
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60063d0>>:CALL *(<Amount(0.5, 1) at 0x2b27d6006390>, {}) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.5, 1) at 0x2b27d60063d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.__init__ of <pirs.core.tramat.mixer.Mixture object at 0x2b27d60064d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.amount of <pirs.core.tramat.mixer.Mixture object at 0x2b27d60064d0>>:CALL *(<Amount(2.0, 2) at 0x2b27d6006050>,) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006410>>:CALL *(<Amount(2.0, 2) at 0x2b27d6006050>, <Amount(2.0, 2) at 0x2b27d6006050>) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(2.0, 2) at 0x2b27d6006410>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.grams of <pirs.core.tramat.mixer.Mixture object at 0x2b27d60064d0>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006510>>:CALL *(0.0, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(0.0, 2) at 0x2b27d6006510>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:RETURN 236.00581
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006450>>:CALL *(118.002905, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(118.002905, 1) at 0x2b27d6006450>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006550>>:CALL *(119.0253962754218, 1) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(119.025396275, 1) at 0x2b27d6006550>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006450>>:CALL *(119.0253962754218, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(119.025396275, 2) at 0x2b27d6006450>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.grams of <pirs.core.tramat.mixer.Mixture object at 0x2b27d60064d0>>:RETURN <Amount(119.025396275, 2) at 0x2b27d6006450>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.amount of <pirs.core.tramat.mixer.Mixture object at 0x2b27d60064d0>>:RETURN <Amount(119.025396275, 2) at 0x2b27d6006450>
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d60064d0>>:CALL *(119.0253962754218, 2) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(119.025396275, 2) at 0x2b27d60064d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.how_much of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:RETURN <Amount(119.025396275, 2) at 0x2b27d60064d0>
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:CALL *() **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.M of <Nuclide 92238 at 0x2b27d6006210>>:RETURN 236.00581
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.report of <pirs.core.tramat.mixer.Mixture object at 0x2b27d5febf10>>:RETURN 'Mixture Umix\n        <   92235 233.0248>: 1.0 m\n        <   92238 236.0058>: 1.0 m\ntotal:  2.0 m or 473.094725584 g\nNuclide composition:\n                    Nuclide       At.frac      Wgt.frac     amount, m     weight, g\n        <   92235 233.0248>   5.00000e-01   4.96822e-01   1.00000e+00   2.35044e+02\n        <   92238 236.0058>   5.00000e-01   5.03178e-01   1.00000e+00   2.38051e+02'
+Mixture Umix
+        <   92235 233.0248>: 1.0 m
+        <   92238 236.0058>: 1.0 m
+total:  2.0 m or 473.094725584 g
+Nuclide composition:
+                    Nuclide       At.frac      Wgt.frac     amount, m     weight, g
+        <   92235 233.0248>   5.00000e-01   4.96822e-01   1.00000e+00   2.35044e+02
+        <   92238 236.0058>   5.00000e-01   5.03178e-01   1.00000e+00   2.38051e+02
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:CALL *(<class 'pirs.core.tramat.mixer.Mixture'>, 'Al') **{}
+From f_to_tuple: [(13027, (1.0, 1)), (1, 1)]
+From f_to_tuple: (13027, (1.0, 1))
+INFO:pirs.core.tramat.mixer.Mixture:__new__:Single string argument converted to tuple: (13027, (1.0, 1))
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:CALL *(<class 'pirs.core.tramat.mixer.Mixture'>, 13027, (1.0, 1)) **{}
+INFO:pirs.core.tramat.mixer.Mixture:__new__:New Mixture instance created
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:RETURN <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.__init__ of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:CALL *(13027, (1.0, 1)) **{}
+INFO:pirs.core.tramat.mixer.Mixture:__init__:Pair ingredient -- amount: 13027 -- (1.0, 1)
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.__init__ of <Nuclide  at 0x2b27d60061d0>>:CALL *(13027,) **{}
+TRACE:pirs.core.tramat.mixer.Nuclide:<bound method Nuclide.__init__ of <Nuclide 13027 at 0x2b27d60061d0>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(, ) at 0x2b27d6006350>>:CALL *((1.0, 1), {}) **{}
+TRACE:pirs.core.tramat.mixer.Amount:<bound method Amount.__init__ of <Amount(1.0, 1) at 0x2b27d6006350>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.__init__ of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:RETURN None
+TRACE:pirs.core.tramat.mixer.Mixture:<function __new__ at 0x2b27caeca938>:RETURN <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>
+TRACE:pirs.core.tramat.mixer.Mixture:<bound method Mixture.__init__ of <pirs.core.tramat.mixer.Mixture object at 0x2b27d6001c90>>:CALL *('Al',) **{}
+Traceback (most recent call last):
+  File "traced_mixer.py", line 15, in <module>
+    m2 = Mixture('Al')
+  File "/manni/work/tan/gh/Autologging/autologging.py", line 1039, in autologging_traced_instancemethod_delegator
+    return proxy(method, args, keywords)
+  File "/manni/work/tan/gh/Autologging/autologging.py", line 1196, in __call__
+    value = function(*args, **keywords)
+  File "/manni/work/tan/gh/pirs2/pirs/core/tramat/mixer.py", line 608, in __init__
+    'or an odd number of arguments')
+TypeError: Method __init__ takes exactly one or an odd number of arguments

@@ -23,6 +23,8 @@ Definition of the Nuclide and Mixture classes.
 # Author: Anton Travleev, anton.travleev@kit.edu
 # Developed at INR, Karlsruhe Institute of Technology
 # at
+import autologging
+
 from collections import OrderedDict
 
 from .data_masses import xsdir1 as AWR_SET
@@ -42,6 +44,7 @@ G_MOL_AWR = AMU_AWR * G_AMU * NAVOGAD  # Conversion factor g/mol/awr
 _nMix = 0
 
 
+@autologging.traced
 class Nuclide(object):
     """
     Representation of a nuclide. A nuclide is defined by its mass and charge
@@ -242,10 +245,18 @@ class Nuclide(object):
             return NotImplemented
 
     def __str__(self):
-        return '<{0:8d} {1:8.4f}>'.format(self.ZAID, self.M())
+        return '<N {0:8d} {1:8.4f}>'.format(self.ZAID, self.M())
 
     def __repr__(self):
-        return '<Nuclide({})>'.format(self.ZAID)
+        # If autologging.traced is used, it puts a repr(self) at the very begin
+        # of __init__. Thus, if here an attribute is reffered that is first
+        # defined in __init__, the use of traced can result in AttributeError.
+        try:
+            self_za = '{}'.format(self.ZAID)
+        except AttributeError:
+            self_za = ''
+        self_id = 'at {}'.format(hex(id(self)))
+        return '<Nuclide {} {}>'.format(self_za, self_id)
 
     def check_attributes(self, **kwargs):
         """
@@ -267,6 +278,7 @@ class Nuclide(object):
                isinstance(attr, self.__class__.__init__.__class__)):
                 attr = attr()
             elif isinstance(value, list):
+                # self._print_log('Check {} in {}'.format(attr, value))
                 if attr not in value:
                     return False
             elif isinstance(value, basestring):
@@ -282,7 +294,7 @@ class Nuclide(object):
         Two Nuclide instances are equal, if they have equal ZAID and M.
         """
         if isinstance(othr, self.__class__):
-            return self.ZAID == othr.ZAID and self.__m == othr.__m
+            return self.ZAID == othr.ZAID and self.M() == othr.M()
         else:
             return NotImplemented
 
@@ -300,9 +312,10 @@ class Nuclide(object):
         return za in (92235, 94239, 94241)
 
 
+# @autologging.traced
 class Amount(object):
     """
-    Is a set of two entries: value and its unit. The value must be a float (or
+    Is a set of two entries: a value and its unit. The value must be a float (or
     convertable to float) and the unit can be specified by an integer, or by a
     string:
 
@@ -320,7 +333,7 @@ class Amount(object):
     >>> print g1, g2, g3
     2.0 g 2.0 g 2.0 g
 
-    One can alse define cubic centimeters. The following instances all represent
+    One can also define cubic centimeters. The following instances all represent
     "three cc":
     >>> v1 = Amount(3, 3)
     >>> v2 = Amount(3, 'cc')
@@ -421,13 +434,19 @@ class Amount(object):
                 self.__t = tid
                 break
         else:
-            raise ValueError('Unknown unit: ', value)
+            raise ValueError('Unknown unit: ', repr(value))
 
     def __str__(self):
-        return '{0} {1}'.format(self.__v, self.name)
+        return '<A {0} {1}>'.format(self.__v, self.name)
 
     def __repr__(self):
-        return 'Amount({}, {})'.format(self.__v, self.__t)
+        try:
+            v = self.__v
+            t = self.__t
+        except AttributeError:
+            v = ''
+            t = ''
+        return '<Amount({}, {}) at {}>'.format(v, t, hex(id(self)))
 
     @property
     def name(self):
@@ -478,6 +497,9 @@ class Amount(object):
             return NotImplemented
 
 
+
+@autologging.logged
+@autologging.traced
 class Mixture(object):
     """Mixture of nuclides or other mixtures.
 
@@ -493,55 +515,35 @@ class Mixture(object):
     # Instance counter
     nMix = 0
 
-    # log level. Above 0 means additional log messages.
-    logLevel = 0
-
-    @classmethod
-    def _print_log(cls, message):
-        if cls.logLevel > 0:
-            print message
-
     def __new__(cls, *args, **kwargs):
         """
-        New instance is created only if args has more than 1 ingredient and if
-        this ingredient is allready of Mixture class.
+        If the only argument of the constructor is another Mixture instance, it
+        is passed through, without wrapping it into the new Mixture instance.
+
+        If only one argument is given, 
         """
-        # print 'new', args, kwargs
         if len(args) == 1:
-            # only one argument.
+            # Only one argument is given. Try to avoid wrapping a single Mixture ingredient into a new Mixture instance.
             arg = args[0]
             if isinstance(arg, cls):
-                cls._print_log('new: bypass 1-st argument')
+                # The argument is another Mixture instance. Simply propagate it:
+                cls.__log.info('Single argument of Mixture class passed through')
                 res = arg
-            elif isinstance(arg, tuple):
-                cls._print_log('new: expand the 1-st argument')
-                res = cls(*arg)
+            elif isinstance(arg, basestring): 
+                # A string is given. Consider it is a formula that can be converted into a Mixture
+                t = formula_to_tuple(arg, names=kwargs.get('names', {}))
+                cls.__log.info('Single string argument converted to tuple: {} -> {}'.format(arg, t))
+                res = cls(*t)
             elif isinstance(arg, int):
-                cls._print_log('new: replace int with Nuclide')
-                res = cls(Nuclide(arg), (1, 1))
-            elif isinstance(arg, Nuclide):
-                cls._print_log('new: One nuclide')
-                res = cls(arg, (1, 1))
-            elif isinstance(arg, basestring):
-                cls._print_log('new: replace string with tuple')
-                res = cls(*formula_to_tuple(arg, names=kwargs.get('names', {})))
+                # An integer is given. Consider this as ZAID and provide with default unit.
+                res = cls(Nuclide(arg), Amount(1, kwargs.get('units', 1)))
             else:
-                raise ValueError('Unsupported type of ingredient, ', type(arg))
+                raise TypeError('Single argument of type {} cannot be interpreted'.format(type(arg)))
         else:
-            cls._print_log('new: create new ' + str(args) + str(kwargs))
+            cls.__log.info('New Mixture instance created')
             res = super(Mixture, cls).__new__(cls)
             cls.nMix += 1
         return res
-
-    def __initialized(self):
-        try:
-            self.__m
-            self.__a
-            self.__c
-            self.__name
-            return True
-        except AttributeError:
-            return False
 
     def __init__(self, *args, **kwargs):
         """
@@ -580,72 +582,74 @@ class Mixture(object):
         element is 1 for moles, 2 for grams and 3 for cubic centimeters.
 
         """
+        self.__log.info('Initializing for object {}'.format(repr(self)))
+        self.__log.info(self.__dict__)
+        if hasattr(self, '_Mixture__m'):
+            # check that the new method already passed an initialized instance:
+            return
 
-        if self.__initialized():
-            # print 'init: already initialized'
-            pass
-        else:
-            self.__class__._print_log('init: initialize self: {} '
-                                      'args: {} '
-                                      'kwargs: {}'.format(repr(self),
-                                                          args, kwargs))
-            # a new instance is returned, setup it.
+        # a mixture is stored in two lists, specifying what to mix and how
+        # much.
+        self.__m = []            # ingredients (Materials)
+        self.__a = []            # amount (instances of Amount class)
+        self.__c = None          # recipe's given concentration. See conc, dens.
+        self.__name = None       # recipe's given name.
 
-            # a mixture is stored in two lists, specifying what to mix and how
-            # much.
-            self.__m = []            # ingredients (Materials)
-            self.__a = []            # amount (instances of Amount class)
-            self.__c = None          # recipe's concentration. See conc, dens.
-            self.__name = None       # recipe's given name.
+        # default names:
+        du = kwargs.get('units', 1)
+        dn = kwargs.get('names', {})
 
-            # default units
-            du = kwargs.get('units', 1)
-            # default names:
-            dn = kwargs.get('names', {})
+        # New args interpretation
+        # If there is only one argument, assume it as the single ingredient with default Amount
+        # if len(args) == 1:
+        #     args = tuple(args) + (Amount(1, du), )
+        #     self.__log.info("Updated list of arguments: {}".format(args))
+        if not (len(args) in (0, 1) or len(args) % 2 == 0):
+            # Check that the number of arguments is odd, i.e. i1, a1, i2, a2, ...iN, aN
+            print len(args) not in (0, 1)
+            print len(args) % 2
+            raise TypeError('Method __init__ takes exactly zero, one ' +
+                            'or an odd number of arguments', len(args), args)
 
-            # New args interpretation
-            if len(args) == 0 or len(args) % 2 != 0:
-                # if there are more than 1 arguments, thier amount should be
-                # even.
-                raise TypeError('Method __init__ takes exactly one ' +
-                                'or an odd number of arguments')
+        # interprete each pair of arguments
+        for mraw, araw in zip(args[0::2], args[1::2]):
+            self.__log.info('Pair ingredient -- amount: {} -- {}'.format(mraw, araw))
+            m = None
+            # interprete definition of material
+            if isinstance(mraw, (self.__class__, Nuclide)):
+                # use the specified in arguments material directry as
+                # ingredient.
+                self.__log.info('Ingredient added as is')
+                m = mraw
+            elif isinstance(mraw, int):
+                # if integer, assume it is ZAID representation of a nuclide
+                # self._print_log('Using {} as ZAID'.format(mraw))
+                self.__log.info('Int ingredient added as Nuclide')
+                m = Nuclide(mraw)
+            elif isinstance(mraw, tuple) and len(mraw) % 2 == 0:
+                # For a tuple to be interpreted as a mixture definition, it must contain even number of entries
+                self.__log.info('Tuple ingredient added as Mixture')
+                m = self.__class__(*mraw)
+                
+            elif isinstance(mraw, basestring):
+                # Assume that string gives a chemical name or a chemical
+                # formula.  Optional keyword argument with natural
+                # isotopical abundancies
+                # may be specified.
+                # self._print_log('Using {} as chemical formula'.format(mraw))
+                self.__log.info('String ingredient converted to tuple')
+                m = self.__class__(*formula_to_tuple(mraw, names=dn))
 
-            # interprete each pair of arguments
-            ai = iter(args)  # iterator on args, to get next element
-            for mraw in ai:
-                m = None
-                # interprete definition of material
-                if (isinstance(mraw, self.__class__) or
-                   isinstance(mraw, Nuclide)):
-                    # use the specified in arguments material directry as
-                    # ingredient.
-                    self._print_log('Using {} as ingredient'.format(mraw))
-                    m = mraw
-                elif isinstance(mraw, int):
-                    # if integer, assume it is ZAID representation of a nuclide
-                    self._print_log('Using {} as ZAID'.format(mraw))
-                    m = Nuclide(mraw)
-                elif isinstance(mraw, basestring):
-                    # Assume that string gives a chemical name or a chemical
-                    # formula.  Optional keyword argument with natural
-                    # isotopical abundancies
-                    # may be specified.
-                    self._print_log('Using {} as chemical formula'.format(mraw))
-                    mraw = formula_to_tuple(mraw, names=dn)
-                if isinstance(mraw, tuple):
-                    m = self.__class__(*mraw, **kwargs)
+            if m is None:
+                raise TypeError('Unsupported type of material definition, ',
+                                repr(mraw), type(mraw))
 
-                if m is None:
-                    raise TypeError('Unsupported type of material definition, ',
-                                    repr(mraw), type(mraw))
+            # all possible forms of the amount definiton see in the
+            # constructor of Amount() class
+            a = Amount(araw, du)  # if araw is tuple, du is ignored
 
-                # all possible forms of the amount definiton see in the
-                # constructor of Amount() class
-                araw = ai.next()
-                a = Amount(araw, du)  # if araw is tuple, du is ignored
-
-                self.__m.append(m)
-                self.__a.append(a)
+            self.__m.append(m)
+            self.__a.append(a)
         return
 
     @classmethod
@@ -789,9 +793,7 @@ class Mixture(object):
         >>> m.index(26058)
         3
         """
-        if isinstance(i, self.__class__):
-            return self.__m.index(i)
-        elif isinstance(i, Nuclide):
+        if isinstance(i, (self.__class__, Nuclide)):
             return self.__m.index(i)
         elif isinstance(i, int):
             n = Nuclide(i)
@@ -952,7 +954,7 @@ class Mixture(object):
             c = self.cc()
         else:
             raise ValueError('Unknown value of a.t: ', a.t)
-        self.__a = map(lambda x: x*a.v/c.v, self.__a)
+        self.__a = list(map(lambda x: x*a.v/c.v, self.__a))
         return None
 
     def moles(self):
@@ -1003,19 +1005,25 @@ class Mixture(object):
 
     def cc(self):
         """
+        As used in report(), this function should give the sum of ingredient's
+        volumes. This value is independent on the user-specified conc of the mixture itself.
+        Therefore, the presence of self.conc should not be checked at all.
+
+
         returns total volume in cubic centimeters of the ingredients, specified
         in the recipe definition.
 
+
+
         Returned value is an instance of the ``Amount`` class.
 
-        Some ingredients might have no density/concentration property, in this
-        case the direct evaluation of the sum of ingredients volumes is not
-        possible. In this case, the value ::
+        If the mixture density is known, the volume is computed as ::
 
             self.grams() / self.dens
 
-        will be returned. If the density/concentration of self is not defined,
-        None is returned.
+        Otherwise, the mixture volume is computed as a sum of the ingredients
+        volumes. The latter is not always possible, in which case a ValueError
+        is thrown.
 
         """
         res = Amount(0, 3)
@@ -1056,24 +1064,29 @@ class Mixture(object):
         a = Amount(t, t)
         if a.t == 1:
             # in moles
-            return self.moles()
+            res = self.moles()
         elif a.t == 2:
-            return self.grams()
+            res = self.grams()
         elif a.t == 3:
-            return self.cc()
+            res = self.cc()
+        return res
 
     def M(self):
         """
         Effective molar mass of the recipe.
 
         """
+        # If mixture is empty, consider it as void
+        if not self.__m:
+            return 0.
+
         Smass = 0.
         Smole = 0.
         for (m, a) in zip(self.__m, self.__a):
             if a.t == 1:
                 mole = a.v
             else:
-                mole = Mixture((m, a)).moles().v
+                mole = Mixture(m, a).moles().v
             Smass += m.M() * mole
             Smole += mole
         if Smass == 0.:
@@ -1143,10 +1156,20 @@ class Mixture(object):
         # For each ingredient, define its amount, Ni and its volume, Vi. The
         # derived conc is sum(Ni) / sum(Vi).
 
+        # Note that for an ingredient of the Nuclide class one cannot define the correspondent
+        # volume. Therefore, if at least one ingredient of the Mixture is a Nuclide, the 
+        # derived concentration of the Mixture cannot be defined.
+
+        # If mixture contains no ingredients, assume its conc is zero
+        if not self.__m:
+            return 0.0
+
         Sv = 0.
         Sn = 0.
 
         for (m, a) in zip(self.__m, self.__a):
+            if isinstance(m, Nuclide):
+                return None
             mm = Mixture(m, a)
             try:
                 n = mm.moles()
@@ -1164,7 +1187,7 @@ class Mixture(object):
         except ValueError:
             m = 0.0
 
-        return '<{0:8s} {1:8.4f}>'.format(self.name, m)
+        return '<M {0:8s} {1:8.4f}>'.format(self.name, m)
 
     def report(self):
         """
@@ -1187,6 +1210,12 @@ class Mixture(object):
                 s += ' or {0}'.format(str(a))
         s = s.replace(':  or', ': ')
         res.append(s)
+
+        # If possible, print out density/concentration
+        if self.dens is not None:
+            res[0] += ' {:13.4e}[g/cc]'.format(self.dens)
+        if self.conc is not None:
+            res[0] += ' {:13.4e}[1/cc]'.format(self.conc)
 
         res.append('Nuclide composition:')
         res.append(indent + '{0:>19s} {1:>13s} {2:>13s} {3:>13s} {4:>13s}'
@@ -1385,23 +1414,29 @@ class Mixture(object):
 
         """
         tt = Amount(t, t)
-        if tt.t not in [1, 2]:
-            raise ValueError('Unsupported value of t argument: ' + str(t))
+        # if tt.t not in [1, 2]:
+        #     raise ValueError('Unsupported value of t argument: ' + str(t))
         if len(args) != 0:
             r = Amount(0, tt.t)
             for arg in args:
+                if isinstance(arg, int):
+                    arg = Nuclide(arg)
+                elif isinstance(arg, basestring):
+                    arg = self.__class__(*formula_to_tuple(arg))
                 for (m, a) in zip(self.__m, self.__a):
-                    if (isinstance(arg, int) and
-                       isinstance(m, Nuclide) and
-                       m.ZAID == arg):
-                        r += Mixture((m, a)).amount(tt)
-                    elif isinstance(arg, basestring):
-                        # e = Mixture( *natural.recipe(arg) )
-                        e = Mixture(*formula_to_tuple(arg))
-                        if isinstance(m, self.__class__) and e == m:
-                            r += Mixture((e, a)).amount(tt)
-                    elif arg == m:
-                        r += Mixture((m, a)).amount(tt)
+                    if m == arg:
+                        r += Mixture(arg, a).amount(tt)
+
+                    # if (isinstance(arg, int) and
+                    #    isinstance(m, Nuclide) and
+                    #    m.ZAID == arg):
+                    #     r += Mixture(m, a).amount(tt)
+                    # elif isinstance(arg, basestring):
+                    #     e = Mixture(*formula_to_tuple(arg))
+                    #     if isinstance(m, self.__class__) and e == m:
+                    #         r += Mixture(e, a).amount(tt)
+                    # elif arg == m:
+                    #     r += Mixture(m, a).amount(tt)
             return r
         elif len(kwargs) != 0:
             e = self.expanded()
@@ -1412,7 +1447,7 @@ class Mixture(object):
                     if tt.t == 1:
                         r += a
                     else:
-                        r += Mixture((m, a)).amount(tt)
+                        r += Mixture(m, a).amount(tt)
             return r
         else:
             return self.amount(tt)
@@ -1503,17 +1538,20 @@ class Mixture(object):
 
         # go back to initial units for materials m1 and m2:
         if a1.t != 1:
-            self.__v[i1] = Mixture((var[0], self.__a[i1]).amount(a1))
+            self.__a[i1] = Mixture(var[0], self.__a[i1]).amount(a1)
         if a2.t != 1:
-            self.__v[i2] = Mixture((var[1], self.__a[i2]).amount(a2))
+            self.__a[i2] = Mixture(var[1], self.__a[i2]).amount(a2)
 
     def __eq__(self, othr):
         """
         Two mixture instances are equal, if they have equal recipies, names and
         concentrations.
         """
+        if self is othr:
+            return True
         if isinstance(othr, self.__class__):
-            return (self.recipe() == othr.recipe() and
+            return (self.__m == othr.__m and
+                    self.__a == othr.__a and
                     self.name == othr.name and
                     self.conc == othr.conc)
         else:
