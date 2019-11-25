@@ -22,5 +22,6 @@ use('cairo')
 from .mplotter import MeshPlotter
 from .cmap import colormap
 from .color_list import cgen as colornames
+from  .normalizers import MyNormalize 
 
 
