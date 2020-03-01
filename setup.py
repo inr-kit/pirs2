@@ -27,7 +27,7 @@ setup(
     long_description=long_descr,
     long_description_content_type=long_descr_type,
     author='Anton Travleev',
-    author_email='anton.travleev@kit.edu',
+    author_email='anton.travleev@gmail.com',
     url='https://github.com/inr-kit/pirs2',
     keywords='MCNP SCF COUPLED REACTOR CALCULATIONS',
     package_data={
