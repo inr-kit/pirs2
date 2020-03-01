@@ -21,7 +21,7 @@ with open('README.rst', 'r') as f:
     long_descr_type = 'text/x-rst'
 
 setup(
-    name='pirs2',
+    name='pyirs',
     use_scm_version=True,
     description='Python Interfaces for Reactor Simulations',
     long_description=long_descr,
