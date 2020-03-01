@@ -16,21 +16,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-PIRS stands for Python Interfaces for Reactor Simulations. 
+PIRS stands for Python Interfaces for Reactor Simulations.
 
 This package provides classes to interact with codes from the
-Python. Currently implemented are interfaces to MCNP (Monte-Carlo 
+Python. Currently implemented are interfaces to MCNP (Monte-Carlo
 neutronics) and SCF (sub-channel thermo-hydraulics).
 
-An interface to a code is implemented in two levels: 
+An interface to a code is implemented in two levels:
 
     *
       The low-level interface describes classes for object-oriented
       representation of data needed for the code input, defines routines to
       read the code's output and has means to start the code from a Python
       script (or from interactive the Python interpreter).
-      
-    * 
+
+    *
       The high-level interface converts code-independent description of
       geometry into input file(s) and puts the results of the code into the
       geometry back using the low-level interface.
@@ -38,7 +38,7 @@ An interface to a code is implemented in two levels:
 
 Subpackages of PIRS are organized into several groups:
 
-    pirs.solids: 
+    pirs.solids:
         Classes representing solids to build computational geometry
 
     pirs.hli:
@@ -48,3 +48,10 @@ Subpackages of PIRS are organized into several groups:
 from .hli.mcnp.interface import McnpInterface
 # from .hli.scf.interface import ScfInterface
 from .hli.scf2.interface import Model as ScfInterface
+
+try:
+    from .version import version
+except ImportError:
+    version = 'git.development'
+__version__ = version
+
